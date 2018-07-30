@@ -16,8 +16,8 @@ namespace CLI
             .AddScoped<IColonistPickGetter, ColonistPickGetter>()
             .AddScoped<IDrawGetter, DrawGetter>()
             .AddScoped<IDiscardGetter, DiscardGetter>()
-            .AddScoped<IPowerGetter, >()
-            .AddScoped<IBuildGetter, >()
+            .AddScoped<IPowerGetter, PowerGetter>()
+            .AddScoped<IBuildGetter, BuildGetter>()
             .BuildServiceProvider();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using MediatR;
+using Game.Commands;
 
 namespace Game.Entities.Colonists
 {
@@ -11,7 +12,9 @@ namespace Game.Entities.Colonists
         public override ICollection<IRequest<GameState>> GetActions(BoardState boardState)
         {
             // No special ability
-            return new List<IRequest<BoardState>>();
+            ICollection<IRequest<GameState>> actions = new List<IRequest<GameState>>();
+            actions.Add(new DoNothingCommand { BoardState = boardState });
+            return actions;
         }
 
         public override void PerformClassDrawAction(BoardState boardState)

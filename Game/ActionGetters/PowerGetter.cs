@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Game.ActionGetters
 {
-    class PowerGetter : IPowerGetter
+    public class PowerGetter : IPowerGetter
     {
         public Task<GameState> Process(BoardState boardState)
         {
@@ -18,9 +18,7 @@ namespace Game.ActionGetters
         {
             var state = new GameState();
             state.BoardState = boardState;
-            state.Actions = new List<IRequest<GameState>>();
-
-            // TODO
+            state.Actions = boardState.Players[boardState.PlayerTurn - 1].Colonist.GetActions(boardState);
 
             return state;
         }
