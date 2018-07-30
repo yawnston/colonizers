@@ -12,5 +12,11 @@ namespace Game.Commands
         [JsonIgnore]
         public BoardState BoardState { get; set; }
         public Colonist Colonist { get; set; }
+
+        public override string ToString()
+        {
+            return $@"Choose colonist: 
+    Type: {Colonist.ToString()}";
+        }
     }
 }

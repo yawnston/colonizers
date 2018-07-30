@@ -14,5 +14,7 @@ namespace Game.Entities
         public ICollection<Module> Hand { get; set; } = new List<Module>();
         // Modules the player has played and are out on the field
         public ICollection<Module> Colony { get; set; } = new List<Module>();
+
+        public int ID { get; set; }
     }
 }

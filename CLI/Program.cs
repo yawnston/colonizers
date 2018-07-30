@@ -5,6 +5,8 @@ using System.Reflection;
 using Game.ActionGetters;
 using Game;
 using Newtonsoft.Json;
+using Game.Entities;
+using System.Linq;
 
 namespace CLI
 {
@@ -29,22 +31,41 @@ namespace CLI
             var mediator = serviceProvider.GetService<IMediator>();
             var resolver = new Resolver(mediator);
 
-            GameState gameState; IRequest<GameState> action;
-            var boardState = new BoardState().InitRound();
-            var firstGetter = serviceProvider.GetService<IColonistPickGetter>();
-            gameState = firstGetter.Process(boardState).Result;
+            GameState gameState; IRequest<GameState> action; PlayerInfo currentPlayer;
+            var boardState = BoardFactory.Standard();
+            gameState = GameFactory.NewGame(boardState, serviceProvider);
 
             while (true)
             {
+                currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
+                Console.WriteLine($"PLAYER {currentPlayer.ID}");
+                Console.WriteLine($"Your Omnium: {currentPlayer.Omnium}");
+                if (gameState.BoardState.GamePhase != BoardState.Phase.ColonistPick) Console.WriteLine($"Your Colonist: {currentPlayer.Colonist}");
+                Console.WriteLine("Your Hand:");
+                foreach(var m in currentPlayer.Hand)
+                {
+                    Console.WriteLine($"{m.ToString()}");
+                }
+
+                Console.WriteLine("-------------------------------------");
+
+                int i = 0;
                 foreach(var a in gameState.Actions)
                 {
-                    Console.WriteLine(JsonConvert.SerializeObject(a, Formatting.Indented, new JsonSerializerSettings
-                    {
-                        TypeNameHandling = TypeNameHandling.All
-                    }));
+                    Console.WriteLine($"({i++}) {a.ToString()}");
                 }
                 action = gameState.Actions[Int32.Parse(Console.ReadLine())];
                 gameState = resolver.Resolve(action).Result;
+                Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                if (gameState.GameOver) break;
+            }
+
+            Console.WriteLine("Game over");
+            Console.WriteLine("Results:");
+            Console.WriteLine();
+            foreach(var p in gameState.GameEndInfo.Players.OrderBy(pi => pi.VictoryPoints))
+            {
+                Console.WriteLine($"Player {p.Player.ID}: {p.VictoryPoints} points");
             }
         }
     }

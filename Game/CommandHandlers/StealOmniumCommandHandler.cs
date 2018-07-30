@@ -39,6 +39,7 @@ namespace Game.CommandHandlers
                     amountStolen = request.Amount;
                     targetPlayer.Omnium -= amountStolen;
                 }
+                currentPlayer.Omnium += amountStolen;
             }
             board.GamePhase = BoardState.Phase.Build;
 

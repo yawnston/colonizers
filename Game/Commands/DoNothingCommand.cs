@@ -10,5 +10,10 @@ namespace Game.Commands
     {
         [JsonIgnore]
         public BoardState BoardState { get; set; }
+
+        public override string ToString()
+        {
+            return $@"Skip colonist ability";
+        }
     }
 }

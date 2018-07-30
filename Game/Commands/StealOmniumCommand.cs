@@ -13,5 +13,11 @@ namespace Game.Commands
         public BoardState BoardState { get; set; }
         public Colonist Target { get; set; }
         public int Amount { get; set; }
+
+        public override string ToString()
+        {
+            return $@"Steal Omnium: 
+    Target: {Target.ToString()}";
+        }
     }
 }

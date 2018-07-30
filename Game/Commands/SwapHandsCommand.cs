@@ -12,5 +12,11 @@ namespace Game.Commands
         [JsonIgnore]
         public BoardState BoardState { get; set; }
         public Colonist Target { get; set; }
+
+        public override string ToString()
+        {
+            return $@"Swap hands: 
+    Target: {Target.ToString()}";
+        }
     }
 }
