@@ -11,6 +11,6 @@ namespace Game.Entities
         public abstract void PerformClassDrawAction(BoardState boardState);
 
         // Get all actions this character can execute in the power phase
-        public abstract ICollection<IRequest<GameState>> GetActions(BoardState boardState);
+        public abstract IList<IRequest<GameState>> GetActions(BoardState boardState);
     }
 }

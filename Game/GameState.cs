@@ -12,6 +12,6 @@ namespace Game
         public GameEndInfo GameEndInfo { get; set; }
         public BoardState BoardState { get; set; }
         // Things the player can do on their turn
-        public ICollection<IRequest<GameState>> Actions { get; set; }
+        public IList<IRequest<GameState>> Actions { get; set; }
     }
 }

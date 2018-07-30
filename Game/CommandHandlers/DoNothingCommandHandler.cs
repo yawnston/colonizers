@@ -12,7 +12,6 @@ namespace Game.CommandHandlers
     class DoNothingCommandHandler : IRequestHandler<DoNothingCommand, GameState>
     {
         readonly IBuildGetter buildGetter;
-        private object gameEndGetter;
 
         public DoNothingCommandHandler(IBuildGetter buildGetter)
         {

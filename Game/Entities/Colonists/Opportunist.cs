@@ -8,10 +8,10 @@ namespace Game.Entities.Colonists
 {
     public class Opportunist : Colonist
     {
-        public override ICollection<IRequest<GameState>> GetActions(BoardState boardState)
+        public override IList<IRequest<GameState>> GetActions(BoardState boardState)
         {
             // Steal up to 2 Omnium from the target Colonist
-            ICollection<IRequest<GameState>> actions = new List<IRequest<GameState>>();
+            IList<IRequest<GameState>> actions = new List<IRequest<GameState>>();
             foreach(var c in boardState.PlayableColonists)
             {
                 actions.Add(new StealOmniumCommand { BoardState = boardState, Target = c, Amount = 2});

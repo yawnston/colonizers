@@ -13,7 +13,6 @@ namespace Game.CommandHandlers
     class StealOmniumCommandHandler : IRequestHandler<StealOmniumCommand, GameState>
     {
         readonly IBuildGetter buildGetter;
-        private object gameEndGetter;
 
         public StealOmniumCommandHandler(IBuildGetter buildGetter)
         {

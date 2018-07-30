@@ -9,10 +9,10 @@ namespace Game.Entities.Colonists
 {
     class Ecologist : Colonist
     {
-        public override ICollection<IRequest<GameState>> GetActions(BoardState boardState)
+        public override IList<IRequest<GameState>> GetActions(BoardState boardState)
         {
             // No special ability
-            ICollection<IRequest<GameState>> actions = new List<IRequest<GameState>>();
+            IList<IRequest<GameState>> actions = new List<IRequest<GameState>>();
             actions.Add(new DoNothingCommand { BoardState = boardState });
             return actions;
         }

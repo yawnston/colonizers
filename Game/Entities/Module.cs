@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Game.Entities
 {
-    public abstract class Module
+    public class Module
     {
-        public enum Color { Green, Blue, Red }
+        public enum Color { Green, Blue, Red, None }
 
         public Color Type { get; set; }
 

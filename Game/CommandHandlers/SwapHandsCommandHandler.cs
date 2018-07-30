@@ -13,7 +13,6 @@ namespace Game.CommandHandlers
     class SwapHandsCommandHandler : IRequestHandler<SwapHandsCommand, GameState>
     {
         readonly IBuildGetter buildGetter;
-        private object gameEndGetter;
 
         public SwapHandsCommandHandler(IBuildGetter buildGetter)
         {

@@ -8,9 +8,9 @@ namespace Game.Entities.Colonists
 {
     class Spy : Colonist
     {
-        public override ICollection<IRequest<GameState>> GetActions(BoardState boardState)
+        public override IList<IRequest<GameState>> GetActions(BoardState boardState)
         {
-            ICollection<IRequest<GameState>> actions = new List<IRequest<GameState>>();
+            IList<IRequest<GameState>> actions = new List<IRequest<GameState>>();
             foreach (var c in boardState.PlayableColonists)
             {
                 actions.Add(new SwapHandsCommand { BoardState = boardState, Target = c });
