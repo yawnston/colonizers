@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Game.ActionGetters
 {
-    class GameEndGetter : IGameEndGetter
+    public class GameEndGetter : IGameEndGetter
     {
         public Task<GameState> Process(BoardState boardState)
         {

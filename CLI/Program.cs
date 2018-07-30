@@ -4,6 +4,7 @@ using MediatR;
 using System.Reflection;
 using Game.ActionGetters;
 using Game;
+using Newtonsoft.Json;
 
 namespace CLI
 {
@@ -12,13 +13,14 @@ namespace CLI
         static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-            .AddMediatR(typeof(Program).GetTypeInfo().Assembly)
+            .AddMediatR(typeof(Resolver).GetTypeInfo().Assembly)
             .AddScoped<IMediator, Mediator>()
             .AddScoped<IColonistPickGetter, ColonistPickGetter>()
             .AddScoped<IDrawGetter, DrawGetter>()
             .AddScoped<IDiscardGetter, DiscardGetter>()
             .AddScoped<IPowerGetter, PowerGetter>()
             .AddScoped<IBuildGetter, BuildGetter>()
+            .AddScoped<IGameEndGetter, GameEndGetter>()
             .BuildServiceProvider();
 
             Console.WriteLine("Colonizers v0.1");
@@ -36,7 +38,10 @@ namespace CLI
             {
                 foreach(var a in gameState.Actions)
                 {
-                    Console.WriteLine(a.ToString());
+                    Console.WriteLine(JsonConvert.SerializeObject(a, Formatting.Indented, new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    }));
                 }
                 action = gameState.Actions[Int32.Parse(Console.ReadLine())];
                 gameState = resolver.Resolve(action).Result;

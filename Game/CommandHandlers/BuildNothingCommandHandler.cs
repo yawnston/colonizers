@@ -26,7 +26,7 @@ namespace Game.CommandHandlers
         public Task<GameState> Handle(BuildNothingCommand request, CancellationToken cancellationToken)
         {
             var board = request.BoardState;
-            if (board.GamePhase != BoardState.Phase.ColonistPick) throw new InvalidOperationException(request.ToString());
+            if (board.GamePhase != BoardState.Phase.Build) throw new InvalidOperationException(request.ToString());
 
             if (board.PlayerTurn == board.Players.Count)
             {

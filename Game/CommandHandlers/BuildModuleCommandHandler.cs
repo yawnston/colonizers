@@ -25,7 +25,7 @@ namespace Game.CommandHandlers
         public Task<GameState> Handle(BuildModuleCommand request, CancellationToken cancellationToken)
         {
             var board = request.BoardState;
-            if (board.GamePhase != BoardState.Phase.ColonistPick) throw new InvalidOperationException(request.ToString());
+            if (board.GamePhase != BoardState.Phase.Build) throw new InvalidOperationException(request.ToString());
 
             var player = board.Players[board.PlayerTurn - 1];
             if (player.Omnium < request.Module.BuildCost) throw new InvalidOperationException($"Not enough omnium to build module: {request}");
