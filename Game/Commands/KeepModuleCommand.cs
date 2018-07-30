@@ -12,5 +12,13 @@ namespace Game.Commands
         [JsonIgnore]
         public BoardState BoardState { get; set; }
         public Module Module { get; set; }
+
+        public override string ToString()
+        {
+            return $@"Keep module: 
+    Cost: {Module.BuildCost}
+    Value: {Module.VictoryValue}
+    Type: {Module.Type.ToString()}";
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Game
         // Colonists that are available for picking
         public ICollection<Colonist> AvailableColonists { get; set; } = new List<Colonist>();
 
-        public ICollection<Module> Deck { get; set; } = new List<Module>();
+        public IList<Module> Deck { get; set; } = new List<Module>();
 
         // Holds modules between card draw and discard
         public IList<Module> TempStorage { get; set; } = new List<Module>();

@@ -11,7 +11,7 @@ namespace Game
         public static BoardState Standard()
         {
             var board = new BoardState();
-            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo());
+            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo { ID = i });
 
             board.PlayableColonists.Add(new Ecologist());
             board.PlayableColonists.Add(new General());
@@ -38,13 +38,15 @@ namespace Game
             for (int i = 0; i < 3; ++i) board.Deck.Add(new Module { BuildCost = 5, VictoryValue = 5, Type = Module.Color.Red });
             for (int i = 0; i < 2; ++i) board.Deck.Add(new Module { BuildCost = 7, VictoryValue = 7, Type = Module.Color.Red });
 
+            board.Deck.Shuffle();
+
             return board;
         }
 
         public static BoardState BasicFair()
         {
             var board = new BoardState();
-            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo());
+            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo { ID = i });
 
             board.PlayableColonists.Add(new Ecologist());
             board.PlayableColonists.Add(new General());
@@ -70,13 +72,15 @@ namespace Game
             for (int i = 0; i < 2; ++i) board.Deck.Add(new Module { BuildCost = 6, VictoryValue = 6, Type = Module.Color.Red });
             for (int i = 0; i < 1; ++i) board.Deck.Add(new Module { BuildCost = 8, VictoryValue = 8, Type = Module.Color.Red });
 
+            board.Deck.Shuffle();
+
             return board;
         }
 
         public static BoardState BasicGreenAdvantage()
         {
             var board = new BoardState();
-            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo());
+            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo { ID = i });
 
             board.PlayableColonists.Add(new Ecologist());
             board.PlayableColonists.Add(new General());
@@ -102,13 +106,15 @@ namespace Game
             for (int i = 0; i < 2; ++i) board.Deck.Add(new Module { BuildCost = 6, VictoryValue = 6, Type = Module.Color.Red });
             for (int i = 0; i < 1; ++i) board.Deck.Add(new Module { BuildCost = 8, VictoryValue = 8, Type = Module.Color.Red });
 
+            board.Deck.Shuffle();
+
             return board;
         }
 
         public static BoardState BasicGreenBlueAdvantage()
         {
             var board = new BoardState();
-            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo());
+            for (int i = 0; i < 4; ++i) board.Players.Add(new PlayerInfo { ID = i });
 
             board.PlayableColonists.Add(new Ecologist());
             board.PlayableColonists.Add(new General());
@@ -133,6 +139,8 @@ namespace Game
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 4, VictoryValue = 4, Type = Module.Color.Red });
             for (int i = 0; i < 2; ++i) board.Deck.Add(new Module { BuildCost = 6, VictoryValue = 6, Type = Module.Color.Red });
             for (int i = 0; i < 1; ++i) board.Deck.Add(new Module { BuildCost = 8, VictoryValue = 8, Type = Module.Color.Red });
+
+            board.Deck.Shuffle();
 
             return board;
         }

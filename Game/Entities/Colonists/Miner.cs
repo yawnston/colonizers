@@ -23,5 +23,10 @@ namespace Game.Entities.Colonists
             foreach (var m in (from module in boardState.Players[boardState.PlayerTurn - 1].Colony where module.Type == Module.Color.Blue select module)) extraOmnium++;
             boardState.Players[boardState.PlayerTurn - 1].Omnium += extraOmnium;
         }
+
+        public override string ToString()
+        {
+            return "Miner";
+        }
     }
 }

@@ -13,5 +13,10 @@ namespace Game.Entities
         public int BuildCost { get; set; }
 
         public int VictoryValue { get; set; }
+
+        public override string ToString()
+        {
+            return $"Cost: {BuildCost}, Value: {VictoryValue}, Type: {Type.ToString()}";
+        }
     }
 }

@@ -23,5 +23,10 @@ namespace Game.Entities.Colonists
         {
             // No passive ability
         }
+
+        public override string ToString()
+        {
+            return "Spy";
+        }
     }
 }

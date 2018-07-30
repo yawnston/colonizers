@@ -27,5 +27,10 @@ namespace Game.Entities.Colonists
             boardState.Deck.Remove(module2);
             boardState.Players[boardState.PlayerTurn - 1].Hand.Add(module2);
         }
+
+        public override string ToString()
+        {
+            return "Visionary";
+        }
     }
 }
