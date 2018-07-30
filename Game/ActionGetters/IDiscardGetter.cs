@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Game.ActionGetters
 {
-    interface IDiscardGetter : IGetter
+    public interface IDiscardGetter : IGetter
     {
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Game.ActionGetters
 {
-    interface IPowerGetter : IGetter
+    public interface IPowerGetter : IGetter
     {
     }
 }

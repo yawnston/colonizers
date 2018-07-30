@@ -15,8 +15,21 @@ namespace Game
         // Colonists that are available for picking
         public ICollection<Colonist> AvailableColonists { get; set; }
 
+        public ICollection<Module> Deck { get; set; }
+
+        // Holds modules between card draw and discard
+        public IList<Module> TempStorage { get; set; }
+
         public int PlayerTurn { get; set; }
 
         public Phase GamePhase { get; set; }
+
+        public void NewRound()
+        {
+            AvailableColonists = new List<Colonist>();
+            foreach (var c in PlayableColonists) AvailableColonists.Add(c);
+            PlayerTurn = 1;
+            GamePhase = Phase.ColonistPick;
+        }
     }
 }

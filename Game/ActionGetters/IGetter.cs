@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Game.ActionGetters
 {
-    interface IGetter
+    public interface IGetter
     {
         Task<GameState> Process(BoardState boardState);
     }

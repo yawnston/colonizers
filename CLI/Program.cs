@@ -1,4 +1,8 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using MediatR;
+using System.Reflection;
+using Game.ActionGetters;
 
 namespace CLI
 {
@@ -6,7 +10,15 @@ namespace CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var serviceProvider = new ServiceCollection()
+            .AddMediatR(typeof(Program).GetTypeInfo().Assembly)
+            .AddScoped<IMediator, Mediator>()
+            .AddScoped<IColonistPickGetter, ColonistPickGetter>()
+            .AddScoped<IDrawGetter, DrawGetter>()
+            .AddScoped<IDiscardGetter, DiscardGetter>()
+            .AddScoped<IPowerGetter, >()
+            .AddScoped<IBuildGetter, >()
+            .BuildServiceProvider();
         }
     }
 }
