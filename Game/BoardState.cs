@@ -26,39 +26,6 @@ namespace Game
 
         public Phase GamePhase { get; set; } = Phase.ColonistPick;
 
-        public BoardState InitRound()
-        {
-            // TODO
-            for (int i = 0; i < 4; ++i) Players.Add(new PlayerInfo());
-
-            PlayableColonists.Add(new Ecologist());
-            PlayableColonists.Add(new General());
-            PlayableColonists.Add(new Miner());
-            PlayableColonists.Add(new Opportunist());
-            PlayableColonists.Add(new Spy());
-            PlayableColonists.Add(new Visionary());
-
-            foreach (var c in PlayableColonists) AvailableColonists.Add(c);
-
-            for (int i = 0; i < 4; ++i) Deck.Add(new Module { BuildCost = 2, VictoryValue = 2, Type = Module.Color.Green });
-            for (int i = 0; i < 4; ++i) Deck.Add(new Module { BuildCost = 4, VictoryValue = 4, Type = Module.Color.Green });
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 6, VictoryValue = 7, Type = Module.Color.Green });
-            for (int i = 0; i < 1; ++i) Deck.Add(new Module { BuildCost = 8, VictoryValue = 10, Type = Module.Color.Green });
-
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 2, VictoryValue = 2, Type = Module.Color.Blue });
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 3, VictoryValue = 3, Type = Module.Color.Blue });
-            for (int i = 0; i < 4; ++i) Deck.Add(new Module { BuildCost = 4, VictoryValue = 4, Type = Module.Color.Blue });
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 8, VictoryValue = 9, Type = Module.Color.Blue });
-
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 1, VictoryValue = 2, Type = Module.Color.Red });
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 2, VictoryValue = 2, Type = Module.Color.Red });
-            for (int i = 0; i < 4; ++i) Deck.Add(new Module { BuildCost = 3, VictoryValue = 3, Type = Module.Color.Red });
-            for (int i = 0; i < 3; ++i) Deck.Add(new Module { BuildCost = 5, VictoryValue = 5, Type = Module.Color.Red });
-            for (int i = 0; i < 2; ++i) Deck.Add(new Module { BuildCost = 7, VictoryValue = 7, Type = Module.Color.Red });
-
-            return this;
-        }
-
         public bool NewRound()
         {
             AvailableColonists = new List<Colonist>();

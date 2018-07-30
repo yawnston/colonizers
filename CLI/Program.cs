@@ -30,9 +30,8 @@ namespace CLI
             var resolver = new Resolver(mediator);
 
             GameState gameState; IRequest<GameState> action;
-            var boardState = new BoardState().InitRound();
-            var firstGetter = serviceProvider.GetService<IColonistPickGetter>();
-            gameState = firstGetter.Process(boardState).Result;
+            var boardState = BoardFactory.Standard();
+            gameState = GameFactory.NewGame(boardState, serviceProvider);
 
             while (true)
             {
