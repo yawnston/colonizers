@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Game.Commands
 {
-    class DoNothingCommand : IRequest<GameState>
+    class BuildNothingCommand : IRequest<GameState>
     {
         public GameState GameState { get; set; }
     }

@@ -5,11 +5,13 @@ using System.Text;
 
 namespace Game
 {
-    class GameState
+    public class GameState
     {
         public bool GameOver { get; set; } = false;
+        
+        public GameEndInfo GameEndInfo { get; set; }
         public BoardState BoardState { get; set; }
         // Things the player can do on their turn
-        public ICollection<IRequest> Actions { get; set; }
+        public ICollection<IRequest<GameState>> Actions { get; set; }
     }
 }
