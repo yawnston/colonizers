@@ -24,6 +24,7 @@ namespace Game.CommandHandlers
         {
             var board = request.BoardState;
             if (board.GamePhase != BoardState.Phase.ColonistPick) throw new InvalidOperationException(request.ToString());
+
             board.Players[board.PlayerTurn - 1].Colonist = request.Colonist;
             board.AvailableColonists.Remove(request.Colonist);
 

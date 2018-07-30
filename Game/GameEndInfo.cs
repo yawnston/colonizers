@@ -6,5 +6,6 @@ namespace Game
 {
     public class GameEndInfo
     {
+        public IList<PlayerEndInfo> Players { get; set; }
     }
 }

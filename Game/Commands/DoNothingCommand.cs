@@ -7,6 +7,6 @@ namespace Game.Commands
 {
     class DoNothingCommand : IRequest<GameState>
     {
-        public GameState GameState { get; set; }
+        public BoardState BoardState { get; set; }
     }
 }

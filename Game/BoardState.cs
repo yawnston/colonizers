@@ -1,6 +1,7 @@
 ﻿using Game.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Game
@@ -24,12 +25,15 @@ namespace Game
 
         public Phase GamePhase { get; set; }
 
-        public void NewRound()
+        public bool NewRound()
         {
             AvailableColonists = new List<Colonist>();
             foreach (var c in PlayableColonists) AvailableColonists.Add(c);
             PlayerTurn = 1;
             GamePhase = Phase.ColonistPick;
+
+            bool anyPlayerFinished = (from p in Players where p.Colony.Count == 8 select p.Colony.Count).Any();
+            return anyPlayerFinished;
         }
     }
 }
