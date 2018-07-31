@@ -1,5 +1,5 @@
 import json
 
 def processState(jsonString):
-    print("Hello from a function")
+    print json.loads(jsonString)
     return 0
