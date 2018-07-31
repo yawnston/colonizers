@@ -5,7 +5,7 @@ def processState(jsonString):
     gameState = json.loads(jsonString) # convert json string to dictionary
 
     # DEBUGGING PRINT
-    print(json.dumps(gameState, indent=4))
+    #print(json.dumps(gameState, indent=4))
 
     phase = gameState["Board"]["GamePhase"]
     
@@ -28,7 +28,14 @@ def processColonistPick(gameState):
     return randint(0, actionCount - 1)
 
 def processDraw(gameState):
-    # randomly decide if we take omnium or draw modules
+    # if at least 3 cards are in hand, take omnium
+    if len(gameState["Board"]["CurrentPlayer"]["Hand"]) >= 3:
+        for index, a in enumerate(gameState["Actions"]):
+            if a["Type"] == "TakeOmnium":
+                break
+        return index
+
+    # otherwise randomly decide if we take omnium or draw modules
     return randint(0, 1)
 
 def processDiscard(gameState):
