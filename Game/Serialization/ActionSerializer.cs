@@ -8,13 +8,13 @@ namespace Game.Serialization
 {
     public static class ActionSerializer
     {
-        public static string Serialize(IRequest<GameState> action)
+        public static JObject Serialize(IRequest<GameState> action)
         {
             var result = new JObject();
 
 
 
-            return result.ToString();
+            return result;
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Game.Serialization
 {
     public static class BoardStateJsonSerializer
     {
-        public static string Serialize(BoardState boardState)
+        public static JObject Serialize(BoardState boardState)
         {
             var result = new JObject();
 
-            result["CurrentPlayer"] = new JValue(SerializeCurrentPlayer(boardState.Players[boardState.PlayerTurn - 1]));
+            result["CurrentPlayer"] = SerializeCurrentPlayer(boardState.Players[boardState.PlayerTurn - 1]);
             var otherPlayers = new JArray();
             foreach(var p in (from pl in boardState.Players where pl.ID + 1 != boardState.PlayerTurn select pl))
             {
@@ -32,10 +32,10 @@ namespace Game.Serialization
             result["PlayerTurn"] = new JValue(boardState.PlayerTurn);
             result["GamePhase"] = new JValue(boardState.GamePhase.ToString());
 
-            return result.ToString();
+            return result;
         }
 
-        private static string SerializeCurrentPlayer(PlayerInfo playerInfo)
+        private static JObject SerializeCurrentPlayer(PlayerInfo playerInfo)
         {
             var player = new JObject();
             player["Colonist"] = new JValue(playerInfo.Colonist?.ToString() ?? "");
@@ -53,10 +53,10 @@ namespace Game.Serialization
             }
             player["Colony"] = colony;
             player["Number"] = playerInfo.ID;
-            return player.ToString();
+            return player;
         }
 
-        private static string SerializeOtherPlayer(PlayerInfo playerInfo)
+        private static JObject SerializeOtherPlayer(PlayerInfo playerInfo)
         {
             var player = new JObject();
             player["Colonist"] = new JValue(playerInfo.Colonist?.ToString() ?? "");
@@ -69,7 +69,7 @@ namespace Game.Serialization
             }
             player["Colony"] = colony;
             player["Number"] = playerInfo.ID;
-            return player.ToString();
+            return player;
         }
     }
 }
