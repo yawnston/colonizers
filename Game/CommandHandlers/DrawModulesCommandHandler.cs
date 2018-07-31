@@ -27,6 +27,8 @@ namespace Game.CommandHandlers
 
             board.Players[board.PlayerTurn - 1].Colonist.PerformClassDrawAction(board);
 
+            if (board.Deck.Count < 2) throw new DeckEmptyException();
+
             board.GamePhase = BoardState.Phase.Discard;
             board.TempStorage = new List<Module>();
             var module1 = board.Deck.First();
