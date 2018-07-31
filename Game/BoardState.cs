@@ -13,9 +13,9 @@ namespace Game
 
         public IList<PlayerInfo> Players { get; set; } = new List<PlayerInfo>();
         // Colonists that are playable this game
-        public ICollection<Colonist> PlayableColonists { get; set; } = new List<Colonist>();
+        public IList<Colonist> PlayableColonists { get; set; } = new List<Colonist>();
         // Colonists that are available for picking
-        public ICollection<Colonist> AvailableColonists { get; set; } = new List<Colonist>();
+        public IList<Colonist> AvailableColonists { get; set; } = new List<Colonist>();
 
         public IList<Module> Deck { get; set; } = new List<Module>();
 
@@ -30,6 +30,9 @@ namespace Game
         {
             AvailableColonists = new List<Colonist>();
             foreach (var c in PlayableColonists) AvailableColonists.Add(c);
+            AvailableColonists.Shuffle();
+            AvailableColonists.RemoveAt(0); // Remove a random colonist at the start of each round
+
             PlayerTurn = 1;
             GamePhase = Phase.ColonistPick;
 

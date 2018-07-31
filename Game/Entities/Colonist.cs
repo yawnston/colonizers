@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Game.Commands;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,6 @@ namespace Game.Entities
         public abstract void PerformClassDrawAction(BoardState boardState);
 
         // Get all actions this character can execute in the power phase
-        public abstract IList<IRequest<GameState>> GetActions(BoardState boardState);
+        public abstract IList<IGameAction> GetActions(BoardState boardState);
     }
 }

@@ -18,7 +18,7 @@ namespace Game.ActionGetters
         {
             var state = new GameState();
             state.BoardState = boardState;
-            state.Actions = new List<IRequest<GameState>>();
+            state.Actions = new List<IGameAction>();
             foreach (var m in boardState.Players[boardState.PlayerTurn - 1].Hand)
             {
                 if (m.BuildCost <= boardState.Players[boardState.PlayerTurn - 1].Omnium)

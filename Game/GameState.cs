@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Game.Commands;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,6 @@ namespace Game
         public GameEndInfo GameEndInfo { get; set; }
         public BoardState BoardState { get; set; }
         // Things the player can do on their turn
-        public IList<IRequest<GameState>> Actions { get; set; }
+        public IList<IGameAction> Actions { get; set; }
     }
 }

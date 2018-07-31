@@ -13,5 +13,10 @@ namespace Game
             var firstGetter = serviceProvider.GetService<IColonistPickGetter>();
             return firstGetter.Process(boardState).Result;
         }
+
+        public static GameState NewGame(BoardState boardState, object serviceProvider)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
