@@ -17,13 +17,11 @@ namespace Game.Serialization
             var actions = new JArray();
             foreach(var a in gameState.Actions)
             {
-                actions.Add(ActionSerializer.Serialize(a));
+                actions.Add(a.Serialize());
             }
             result["Actions"] = actions;
 
             return result.ToString();
         }
     }
-
-
 }

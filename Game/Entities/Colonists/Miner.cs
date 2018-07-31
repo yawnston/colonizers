@@ -9,10 +9,10 @@ namespace Game.Entities.Colonists
 {
     class Miner : Colonist
     {
-        public override IList<IRequest<GameState>> GetActions(BoardState boardState)
+        public override IList<IGameAction> GetActions(BoardState boardState)
         {
             // No special ability
-            IList<IRequest<GameState>> actions = new List<IRequest<GameState>>();
+            IList<IGameAction> actions = new List<IGameAction>();
             actions.Add(new DoNothingCommand { BoardState = boardState });
             return actions;
         }

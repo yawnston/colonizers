@@ -18,7 +18,7 @@ namespace Game.ActionGetters
         {
             var state = new GameState();
             state.BoardState = boardState;
-            state.Actions = new List<IRequest<GameState>>();
+            state.Actions = new List<IGameAction>();
             foreach(var c in boardState.AvailableColonists)
             {
                 state.Actions.Add(new ColonistPickCommand { BoardState = boardState, Colonist = c});

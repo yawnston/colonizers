@@ -18,7 +18,7 @@ namespace Game.ActionGetters
         {
             var state = new GameState();
             state.BoardState = boardState;
-            state.Actions = new List<IRequest<GameState>>();
+            state.Actions = new List<IGameAction>();
             state.Actions.Add(new KeepModuleCommand { BoardState = boardState, Module = boardState.TempStorage[0] });
             state.Actions.Add(new KeepModuleCommand { BoardState = boardState, Module = boardState.TempStorage[1] });
             return state;

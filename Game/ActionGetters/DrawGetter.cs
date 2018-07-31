@@ -19,7 +19,7 @@ namespace Game.ActionGetters
         {
             var state = new GameState();
             state.BoardState = boardState;
-            state.Actions = new List<IRequest<GameState>>();
+            state.Actions = new List<IGameAction>();
             state.Actions.Add(new TakeOmniumCommand { BoardState = boardState });
             state.Actions.Add(new DrawModulesCommand { BoardState = boardState });
             return state;
