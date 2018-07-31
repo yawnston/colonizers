@@ -20,7 +20,10 @@ namespace Game
             board.PlayableColonists.Add(new Spy());
             board.PlayableColonists.Add(new Visionary());
 
+            board.PlayableColonists.Shuffle();
+
             foreach (var c in board.PlayableColonists) board.AvailableColonists.Add(c);
+            board.AvailableColonists.RemoveAt(0);
 
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 2, VictoryValue = 2, Type = Module.Color.Green });
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 4, VictoryValue = 4, Type = Module.Color.Green });
@@ -55,7 +58,10 @@ namespace Game
             board.PlayableColonists.Add(new Spy());
             board.PlayableColonists.Add(new Visionary());
 
+            board.PlayableColonists.Shuffle();
+
             foreach (var c in board.PlayableColonists) board.AvailableColonists.Add(c);
+            board.AvailableColonists.RemoveAt(0);
 
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 2, VictoryValue = 2, Type = Module.Color.Green });
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 4, VictoryValue = 4, Type = Module.Color.Green });
@@ -89,7 +95,10 @@ namespace Game
             board.PlayableColonists.Add(new Spy());
             board.PlayableColonists.Add(new Visionary());
 
+            board.PlayableColonists.Shuffle();
+
             foreach (var c in board.PlayableColonists) board.AvailableColonists.Add(c);
+            board.AvailableColonists.RemoveAt(0);
 
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 2, VictoryValue = 3, Type = Module.Color.Green });
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 4, VictoryValue = 5, Type = Module.Color.Green });
@@ -123,7 +132,10 @@ namespace Game
             board.PlayableColonists.Add(new Spy());
             board.PlayableColonists.Add(new Visionary());
 
+            board.PlayableColonists.Shuffle();
+
             foreach (var c in board.PlayableColonists) board.AvailableColonists.Add(c);
+            board.AvailableColonists.RemoveAt(0);
 
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 2, VictoryValue = 3, Type = Module.Color.Green });
             for (int i = 0; i < 4; ++i) board.Deck.Add(new Module { BuildCost = 4, VictoryValue = 5, Type = Module.Color.Green });

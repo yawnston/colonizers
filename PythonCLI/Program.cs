@@ -48,7 +48,7 @@ namespace PythonCLI
 
             var engine = Python.CreateEngine();
             var paths = engine.GetSearchPaths();
-            paths.Add(@"C:\Python27\Lib");
+            paths.Add(@"C:\Python27\Lib"); // FIXME: a better solution for this monstrosity
             engine.SetSearchPaths(paths);
 
             IList<CompiledCode> scripts;

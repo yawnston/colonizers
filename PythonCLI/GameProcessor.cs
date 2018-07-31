@@ -28,13 +28,16 @@ namespace PythonCLI
 
             while (true)
             {
+                if (gameState.GameOver) break;
+
                 currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
 
                 scope = engine.CreateScope();
                 scripts[currentPlayer.ID].Execute(scope);
                 Func<string, int> processState = scope.GetVariable<Func<string, int>>("processState");
 
-                Console.WriteLine(processState(GameStateJsonSerializer.Serialize(gameState)));
+                int result = processState(GameStateJsonSerializer.Serialize(gameState)); // Call the python script to let it choose what to do
+                gameState = resolver.Resolve(gameState.Actions[result]).Result;
 
                 Console.ReadLine();
             }
@@ -43,22 +46,8 @@ namespace PythonCLI
             Console.WriteLine();
             foreach (var p in gameState.GameEndInfo.Players.OrderBy(pi => pi.VictoryPoints))
             {
-
                 Console.WriteLine($"Player {p.Player.ID}: {p.VictoryPoints} points");
             }
-
-            /*
-            var engine = Python.CreateEngine();
-            var theScript = @"def PrintMessage():
-    print 'This is a message!'
-
-PrintMessage()
-";
-            dynamic scope = engine.CreateScope();
-            scope.Add = new Func<int, int, int>((x, y) => x + y);
-            engine.Execute(theScript);
-            engine.Execute(@"print Add(2, 3)", scope);
-            */
         }
     }
 }
