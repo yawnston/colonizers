@@ -15,7 +15,7 @@ namespace PythonCLI
             var scriptReadTasks = new List<Task<string>>(4);
             for (int i = 0; i < 4; ++i)
             {
-                scriptReadTasks[i] = File.ReadAllTextAsync(args[i]);
+                scriptReadTasks.Add(File.ReadAllTextAsync(args[i]));
             }
             return scriptReadTasks;
         }
@@ -31,7 +31,7 @@ namespace PythonCLI
             var scripts = new List<string>(tasks.Count);
             for (int i = 0; i < tasks.Count; i++)
             {
-                scripts[i] = tasks[i].Result;
+                scripts.Add(tasks[i].Result);
             }
             return scripts;
         }
@@ -42,7 +42,7 @@ namespace PythonCLI
             for (int i = 0; i < scripts.Count; i++)
             {
                 var source = engine.CreateScriptSourceFromString(scripts[i]);
-                compiledScripts[i] = source.Compile();
+                compiledScripts.Add(source.Compile());
             }
             return compiledScripts;
         }

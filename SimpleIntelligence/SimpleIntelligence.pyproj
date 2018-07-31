@@ -2,14 +2,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>ef67c131-9548-46bf-a4a6-700572fcc639</ProjectGuid>
+    <ProjectGuid>ef27c924-2fa8-4a14-831c-cbfe030b2760</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>SimpleIntelligence.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
-    <InterpreterId>IronPython|2.7-32</InterpreterId>
-    <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
     <OutputPath>.</OutputPath>
     <Name>SimpleIntelligence</Name>
     <RootNamespace>SimpleIntelligence</RootNamespace>
@@ -23,10 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="SimpleIntelligence.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="IronPython|2.7-32" />
+    <Compile Include="SimpleIntelligence.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

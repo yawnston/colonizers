@@ -9,7 +9,7 @@ namespace Game
     {
         public static string Serialize(GameState gameState)
         {
-
+            return "test";
         }
     }
 }
