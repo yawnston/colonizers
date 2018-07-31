@@ -40,7 +40,6 @@ namespace PythonCLI
                 int result = processState(GameStateJsonSerializer.Serialize(gameState)); // Call the python script to let it choose what to do
                 if (result < 0 || result >= gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
                 gameState = resolver.Resolve(gameState.Actions[result]).Result;
-
                 Console.ReadLine();
             }
 

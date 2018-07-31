@@ -19,7 +19,7 @@ namespace Game.Commands
             var result = new JObject();
 
             result["Type"] = "BuildModule";
-            result["Module"] = new JValue(Module);
+            result["Module"] = JObject.FromObject(Module);
 
             return result;
         }
