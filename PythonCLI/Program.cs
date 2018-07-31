@@ -47,6 +47,10 @@ namespace PythonCLI
             var gameState = GameFactory.NewGame(boardState, serviceProvider);
 
             var engine = Python.CreateEngine();
+            var paths = engine.GetSearchPaths();
+            paths.Add(@"C:\Python27\Lib");
+            engine.SetSearchPaths(paths);
+
             IList<CompiledCode> scripts;
             try
             {
