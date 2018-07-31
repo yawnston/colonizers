@@ -43,13 +43,13 @@ namespace Game.Serialization
             var hand = new JArray();
             foreach (var m in playerInfo.Hand)
             {
-                hand.Add(m); // FIXME?
+                hand.Add(JObject.FromObject(m)); // FIXME?
             }
             player["Hand"] = hand;
             var colony = new JArray();
             foreach (var m in playerInfo.Colony)
             {
-                colony.Add(m); // FIXME?
+                colony.Add(JObject.FromObject(m)); // FIXME?
             }
             player["Colony"] = colony;
             player["Number"] = playerInfo.ID;
@@ -65,7 +65,7 @@ namespace Game.Serialization
             var colony = new JArray();
             foreach(var m in playerInfo.Colony)
             {
-                colony.Add(m); // FIXME?
+                colony.Add(JObject.FromObject(m)); // FIXME?
             }
             player["Colony"] = colony;
             player["Number"] = playerInfo.ID;

@@ -28,8 +28,8 @@ def processColonistPick(gameState):
     return randint(0, actionCount - 1)
 
 def processDraw(gameState):
-    # if at least 3 cards are in hand, take omnium
-    if len(gameState["Board"]["CurrentPlayer"]["Hand"]) >= 3:
+    # if at least 1 cards are in hand, take omnium
+    if len(gameState["Board"]["CurrentPlayer"]["Hand"]) >= 1:
         for index, a in enumerate(gameState["Actions"]):
             if a["Type"] == "TakeOmnium":
                 break
@@ -48,14 +48,14 @@ def processPower(gameState):
     return randint(0, actionCount - 1)
 
 def processBuild(gameState):
-    # attempt to play the highest value module we can afford
+    # attempt to play the lowest value module we can afford
     actionCount = len(gameState["Actions"])
     if actionCount == 1: # we cannot build anything -> we can't choose
         return 0
     #we know we can build something -> remove the BuildNothing action before picking
     realBuildActions = [i for i in gameState["Actions"] if i["Type"] != "BuildNothing"]
 
-    bestBuilding = max(action["Module"]["VictoryValue"] for action in realBuildActions)
+    bestBuilding = min(action["Module"]["VictoryValue"] for action in realBuildActions)
 
     for index, a in enumerate(gameState["Actions"]):
         if a["Module"]["VictoryValue"] == bestBuilding:
