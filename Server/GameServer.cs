@@ -54,10 +54,9 @@ namespace Server
                 var boardState = BoardFactory.Standard();
                 var gameState = GameFactory.NewGame(boardState, serviceProvider);
 
-                RunGame(gameState);
-
+                RunGame(gameState, clSock);
+                Console.WriteLine("RunGame ended");
                 clSock.Shutdown(SocketShutdown.Both);  // close sockets
-                clSock.Close();
             }
             catch (Exception e)
             {
@@ -65,7 +64,7 @@ namespace Server
             }
         }
 
-        private void RunGame(GameState beginningState)
+        private void RunGame(GameState beginningState, Socket clSock)
         {
             GameState gameState = beginningState;
             PlayerInfo currentPlayer;
@@ -76,7 +75,7 @@ namespace Server
 
                 currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
 
-                int result = GetClientAction(GameStateJsonSerializer.Serialize(gameState)); // Call the python script to let it choose what to do
+                int result = GetClientAction(GameStateJsonSerializer.Serialize(gameState), clSock); // Call the python script to let it choose what to do
                 if (result < 0 || result >= gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
                 gameState = resolver.Resolve(gameState.Actions[result]).Result;
             }
@@ -84,23 +83,39 @@ namespace Server
             SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState));
         }
 
-        private int GetClientAction(string gameStateJson)
+        private int GetClientAction(string gameStateJson, Socket clSock)
         {
             var bytes = Encoding.UTF8.GetBytes(gameStateJson);
             var jsonLength = bytes.Length;
-            s.Send(BitConverter.GetBytes(jsonLength)); // send the amount of bytes the json string takes
+            var lengthBytes = BitConverter.GetBytes(jsonLength);
+
+            Console.WriteLine($"Sending {jsonLength} as length info with message length {lengthBytes.Length}");
+            int count = 0;
+            while (count < lengthBytes.Length) // if you are brave you can do it all in the condition.
+            {
+                Console.WriteLine(count);
+                count += clSock.Send(
+                    lengthBytes,
+                    count,
+                    lengthBytes.Length - count, // This can be anything as long as it doesn't overflow the buffer, bytes.
+                    SocketFlags.None);
+            }
+
             int sent = 0;
             while (sent < bytes.Length) // if you are brave you can do it all in the condition.
             {
-                sent += s.Send(
+                sent += clSock.Send(
                     bytes,
                     sent,
                     bytes.Length - sent, // This can be anything as long as it doesn't overflow the buffer, bytes.
                     SocketFlags.None);
             }
+            Console.WriteLine("Sent json string");
 
             var responseBytes = new Byte[4];
-            s.Receive(responseBytes);
+            Console.WriteLine("Waiting for response 4 bytes");
+            clSock.Receive(responseBytes);
+            Console.WriteLine($"Received {BitConverter.ToInt32(responseBytes)} as a response");
             return BitConverter.ToInt32(responseBytes);
         }
 

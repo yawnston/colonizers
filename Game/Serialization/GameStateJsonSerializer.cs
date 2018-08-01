@@ -27,6 +27,7 @@ namespace Game.Serialization
         public static string SerializeGameOver(GameState gameState)
         {
             // TODO
+            return "placeholder";
         }
     }
 }

@@ -8,3 +8,4 @@ C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\Sample
 C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.AssemblyInfo.cs
 C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.dll
 C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.pdb
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.csprojAssemblyReference.cache
