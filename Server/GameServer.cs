@@ -55,12 +55,16 @@ namespace Server
                 var gameState = GameFactory.NewGame(boardState, serviceProvider);
 
                 RunGame(gameState, clSock);
-                Console.WriteLine("RunGame ended");
-                clSock.Shutdown(SocketShutdown.Both);  // close sockets
+
+                clSock.Shutdown(SocketShutdown.Both); // close sockets
             }
             catch (Exception e)
             {
-                // TODO
+                Console.WriteLine(e); // log the exception to the console
+            }
+            finally
+            {
+                clSock.Close();
             }
         }
 
@@ -88,34 +92,29 @@ namespace Server
             var bytes = Encoding.UTF8.GetBytes(gameStateJson);
             var jsonLength = bytes.Length;
             var lengthBytes = BitConverter.GetBytes(jsonLength);
-
-            Console.WriteLine($"Sending {jsonLength} as length info with message length {lengthBytes.Length}");
+            
             int count = 0;
-            while (count < lengthBytes.Length) // if you are brave you can do it all in the condition.
+            while (count < lengthBytes.Length)
             {
-                Console.WriteLine(count);
                 count += clSock.Send(
                     lengthBytes,
                     count,
-                    lengthBytes.Length - count, // This can be anything as long as it doesn't overflow the buffer, bytes.
+                    lengthBytes.Length - count,
                     SocketFlags.None);
             }
 
             int sent = 0;
-            while (sent < bytes.Length) // if you are brave you can do it all in the condition.
+            while (sent < bytes.Length)
             {
                 sent += clSock.Send(
                     bytes,
                     sent,
-                    bytes.Length - sent, // This can be anything as long as it doesn't overflow the buffer, bytes.
+                    bytes.Length - sent,
                     SocketFlags.None);
             }
-            Console.WriteLine("Sent json string");
 
             var responseBytes = new Byte[4];
-            Console.WriteLine("Waiting for response 4 bytes");
             clSock.Receive(responseBytes);
-            Console.WriteLine($"Received {BitConverter.ToInt32(responseBytes)} as a response");
             return BitConverter.ToInt32(responseBytes);
         }
 

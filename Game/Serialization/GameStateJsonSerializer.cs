@@ -21,12 +21,13 @@ namespace Game.Serialization
             }
             result["Actions"] = actions;
 
+            result["GameOver"] = false;
+
             return result.ToString();
         }
 
         public static string SerializeGameOver(GameState gameState)
         {
-            // TODO
             return "placeholder";
         }
     }

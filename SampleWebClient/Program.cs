@@ -66,6 +66,8 @@ namespace SampleWebClient
                     var responseBytes = BitConverter.GetBytes(response);
                     s.Send(responseBytes);
                 }
+                
+                // TODO: end game
             }
             catch (SocketException)
             {
