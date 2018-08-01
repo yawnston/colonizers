@@ -36,7 +36,7 @@ namespace Game
             PlayerTurn = 1;
             GamePhase = Phase.ColonistPick;
 
-            bool anyPlayerFinished = (from p in Players where p.Colony.Count == 2 select p.Colony.Count).Any();
+            bool anyPlayerFinished = (from p in Players where p.Colony.Count == 8 select p.Colony.Count).Any();
             return anyPlayerFinished;
         }
     }

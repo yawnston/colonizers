@@ -2,7 +2,7 @@
   "profiles": {
     "PythonCLI": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\danie\\Desktop\\Colonizers\\SimpleIntelligence\\SimpleIntelligence.py C:\\Users\\danie\\Desktop\\Colonizers\\SimpleIntelligence\\SimpleIntelligence.py C:\\Users\\danie\\Desktop\\Colonizers\\SimpleIntelligence\\SimpleIntelligence.py C:\\Users\\danie\\Desktop\\Colonizers\\SimpleIntelligence\\SimpleIntelligence.py"
+      "commandLineArgs": "C:\\Users\\danie\\Desktop\\Colonizers\\SimpleIntelligence\\SimpleIntelligence.py C:\\Users\\danie\\Desktop\\Colonizers\\GreedySimpleIntelligence\\GreedySimpleIntelligence.py C:\\Users\\danie\\Desktop\\Colonizers\\SimpleIntelligence\\SimpleIntelligence.py C:\\Users\\danie\\Desktop\\Colonizers\\GreedySimpleIntelligence\\GreedySimpleIntelligence.py C:\\Python27\\Lib"
     }
   }
 }

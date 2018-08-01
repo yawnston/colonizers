@@ -20,9 +20,9 @@ namespace PythonCLI
     {
         static void Main(string[] args)
         {
-            if (args.Length != 4)
+            if (args.Length != 4 && args.Length != 5)
             {
-                Console.WriteLine("Invalid argument count. Please invoke with 4 arguments containing the python scripts.");
+                Console.WriteLine("Invalid argument count. Please invoke with 4 arguments containing the python scripts and and optional 5th argument with the path to Python standard libraries for IronPython to use.");
                 return;
             }
 
@@ -47,9 +47,12 @@ namespace PythonCLI
             var gameState = GameFactory.NewGame(boardState, serviceProvider);
 
             var engine = Python.CreateEngine();
-            var paths = engine.GetSearchPaths();
-            paths.Add(@"C:\Python27\Lib"); // FIXME: a better solution for this monstrosity
-            engine.SetSearchPaths(paths);
+            if (args.Length == 5)
+            {
+                var paths = engine.GetSearchPaths();
+                paths.Add(args[4]);
+                engine.SetSearchPaths(paths);
+            }
 
             IList<CompiledCode> scripts;
             try
