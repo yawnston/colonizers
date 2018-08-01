@@ -7,6 +7,7 @@ using Game;
 using Newtonsoft.Json;
 using Game.Entities;
 using System.Linq;
+using Game.Commands;
 
 namespace CLI
 {
@@ -31,7 +32,7 @@ namespace CLI
             var mediator = serviceProvider.GetService<IMediator>();
             var resolver = new Resolver(mediator);
 
-            GameState gameState; IRequest<GameState> action; PlayerInfo currentPlayer;
+            GameState gameState; IGameAction action; PlayerInfo currentPlayer;
             var boardState = BoardFactory.Standard();
             gameState = GameFactory.NewGame(boardState, serviceProvider);
 

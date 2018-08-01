@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Game.Commands;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Game
             this.mediator = mediator;
         }
 
-        public Task<GameState> Resolve(IRequest<GameState> command)
+        public Task<GameState> Resolve(IGameAction command)
         {
             return mediator.Send(command);
         }
