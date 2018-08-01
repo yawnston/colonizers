@@ -26,6 +26,10 @@ namespace Game.CommandHandlers
             if (board.GamePhase != BoardState.Phase.Discard) throw new InvalidOperationException(request.ToString());
 
             board.Players[board.PlayerTurn - 1].Hand.Add(request.Module);
+            foreach(var m in (from mod in request.BoardState.TempStorage where mod != request.Module select mod))
+            {
+                board.Deck.Add(m); // add the discarded modules to the bottom of the deck
+            }
             board.GamePhase = BoardState.Phase.Power;
             board.TempStorage = null;
 
