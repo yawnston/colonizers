@@ -83,8 +83,8 @@ namespace Server
                 if (result < 0 || result >= gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
                 gameState = resolver.Resolve(gameState.Actions[result]).Result;
             }
-
-            SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState));
+            
+            SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState), clSock);
         }
 
         private int GetClientAction(string gameStateJson, Socket clSock)
@@ -118,9 +118,31 @@ namespace Server
             return BitConverter.ToInt32(responseBytes);
         }
 
-        private void SendGameOverMessage(string gameStateJson)
+        private void SendGameOverMessage(string gameStateJson, Socket clSock)
         {
+            var bytes = Encoding.UTF8.GetBytes(gameStateJson);
+            var jsonLength = bytes.Length;
+            var lengthBytes = BitConverter.GetBytes(jsonLength);
 
+            int count = 0;
+            while (count < lengthBytes.Length)
+            {
+                count += clSock.Send(
+                    lengthBytes,
+                    count,
+                    lengthBytes.Length - count,
+                    SocketFlags.None);
+            }
+
+            int sent = 0;
+            while (sent < bytes.Length)
+            {
+                sent += clSock.Send(
+                    bytes,
+                    sent,
+                    bytes.Length - sent,
+                    SocketFlags.None);
+            }
         }
     }
 }

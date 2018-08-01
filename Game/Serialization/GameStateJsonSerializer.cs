@@ -28,7 +28,15 @@ namespace Game.Serialization
 
         public static string SerializeGameOver(GameState gameState)
         {
-            return "placeholder";
+            var result = new JObject();
+
+            result["Board"] = BoardStateJsonSerializer.Serialize(gameState.BoardState);
+
+            result["GameOver"] = true;
+
+            result["GameEndInfo"] = gameState.GameEndInfo.SerializeToJArray();
+
+            return result.ToString();
         }
     }
 }

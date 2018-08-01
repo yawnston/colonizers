@@ -10,10 +10,11 @@ namespace SampleWebClient
     {
         static void Main(string[] args)
         {
+            Socket s = null;
             try
             {
                 // connect to the server
-                Socket s = new Socket(
+                s = new Socket(
                     AddressFamily.InterNetwork,
                     SocketType.Stream,
                     ProtocolType.Tcp);
@@ -50,6 +51,12 @@ namespace SampleWebClient
                     } while (count < bytes.Length);
                     var jsonString = Encoding.UTF8.GetString(bytes);
                     var gameState = JObject.Parse(jsonString);
+                    if (gameState["GameOver"].Equals(new JValue(true))) // end the processing loop
+                    {
+                        Console.WriteLine(gameState["GameEndInfo"].ToString(Newtonsoft.Json.Formatting.Indented));
+                        s.Shutdown(SocketShutdown.Both);
+                        return;
+                    }
                     Console.WriteLine(gameState.ToString(Newtonsoft.Json.Formatting.Indented));
                     var actionCount = ((JArray)gameState["Actions"]).Count;
 
@@ -66,12 +73,14 @@ namespace SampleWebClient
                     var responseBytes = BitConverter.GetBytes(response);
                     s.Send(responseBytes);
                 }
-                
-                // TODO: end game
             }
             catch (SocketException)
             {
                 Console.WriteLine("Error: Timeout exceeded while waiting for server");
+            }
+            finally
+            {
+                s.Close();
             }
         }
     }
