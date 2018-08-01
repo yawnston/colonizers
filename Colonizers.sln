@@ -15,6 +15,10 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SimpleIntelligence", "Simpl
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GreedySimpleIntelligence", "GreedySimpleIntelligence\GreedySimpleIntelligence.pyproj", "{513DABB5-AFC4-46EA-88D0-70EEAB95E044}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebClient", "SampleWebClient\SampleWebClient.csproj", "{3B07E60E-5AED-4B9B-9F39-77EFB168215A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{EF27C924-2FA8-4A14-831C-CBFE030B2760}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{513DABB5-AFC4-46EA-88D0-70EEAB95E044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{513DABB5-AFC4-46EA-88D0-70EEAB95E044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
