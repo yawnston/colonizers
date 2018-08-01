@@ -59,7 +59,6 @@ namespace Game.Serialization
         private static JObject SerializeOtherPlayer(PlayerInfo playerInfo)
         {
             var player = new JObject();
-            player["Colonist"] = new JValue(playerInfo.Colonist?.ToString() ?? "");
             player["Omnium"] = new JValue(playerInfo.Omnium);
             player["Handsize"] = new JValue(playerInfo.Hand.Count);
             var colony = new JArray();

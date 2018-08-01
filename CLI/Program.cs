@@ -57,7 +57,6 @@ namespace CLI
                 {
                     Console.WriteLine($"*** PLAYER {p.ID}");
                     Console.WriteLine($"Omnium: {p.Omnium}");
-                    if (gameState.BoardState.GamePhase != BoardState.Phase.ColonistPick) Console.WriteLine($"Colonist: {p.Colonist}");
                     Console.WriteLine($"Hand: {p.Hand.Count} modules");
                     Console.WriteLine("Colony:");
                     foreach (var m in p.Colony)
