@@ -25,7 +25,7 @@ namespace CLI
             .AddScoped<IGameEndGetter, GameEndGetter>()
             .BuildServiceProvider();
 
-            Console.WriteLine("Colonizers v0.1");
+            Console.WriteLine("Colonizers v1.0");
             Console.WriteLine("Created by Daniel Crha");
 
             var mediator = serviceProvider.GetService<IMediator>();
@@ -38,13 +38,32 @@ namespace CLI
             while (true)
             {
                 currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
-                Console.WriteLine($"PLAYER {currentPlayer.ID}");
+                Console.WriteLine($"+++ PLAYER {currentPlayer.ID}");
                 Console.WriteLine($"Your Omnium: {currentPlayer.Omnium}");
                 if (gameState.BoardState.GamePhase != BoardState.Phase.ColonistPick) Console.WriteLine($"Your Colonist: {currentPlayer.Colonist}");
                 Console.WriteLine("Your Hand:");
                 foreach(var m in currentPlayer.Hand)
                 {
                     Console.WriteLine($"{m.ToString()}");
+                }
+                Console.WriteLine("Your Colony:");
+                foreach (var m in currentPlayer.Colony)
+                {
+                    Console.WriteLine($"{m.ToString()}");
+                }
+
+                Console.WriteLine($"OTHER PLAYERS:");
+                foreach(var p in (from pl in gameState.BoardState.Players where pl != currentPlayer select pl))
+                {
+                    Console.WriteLine($"*** PLAYER {p.ID}");
+                    Console.WriteLine($"Omnium: {p.Omnium}");
+                    if (gameState.BoardState.GamePhase != BoardState.Phase.ColonistPick) Console.WriteLine($"Colonist: {p.Colonist}");
+                    Console.WriteLine($"Hand: {p.Hand.Count} modules");
+                    Console.WriteLine("Colony:");
+                    foreach (var m in p.Colony)
+                    {
+                        Console.WriteLine($"{m.ToString()}");
+                    }
                 }
 
                 Console.WriteLine("-------------------------------------");
@@ -63,7 +82,7 @@ namespace CLI
             Console.WriteLine("Game over");
             Console.WriteLine("Results:");
             Console.WriteLine();
-            foreach(var p in gameState.GameEndInfo.Players.OrderBy(pi => pi.VictoryPoints))
+            foreach(var p in gameState.GameEndInfo.Players.OrderByDescending(pi => pi.VictoryPoints))
             {
                 Console.WriteLine($"Player {p.Player.ID}: {p.VictoryPoints} points");
             }
