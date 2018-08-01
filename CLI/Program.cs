@@ -73,7 +73,17 @@ namespace CLI
                 {
                     Console.WriteLine($"({i++}) {a.ToString()}");
                 }
-                action = gameState.Actions[Int32.Parse(Console.ReadLine())];
+                bool parseSuccessful; int response;
+                while (true) // loop until the user inputs a valid response
+                {
+                    parseSuccessful = int.TryParse(Console.ReadLine(), out response);
+                    if (!parseSuccessful || response < 0 || response >= gameState.Actions.Count)
+                    {
+                        Console.WriteLine("Invalid action. Please enter a valid action number (starting at 0 from the top).");
+                    }
+                    else break;
+                }
+                action = gameState.Actions[response];
                 gameState = resolver.Resolve(action).Result;
                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 if (gameState.GameOver) break;
