@@ -1,7 +1,10 @@
 ﻿using Game;
 using Game.Entities;
+using Game.Serialization;
+using MediatR;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -11,8 +14,17 @@ namespace Server
 {
     class GameServer
     {
-        private readonly Socket s;
-        private readonly Resolver
+        private Socket s;
+        private readonly Resolver resolver;
+        private readonly IMediator mediator;
+        private readonly IServiceProvider serviceProvider;
+
+        public GameServer(IMediator mediator, IServiceProvider serviceProvider)
+        {
+            this.mediator = mediator;
+            this.serviceProvider = serviceProvider;
+            resolver = new Resolver(mediator);
+        }
 
         public bool StartUp(IPAddress ip, int port)
         {
@@ -34,28 +46,26 @@ namespace Server
 
         }
 
-        // returns all the received data back to the client
+        // create a new game for the connecting client
         private void Communicate(Socket clSock)
         {
             try
             {
-                var mediator = serviceProvider.GetService<IMediator>();
-                var resolver = new Resolver(mediator);
-
-                var processor = new GameProcessor(resolver);
                 var boardState = BoardFactory.Standard();
                 var gameState = GameFactory.NewGame(boardState, serviceProvider);
+
+                RunGame(gameState);
 
                 clSock.Shutdown(SocketShutdown.Both);  // close sockets
                 clSock.Close();
             }
             catch (Exception e)
             {
-
+                // TODO
             }
         }
 
-        public void RunGame(GameState beginningState)
+        private void RunGame(GameState beginningState)
         {
             GameState gameState = beginningState;
             PlayerInfo currentPlayer;
@@ -66,22 +76,38 @@ namespace Server
 
                 currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
 
-                scope = engine.CreateScope();
-                scripts[currentPlayer.ID].Execute(scope);
-                Func<string, int> processState = scope.GetVariable<Func<string, int>>("processState");
-
-                int result = processState(GameStateJsonSerializer.Serialize(gameState)); // Call the python script to let it choose what to do
+                int result = GetClientAction(GameStateJsonSerializer.Serialize(gameState)); // Call the python script to let it choose what to do
                 if (result < 0 || result >= gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
                 gameState = resolver.Resolve(gameState.Actions[result]).Result;
             }
 
-            Console.WriteLine("Results:");
-            Console.WriteLine();
-            foreach (var p in gameState.GameEndInfo.Players.OrderByDescending(pi => pi.VictoryPoints))
+            SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState));
+        }
+
+        private int GetClientAction(string gameStateJson)
+        {
+            var bytes = Encoding.UTF8.GetBytes(gameStateJson);
+            var jsonLength = bytes.Length;
+            s.Send(BitConverter.GetBytes(jsonLength)); // send the amount of bytes the json string takes
+            int sent = 0;
+            while (sent < bytes.Length) // if you are brave you can do it all in the condition.
             {
-                Console.WriteLine($"Player {p.Player.ID}: {p.VictoryPoints} points");
+                sent += s.Send(
+                    bytes,
+                    sent,
+                    bytes.Length - sent, // This can be anything as long as it doesn't overflow the buffer, bytes.
+                    SocketFlags.None);
             }
+
+            var responseBytes = new Byte[4];
+            s.Receive(responseBytes);
+            return BitConverter.ToInt32(responseBytes);
+        }
+
+        private void SendGameOverMessage(string gameStateJson)
+        {
+
         }
     }
 }
-}
+

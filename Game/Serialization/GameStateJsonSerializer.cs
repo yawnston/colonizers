@@ -23,5 +23,10 @@ namespace Game.Serialization
 
             return result.ToString();
         }
+
+        public static string SerializeGameOver(GameState gameState)
+        {
+            // TODO
+        }
     }
 }

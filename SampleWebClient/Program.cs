@@ -18,9 +18,15 @@ namespace SampleWebClient
                     ProtocolType.Tcp);
                 s.Connect(new IPEndPoint(IPAddress.Loopback, 4141));
 
-                byte[] echo = new byte[1024];
-                s.Receive(echo);  // receive the echo message
-                Console.WriteLine(Encoding.ASCII.GetString(echo));
+                int jsonStringByteLength;
+                byte[] lengthBytes = new byte[4];
+                
+
+                while (true)
+                {
+                    s.Receive(lengthBytes); // receive payload length
+                    jsonStringByteLength = BitConverter.ToInt32(lengthBytes);
+                }
             }
             catch (Exception e)
             {

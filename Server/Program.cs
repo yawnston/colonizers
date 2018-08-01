@@ -24,7 +24,9 @@ namespace Server
            .AddScoped<IGameEndGetter, GameEndGetter>()
            .BuildServiceProvider();
 
-            var server = new GameServer();
+            var mediator = serviceProvider.GetService<IMediator>();
+
+            var server = new GameServer(mediator, serviceProvider);
             server.StartUp(IPAddress.Loopback, 4141);  // start the echo server
         }
     }
