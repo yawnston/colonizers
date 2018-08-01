@@ -17,11 +17,12 @@ namespace SampleWebClient
                     AddressFamily.InterNetwork,
                     SocketType.Stream,
                     ProtocolType.Tcp);
+                s.ReceiveTimeout = 5000;
+                s.SendTimeout = 5000;
                 s.Connect(new IPEndPoint(IPAddress.Loopback, 4141));
 
                 int jsonStringByteLength;
                 byte[] lengthBytes = new byte[4];
-                //s.Send(BitConverter.GetBytes(42)); // initialize communication with server
 
                 while (true)
                 {
@@ -48,10 +49,20 @@ namespace SampleWebClient
                             SocketFlags.None);
                     } while (count < bytes.Length);
                     var jsonString = Encoding.UTF8.GetString(bytes);
+                    var gameState = JObject.Parse(jsonString);
+                    Console.WriteLine(gameState.ToString(Newtonsoft.Json.Formatting.Indented));
+                    var actionCount = ((JArray)gameState["Actions"]).Count;
 
-                    Console.WriteLine(JValue.Parse(jsonString).ToString(Newtonsoft.Json.Formatting.Indented));
-
-                    int response = int.Parse(Console.ReadLine());
+                    int response; bool parseSuccessful;
+                    while (true) // loop until the user inputs a valid response
+                    {
+                        parseSuccessful = int.TryParse(Console.ReadLine(), out response);
+                        if (!parseSuccessful || response < 0 || response >= actionCount)
+                        {
+                            Console.WriteLine("Invalid action. Please enter a valid action number (starting at 0 from the top).");
+                        }
+                        else break;
+                    }
                     var responseBytes = BitConverter.GetBytes(response);
                     s.Send(responseBytes);
                 }
