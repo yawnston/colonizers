@@ -23,6 +23,8 @@ namespace Game.CommandHandlers
             var board = request.BoardState;
             if (board.GamePhase != BoardState.Phase.Draw) throw new InvalidOperationException(request.ToString());
 
+            board.Players[board.PlayerTurn - 1].Colonist.PerformClassDrawAction(board);
+
             board.Players[board.PlayerTurn - 1].Omnium += 2;
 
             board.GamePhase = BoardState.Phase.Power;

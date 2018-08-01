@@ -1,0 +1,11 @@
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\bin\Debug\netcoreapp2.1\SampleWebClient.deps.json
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\bin\Debug\netcoreapp2.1\SampleWebClient.runtimeconfig.json
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\bin\Debug\netcoreapp2.1\SampleWebClient.runtimeconfig.dev.json
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\bin\Debug\netcoreapp2.1\SampleWebClient.dll
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\bin\Debug\netcoreapp2.1\SampleWebClient.pdb
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.csproj.CoreCompileInputs.cache
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.AssemblyInfoInputs.cache
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.AssemblyInfo.cs
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.dll
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.pdb
+C:\Users\danie\Desktop\Colonizers\SampleWebClient\obj\Debug\netcoreapp2.1\SampleWebClient.csprojAssemblyReference.cache
