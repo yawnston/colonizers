@@ -33,17 +33,17 @@ namespace Server
                 s = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
                     ProtocolType.Tcp);
                 s.Bind(new IPEndPoint(ip, port));
-                s.Listen(10);  // maximal 10 clients in queue
+                s.Listen(20);  // max 20 clients in queue
             }
             catch (Exception e)
             {
-
+                Console.WriteLine($"Startup failed: {e}");
+                return false;
             }
             for (; ; )
             {
                 Communicate(s.Accept());  // waits for connecting clients
             }
-
         }
 
         // create a new game for the connecting client
@@ -79,7 +79,7 @@ namespace Server
 
                 currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
 
-                int result = GetClientAction(GameStateJsonSerializer.Serialize(gameState), clSock); // Call the python script to let it choose what to do
+                int result = GetClientAction(GameStateJsonSerializer.Serialize(gameState), clSock); // Ask the client for input
                 if (result < 0 || result >= gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
                 gameState = resolver.Resolve(gameState.Actions[result]).Result;
             }
