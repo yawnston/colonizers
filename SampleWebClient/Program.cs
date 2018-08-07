@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -8,8 +11,16 @@ namespace SampleWebClient
 {
     class Program
     {
+        const string API_CONFIG_SECTION = "server-info";
+        const string API_CONFIG_NAME_IP = "ip";
+        const string API_CONFIG_NAME_PORT = "port";
+
+        private static IConfigurationRoot configuration;
+
         static void Main(string[] args)
         {
+            LoadConfig();
+
             Socket s = null;
             try
             {
@@ -20,7 +31,9 @@ namespace SampleWebClient
                     ProtocolType.Tcp);
                 s.ReceiveTimeout = 5000;
                 s.SendTimeout = 5000;
-                s.Connect(new IPEndPoint(IPAddress.Loopback, 4141));
+                s.Connect(new IPEndPoint(
+                    IPAddress.Parse(configuration.GetSection(API_CONFIG_SECTION)[API_CONFIG_NAME_IP]),
+                    int.Parse(configuration.GetSection(API_CONFIG_SECTION)[API_CONFIG_NAME_PORT])));
 
                 int jsonStringByteLength;
                 byte[] lengthBytes = new byte[4];
@@ -83,5 +96,15 @@ namespace SampleWebClient
                 s.Close();
             }
         }
+
+        private static void LoadConfig()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            configuration = builder.Build();
+        }
+
     }
 }
