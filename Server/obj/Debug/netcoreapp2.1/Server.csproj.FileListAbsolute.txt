@@ -12,3 +12,4 @@ C:\Users\danie\Desktop\Colonizers\Server\obj\Debug\netcoreapp2.1\Server.Assembly
 C:\Users\danie\Desktop\Colonizers\Server\obj\Debug\netcoreapp2.1\Server.csproj.CopyComplete
 C:\Users\danie\Desktop\Colonizers\Server\obj\Debug\netcoreapp2.1\Server.dll
 C:\Users\danie\Desktop\Colonizers\Server\obj\Debug\netcoreapp2.1\Server.pdb
+C:\Users\danie\Desktop\Colonizers\Server\bin\Debug\netcoreapp2.1\appsettings.json

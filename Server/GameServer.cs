@@ -50,7 +50,7 @@ namespace Server
                 allDone.Reset();
 
                 s.BeginAccept(new AsyncCallback(Communicate), s);  // waits for connecting clients
-                
+
                 allDone.WaitOne();
             }
         }
@@ -62,30 +62,18 @@ namespace Server
 
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
-            
+
             var boardState = BoardFactory.Standard();
             var gameState = GameFactory.NewGame(boardState, serviceProvider);
 
-            ProcessRound(gameState, handler);
-
-            /*
             try
             {
-                
-
-                RunGame(gameState, clSock);
-
-                clSock.Shutdown(SocketShutdown.Both); // close sockets
+                ProcessRound(gameState, handler);
             }
-            catch (Exception e)
+            catch (SocketException e)
             {
-                Console.WriteLine(e); // log the exception to the console
+                Console.WriteLine(e);
             }
-            finally
-            {
-                clSock.Close();
-            }
-            */
         }
 
         private void ProcessRound(GameState gameState, Socket socket)
@@ -96,27 +84,8 @@ namespace Server
             }
             else
             {
-                
+                GetClientAction(gameState, socket);
             }
-        }
-
-        private void RunGame(GameState beginningState, Socket clSock)
-        {
-            GameState gameState = beginningState;
-            PlayerInfo currentPlayer;
-
-            while (true)
-            {
-                if (gameState.GameOver) break;
-
-                currentPlayer = gameState.BoardState.Players[gameState.BoardState.PlayerTurn - 1];
-
-                int result = GetClientAction(GameStateJsonSerializer.Serialize(gameState), clSock); // Ask the client for input
-                if (result < 0 || result >= gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
-                gameState = resolver.Resolve(gameState.Actions[result]).Result;
-            }
-            
-            SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState), clSock);
         }
 
         #region gameOver
@@ -125,23 +94,36 @@ namespace Server
             var bytes = Encoding.UTF8.GetBytes(gameStateJson);
             var jsonLength = bytes.Length;
             var lengthBytes = BitConverter.GetBytes(jsonLength);
-            var state = new GameOverPayloadStateObject();
+            var state = new GameOverPayloadState();
             state.workSocket = socket;
             state.endStateBytes = bytes;
 
-            socket.BeginSend(lengthBytes, 0, jsonLength, 0,
-                new AsyncCallback(SendGameOverPayloadCallback), state);
+            try
+            {
+                socket.BeginSend(lengthBytes, 0, lengthBytes.Length, 0,
+                        new AsyncCallback(SendGameOverPayloadCallback), state);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private void SendGameOverPayloadCallback(IAsyncResult ar)
         {
-            var state = (GameOverPayloadStateObject)ar.AsyncState;
+            var state = (GameOverPayloadState)ar.AsyncState;
 
-            // TODO: send again if not all is sent?
-            state.workSocket.EndSend(ar);
+            try
+            {
+                state.workSocket.EndSend(ar);
 
-            state.workSocket.BeginSend(state.endStateBytes, 0, state.endStateBytes.Length, 0,
-                new AsyncCallback(GameOverCallback), state.workSocket);
+                state.workSocket.BeginSend(state.endStateBytes, 0, state.endStateBytes.Length, 0,
+                    new AsyncCallback(GameOverCallback), state.workSocket);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private void GameOverCallback(IAsyncResult ar)
@@ -153,7 +135,6 @@ namespace Server
                 Console.WriteLine($"Sent {bytesSent} bytes of game over info to client. Closing connection.");
 
                 handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
             }
             catch (Exception e)
             {
@@ -162,56 +143,77 @@ namespace Server
         }
         #endregion
 
-        private int GetClientAction(string gameStateJson, Socket clSock)
+        #region roundProcessing
+        private void GetClientAction(GameState gameState, Socket socket)
         {
+            var gameStateJson = GameStateJsonSerializer.Serialize(gameState);
             var bytes = Encoding.UTF8.GetBytes(gameStateJson);
             var jsonLength = bytes.Length;
             var lengthBytes = BitConverter.GetBytes(jsonLength);
-            
-            int count = 0;
-            while (count < lengthBytes.Length)
-            {
-                count += clSock.Send(
-                    lengthBytes,
-                    count,
-                    lengthBytes.Length - count,
-                    SocketFlags.None);
-            }
 
-            int sent = 0;
-            while (sent < bytes.Length)
-            {
-                sent += clSock.Send(
-                    bytes,
-                    sent,
-                    bytes.Length - sent,
-                    SocketFlags.None);
-            }
+            var state = new GetClientActionPayloadState();
+            state.workSocket = socket;
+            state.gameState = gameState;
+            state.gameStateBytes = bytes;
 
-            var responseBytes = new Byte[4];
-            clSock.Receive(responseBytes);
-            return BitConverter.ToInt32(responseBytes);
+            try
+            {
+                socket.BeginSend(lengthBytes, 0, lengthBytes.Length, 0,
+                        new AsyncCallback(SendGameStatePayloadCallback), state);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e);
+            }
         }
-    }
-    
-    public class StateObject
-    {
-        // Client socket.  
-        public Socket workSocket = null;
-        // Persistent game state
-        public GameState gameState;
-        // Size of receive buffer.  
-        public const int BufferSize = 1024;
-        // Receive buffer.  
-        public byte[] buffer = new byte[BufferSize];
-        // Received data string.  
-        public StringBuilder sb = new StringBuilder();
-    }
 
-    public class GameOverPayloadStateObject
-    {
-        public Socket workSocket = null;
-        public byte[] endStateBytes;
+        private void SendGameStatePayloadCallback(IAsyncResult ar)
+        {
+            var state = (GetClientActionPayloadState)ar.AsyncState;
+            
+            var newState = new GetClientActionGameState();
+            newState.workSocket = state.workSocket;
+            newState.gameState = state.gameState;
+
+            try
+            {
+                state.workSocket.EndSend(ar);
+                state.workSocket.BeginSend(state.gameStateBytes, 0, state.gameStateBytes.Length, 0,
+                    new AsyncCallback(GetClientResponseCallback), newState);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private void GetClientResponseCallback(IAsyncResult ar)
+        {
+            var state = (GetClientActionGameState)ar.AsyncState;
+
+            var newState = new GetClientActionResponseState();
+            newState.workSocket = state.workSocket;
+            newState.gameState = state.gameState;
+
+            try
+            {
+                state.workSocket.BeginReceive(newState.buffer, 0, GetClientActionResponseState.BufferSize, 0,
+                        new AsyncCallback(ProcessClientResponseCallback), newState);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private void ProcessClientResponseCallback(IAsyncResult ar)
+        {
+            var state = (GetClientActionResponseState)ar.AsyncState;
+            var response = BitConverter.ToInt32(state.buffer);
+            if (response < 0 || response >= state.gameState.Actions.Count) throw new InvalidOperationException("Player script returned out-of-bounds response");
+            var newState = resolver.Resolve(state.gameState.Actions[response]).Result;
+            ProcessRound(newState, state.workSocket);
+        }
+        #endregion
     }
 }
-
