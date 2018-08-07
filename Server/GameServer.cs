@@ -35,6 +35,7 @@ namespace Server
         {
             try
             {
+                Console.WriteLine($"Starting up game server at {ip.ToString()}:{port}");
                 s = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
                     ProtocolType.Tcp);
                 s.Bind(new IPEndPoint(ip, port));
@@ -60,8 +61,12 @@ namespace Server
         {
             allDone.Set();
 
+            Console.WriteLine("Accepting new client");
+
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
+
+            Console.WriteLine($"Accept successful: {handler.RemoteEndPoint.ToString()}");
 
             var boardState = BoardFactory.Standard();
             var gameState = GameFactory.NewGame(boardState, serviceProvider);
@@ -73,6 +78,7 @@ namespace Server
             catch (SocketException e)
             {
                 Console.WriteLine(e);
+                handler.Close();
             }
         }
 
@@ -106,6 +112,7 @@ namespace Server
             catch (SocketException e)
             {
                 Console.WriteLine(e);
+                socket.Close();
             }
         }
 
@@ -123,6 +130,7 @@ namespace Server
             catch (SocketException e)
             {
                 Console.WriteLine(e);
+                state.workSocket.Close();
             }
         }
 
@@ -135,10 +143,12 @@ namespace Server
                 Console.WriteLine($"Sent {bytesSent} bytes of game over info to client. Closing connection.");
 
                 handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                ((Socket)ar.AsyncState).Close();
             }
         }
         #endregion
@@ -164,6 +174,7 @@ namespace Server
             catch (SocketException e)
             {
                 Console.WriteLine(e);
+                socket.Close();
             }
         }
 
@@ -184,6 +195,7 @@ namespace Server
             catch (SocketException e)
             {
                 Console.WriteLine(e);
+                state.workSocket.Close();
             }
         }
 
@@ -203,6 +215,7 @@ namespace Server
             catch (SocketException e)
             {
                 Console.WriteLine(e);
+                state.workSocket.Close();
             }
         }
 
