@@ -9,11 +9,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server
 {
     class GameServer
     {
+        // thread signal  
+        private static ManualResetEvent allDone = new ManualResetEvent(false);
+
         private Socket s;
         private readonly Resolver resolver;
         private readonly IMediator mediator;
@@ -33,7 +38,7 @@ namespace Server
                 s = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
                     ProtocolType.Tcp);
                 s.Bind(new IPEndPoint(ip, port));
-                s.Listen(20);  // max 20 clients in queue
+                s.Listen(100);  // max 100 clients in queue
             }
             catch (Exception e)
             {
@@ -42,17 +47,31 @@ namespace Server
             }
             for (; ; )
             {
-                Communicate(s.Accept());  // waits for connecting clients
+                allDone.Reset();
+
+                s.BeginAccept(new AsyncCallback(Communicate), s);  // waits for connecting clients
+                
+                allDone.WaitOne();
             }
         }
 
         // create a new game for the connecting client
-        private void Communicate(Socket clSock)
+        private void Communicate(IAsyncResult ar)
         {
+            allDone.Set();
+
+            Socket listener = (Socket)ar.AsyncState;
+            Socket handler = listener.EndAccept(ar);
+            
+            var boardState = BoardFactory.Standard();
+            var gameState = GameFactory.NewGame(boardState, serviceProvider);
+
+            ProcessRound(gameState, handler);
+
+            /*
             try
             {
-                var boardState = BoardFactory.Standard();
-                var gameState = GameFactory.NewGame(boardState, serviceProvider);
+                
 
                 RunGame(gameState, clSock);
 
@@ -65,6 +84,15 @@ namespace Server
             finally
             {
                 clSock.Close();
+            }
+            */
+        }
+
+        private void ProcessRound(GameState gameState, Socket socket)
+        {
+            if (gameState.GameOver)
+            {
+                SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState), socket);
             }
         }
 
@@ -120,7 +148,11 @@ namespace Server
 
         private void SendGameOverMessage(string gameStateJson, Socket clSock)
         {
+            // TODO: send length first
             var bytes = Encoding.UTF8.GetBytes(gameStateJson);
+            clSock.BeginSend(bytes, 0, bytes.Length, 0,
+                new AsyncCallback(GameOverCallback), clSock);
+            /*
             var jsonLength = bytes.Length;
             var lengthBytes = BitConverter.GetBytes(jsonLength);
 
@@ -143,7 +175,40 @@ namespace Server
                     bytes.Length - sent,
                     SocketFlags.None);
             }
+            */
         }
+
+        private void GameOverCallback(IAsyncResult ar)
+        {
+            try
+            {
+                Socket handler = (Socket)ar.AsyncState;
+                int bytesSent = handler.EndSend(ar);
+                Console.WriteLine($"Sent {bytesSent} bytes of game over info to client. Closing connection.");
+
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+    }
+
+    // State object for reading client data asynchronously  
+    public class StateObject
+    {
+        // Client socket.  
+        public Socket workSocket = null;
+        // Persistent game state
+        public GameState gameState;
+        // Size of receive buffer.  
+        public const int BufferSize = 1024;
+        // Receive buffer.  
+        public byte[] buffer = new byte[BufferSize];
+        // Received data string.  
+        public StringBuilder sb = new StringBuilder();
     }
 }
 
