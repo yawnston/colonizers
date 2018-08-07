@@ -94,6 +94,10 @@ namespace Server
             {
                 SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState), socket);
             }
+            else
+            {
+                
+            }
         }
 
         private void RunGame(GameState beginningState, Socket clSock)
@@ -114,6 +118,49 @@ namespace Server
             
             SendGameOverMessage(GameStateJsonSerializer.SerializeGameOver(gameState), clSock);
         }
+
+        #region gameOver
+        private void SendGameOverMessage(string gameStateJson, Socket socket)
+        {
+            var bytes = Encoding.UTF8.GetBytes(gameStateJson);
+            var jsonLength = bytes.Length;
+            var lengthBytes = BitConverter.GetBytes(jsonLength);
+            var state = new GameOverPayloadStateObject();
+            state.workSocket = socket;
+            state.endStateBytes = bytes;
+
+            socket.BeginSend(lengthBytes, 0, jsonLength, 0,
+                new AsyncCallback(SendGameOverPayloadCallback), state);
+        }
+
+        private void SendGameOverPayloadCallback(IAsyncResult ar)
+        {
+            var state = (GameOverPayloadStateObject)ar.AsyncState;
+
+            // TODO: send again if not all is sent?
+            state.workSocket.EndSend(ar);
+
+            state.workSocket.BeginSend(state.endStateBytes, 0, state.endStateBytes.Length, 0,
+                new AsyncCallback(GameOverCallback), state.workSocket);
+        }
+
+        private void GameOverCallback(IAsyncResult ar)
+        {
+            try
+            {
+                Socket handler = (Socket)ar.AsyncState;
+                int bytesSent = handler.EndSend(ar);
+                Console.WriteLine($"Sent {bytesSent} bytes of game over info to client. Closing connection.");
+
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+        #endregion
 
         private int GetClientAction(string gameStateJson, Socket clSock)
         {
@@ -145,58 +192,8 @@ namespace Server
             clSock.Receive(responseBytes);
             return BitConverter.ToInt32(responseBytes);
         }
-
-        private void SendGameOverMessage(string gameStateJson, Socket clSock)
-        {
-            // TODO: send length first
-            var bytes = Encoding.UTF8.GetBytes(gameStateJson);
-            clSock.BeginSend(bytes, 0, bytes.Length, 0,
-                new AsyncCallback(GameOverCallback), clSock);
-            /*
-            var jsonLength = bytes.Length;
-            var lengthBytes = BitConverter.GetBytes(jsonLength);
-
-            int count = 0;
-            while (count < lengthBytes.Length)
-            {
-                count += clSock.Send(
-                    lengthBytes,
-                    count,
-                    lengthBytes.Length - count,
-                    SocketFlags.None);
-            }
-
-            int sent = 0;
-            while (sent < bytes.Length)
-            {
-                sent += clSock.Send(
-                    bytes,
-                    sent,
-                    bytes.Length - sent,
-                    SocketFlags.None);
-            }
-            */
-        }
-
-        private void GameOverCallback(IAsyncResult ar)
-        {
-            try
-            {
-                Socket handler = (Socket)ar.AsyncState;
-                int bytesSent = handler.EndSend(ar);
-                Console.WriteLine($"Sent {bytesSent} bytes of game over info to client. Closing connection.");
-
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
     }
-
-    // State object for reading client data asynchronously  
+    
     public class StateObject
     {
         // Client socket.  
@@ -209,6 +206,12 @@ namespace Server
         public byte[] buffer = new byte[BufferSize];
         // Received data string.  
         public StringBuilder sb = new StringBuilder();
+    }
+
+    public class GameOverPayloadStateObject
+    {
+        public Socket workSocket = null;
+        public byte[] endStateBytes;
     }
 }
 
