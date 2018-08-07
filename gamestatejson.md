@@ -28,9 +28,11 @@ A string representing the action's type. Will be one of the following:
  - SwapHands {T}
  - TakeOmnium
 
-Actions marked with {M} also contain an element Module: *Module*
-Actions marked with {C} also contain an element Colonist: *Colonist*
-Actions marked with {T} also contain an element Target: *Colonist*
+Actions marked with {M} also contain an element Module: *Module* 
+
+Actions marked with {C} also contain an element Colonist: *Colonist* 
+
+Actions marked with {T} also contain an element Target: *Colonist* 
 
 
 ***Board***

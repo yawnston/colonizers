@@ -42,3 +42,5 @@ A simple client-server approach is used. Clients connect to the game server (imp
 If for any reason an error is encountered during the communication process (e.g. client disconnect), this error is logged to standard output on the server and the connection is closed.
 
 When the server detects that the game is over (the pipeline returns a specially marked GameState object), after this is sent to the client, the connection is closed.
+
+Server configuration is done via `appsettings.json`.
