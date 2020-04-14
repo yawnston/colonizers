@@ -1,8 +1,5 @@
 ﻿using Game.Commands;
-using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Game.ActionGetters
@@ -19,9 +16,9 @@ namespace Game.ActionGetters
             var state = new GameState();
             state.BoardState = boardState;
             state.Actions = new List<IGameAction>();
-            foreach(var c in boardState.AvailableColonists)
+            foreach (var c in boardState.AvailableColonists)
             {
-                state.Actions.Add(new ColonistPickCommand { BoardState = boardState, Colonist = c});
+                state.Actions.Add(new ColonistPickCommand { BoardState = boardState, Colonist = c.Name });
             }
             return state;
         }

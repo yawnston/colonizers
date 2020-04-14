@@ -1,13 +1,12 @@
 ﻿using Game.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Game.Serialization
 {
+    /// <summary>
+    /// Serialize BoardState from the point of view of the active player (hides other players' secret information)
+    /// </summary>
     public static class BoardStateJsonSerializer
     {
         public static JObject Serialize(BoardState boardState)
@@ -16,14 +15,14 @@ namespace Game.Serialization
 
             result["CurrentPlayer"] = SerializeCurrentPlayer(boardState.Players[boardState.PlayerTurn - 1]);
             var otherPlayers = new JArray();
-            foreach(var p in (from pl in boardState.Players where pl.ID + 1 != boardState.PlayerTurn select pl))
+            foreach (var p in (from pl in boardState.Players where pl.ID != boardState.PlayerTurn select pl))
             {
                 otherPlayers.Add(SerializeOtherPlayer(p));
             }
             result["Players"] = otherPlayers;
 
             var playableColonists = new JArray();
-            foreach(var c in boardState.PlayableColonists)
+            foreach (var c in boardState.PlayableColonists)
             {
                 playableColonists.Add(c.ToString());
             }
@@ -62,7 +61,7 @@ namespace Game.Serialization
             player["Omnium"] = new JValue(playerInfo.Omnium);
             player["Handsize"] = new JValue(playerInfo.Hand.Count);
             var colony = new JArray();
-            foreach(var m in playerInfo.Colony)
+            foreach (var m in playerInfo.Colony)
             {
                 colony.Add(JObject.FromObject(m));
             }

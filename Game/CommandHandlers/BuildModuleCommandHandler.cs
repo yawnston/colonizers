@@ -2,8 +2,7 @@
 using Game.Commands;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,9 +27,13 @@ namespace Game.CommandHandlers
             if (board.GamePhase != BoardState.Phase.Build) throw new InvalidOperationException(request.ToString());
 
             var player = board.Players[board.PlayerTurn - 1];
-            if (player.Omnium < request.Module.BuildCost) throw new InvalidOperationException($"Not enough omnium to build module: {request}");
-            player.Omnium -= request.Module.BuildCost;
-            player.Colony.Add(request.Module);
+            var module = player.Hand.FirstOrDefault(m => m.Name == request.Module);
+            if (module is null) throw new InvalidOperationException($"The given module is not in the player's hand: {request}");
+            if (player.Omnium < module.BuildCost) throw new InvalidOperationException($"Not enough omnium to build module: {request}");
+
+            player.Omnium -= module.BuildCost;
+            player.Hand.Remove(module);
+            player.Colony.Add(module);
 
             if (board.PlayerTurn == board.Players.Count)
             {

@@ -1,10 +1,6 @@
-﻿using Game.Entities;
-using MediatR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using static Game.GameConstants;
 
 namespace Game.Commands
 {
@@ -12,24 +8,15 @@ namespace Game.Commands
     {
         [JsonIgnore]
         public BoardState BoardState { get; set; }
-        public Module Module { get; set; }
 
-        public JObject Serialize()
-        {
-            var result = new JObject();
+        public string Module { get; set; }
 
-            result["Type"] = "BuildModule";
-            result["Module"] = JObject.FromObject(Module);
-
-            return result;
-        }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Action Type { get; set; } = Action.BuildModule;
 
         public override string ToString()
         {
-            return $@"Build module: 
-    Cost: {Module.BuildCost}
-    Value: {Module.VictoryValue}
-    Type: {Module.Type.ToString()}";
+            return $"Build module: {Module}";
         }
     }
 }

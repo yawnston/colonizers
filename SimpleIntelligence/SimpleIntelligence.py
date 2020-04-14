@@ -62,3 +62,31 @@ def processBuild(gameState):
             break
 
     return index
+
+import time
+import struct
+import os
+from datetime import datetime
+
+def initPipe():
+    while True:
+        try:
+            f = open(r'\\.\pipe\\NPTest', 'r+b', 0)
+            return f
+        except:
+            print('waiting for pipe')
+            time.sleep(2)
+
+f = initPipe()
+print('pipe exists')
+
+while True:
+    n = struct.unpack('I', f.read(4))[0]    # Read str length
+    s = f.read(n).decode('ascii')                          # Read str
+    f.seek(0)                               # Important!!!
+    #print('Python Read:', s)
+
+    s = '0'
+    f.write(struct.pack('I', len(s)))   # Write str length and str
+    f.write(s.encode("ascii"))
+    f.seek(0)                               # EDIT: This is also necessary

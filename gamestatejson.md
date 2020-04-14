@@ -49,14 +49,14 @@ Actions marked with {T} also contain an element Target: *Colonist*
  - Omnium: non-negative integer
  - Hand: [*Module*]
  - Colony: [*Module*]
- - Number: non-negative integer
+ - Number: positive integer
 
 ***Player***
 
  - Omnium: non-negative integer
  - Handsize: non-negative integer
  - Colony: [*Module*]
- - Number: non-negative integer
+ - Number: positive integer
 
 ***ColonistString***
 
@@ -71,6 +71,7 @@ A string representing a colonist. Will be one of the following:
 
 ***Module***
 
+ - Name: string
  - Type: *Color*
  - BuildCost: non-negative integer
  - VictoryValue: non-negative integer

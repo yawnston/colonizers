@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Game.Entities
+﻿namespace Game.Entities
 {
     public class Module
     {
         public enum Color { Green, Blue, Red, None }
+
+        public string Name { get; set; }
 
         public Color Type { get; set; }
 
@@ -16,7 +14,7 @@ namespace Game.Entities
 
         public override string ToString()
         {
-            return $"Cost: {BuildCost}, Value: {VictoryValue}, Type: {Type.ToString()}";
+            return $"Name: {Name} Cost: {BuildCost}, Value: {VictoryValue}, Type: {Type.ToString()}";
         }
     }
 }

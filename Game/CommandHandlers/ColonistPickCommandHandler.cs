@@ -1,9 +1,8 @@
-﻿using Game.Commands;
-using Game.ActionGetters;
+﻿using Game.ActionGetters;
+using Game.Commands;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,8 +24,8 @@ namespace Game.CommandHandlers
             var board = request.BoardState;
             if (board.GamePhase != BoardState.Phase.ColonistPick) throw new InvalidOperationException(request.ToString());
 
-            board.Players[board.PlayerTurn - 1].Colonist = request.Colonist;
-            board.AvailableColonists.Remove(request.Colonist);
+            board.Players[board.PlayerTurn - 1].Colonist = board.PlayableColonists.Single(c => c.Name == request.Colonist);
+            board.AvailableColonists.Remove(board.Players[board.PlayerTurn - 1].Colonist);
 
             if (board.PlayerTurn == board.Players.Count) // Move to next phase
             {

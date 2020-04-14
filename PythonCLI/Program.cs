@@ -1,24 +1,56 @@
 ﻿using Game;
 using Game.ActionGetters;
-using Game.Entities;
+using Game.Players;
+using IronPython.Hosting;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
-using System.Reflection;
-using IronPython.Hosting;
-using Microsoft.Scripting.Runtime;
-using System.IO;
-using Microsoft.Scripting;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.Scripting.Hosting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace PythonCLI
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
+        {
+            var serviceProvider = new ServiceCollection()
+              .AddMediatR(typeof(Resolver).GetTypeInfo().Assembly)
+              .AddScoped<IMediator, Mediator>()
+              .AddScoped<IColonistPickGetter, ColonistPickGetter>()
+              .AddScoped<IDrawGetter, DrawGetter>()
+              .AddScoped<IDiscardGetter, DiscardGetter>()
+              .AddScoped<IPowerGetter, PowerGetter>()
+              .AddScoped<IBuildGetter, BuildGetter>()
+              .AddScoped<IGameEndGetter, GameEndGetter>()
+              .BuildServiceProvider();
+            var mediator = serviceProvider.GetService<IMediator>();
+            var resolver = new Resolver(mediator);
+
+            var players = new List<IPlayer>
+            {
+                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\SimpleIntelligence\SimpleIntelligence.py"),
+                new HumanPlayer(),
+                new HumanPlayer(),
+                new HumanPlayer()
+            };
+
+            try
+            {
+                var gameEngine = new GameEngine(resolver, serviceProvider);
+                var gameEndInfo = await gameEngine.RunGame(players);
+                Console.WriteLine(gameEndInfo.SerializeToJArray());
+            }
+            finally
+            {
+                foreach (var player in players) player.Dispose();
+            }
+        }
+
+        static void Main2(string[] args)
         {
             if (args.Length != 4 && args.Length != 5)
             {

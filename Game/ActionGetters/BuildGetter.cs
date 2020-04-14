@@ -1,8 +1,5 @@
 ﻿using Game.Commands;
-using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Game.ActionGetters
@@ -23,7 +20,7 @@ namespace Game.ActionGetters
             {
                 if (m.BuildCost <= boardState.Players[boardState.PlayerTurn - 1].Omnium)
                 {
-                    state.Actions.Add(new BuildModuleCommand { BoardState = boardState, Module = m });
+                    state.Actions.Add(new BuildModuleCommand { BoardState = boardState, Module = m.Name });
                 }
             }
             state.Actions.Add(new BuildNothingCommand { BoardState = boardState });

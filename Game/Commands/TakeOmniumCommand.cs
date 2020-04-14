@@ -1,10 +1,6 @@
-﻿using Game.Entities;
-using MediatR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using static Game.GameConstants;
 
 namespace Game.Commands
 {
@@ -13,14 +9,8 @@ namespace Game.Commands
         [JsonIgnore]
         public BoardState BoardState { get; set; }
 
-        public JObject Serialize()
-        {
-            var result = new JObject();
-
-            result["Type"] = "TakeOmnium";
-
-            return result;
-        }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Action Type { get; set; } = Action.TakeOmnium;
 
         public override string ToString()
         {

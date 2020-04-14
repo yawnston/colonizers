@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Game.Commands;
 using System.Collections.Generic;
-using System.Text;
-using Game.Commands;
-using MediatR;
+using System.Linq;
 
 namespace Game.Entities.Colonists
 {
@@ -11,9 +9,10 @@ namespace Game.Entities.Colonists
         public override IList<IGameAction> GetActions(BoardState boardState)
         {
             IList<IGameAction> actions = new List<IGameAction>();
-            foreach (var c in boardState.PlayableColonists)
+            // Cannot swap hands with self
+            foreach (var c in boardState.PlayableColonists.Where(c => c.Name != boardState.Players[boardState.PlayerTurn - 1].Colonist.Name))
             {
-                actions.Add(new SwapHandsCommand { BoardState = boardState, Target = c });
+                actions.Add(new SwapHandsCommand { BoardState = boardState, Target = c.Name });
             }
             actions.Add(new DoNothingCommand { BoardState = boardState });
             return actions;
@@ -24,9 +23,9 @@ namespace Game.Entities.Colonists
             // No passive ability
         }
 
-        public override string ToString()
+        public Spy()
         {
-            return "Spy";
+            Name = "Spy";
         }
     }
 }

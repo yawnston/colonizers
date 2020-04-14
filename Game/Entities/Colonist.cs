@@ -1,8 +1,5 @@
 ﻿using Game.Commands;
-using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Game.Entities
 {
@@ -13,5 +10,7 @@ namespace Game.Entities
 
         // Get all actions this character can execute in the power phase
         public abstract IList<IGameAction> GetActions(BoardState boardState);
+
+        public string Name { get; protected set; }
     }
 }

@@ -42,13 +42,13 @@ namespace Game.CommandHandlers
             }
 
             board.GamePhase = BoardState.Phase.Discard;
-            board.TempStorage = new List<Module>();
+            board.DiscardTempStorage = new List<Module>();
             var module1 = board.Deck.First();
             board.Deck.Remove(module1);
-            board.TempStorage.Add(module1);
+            board.DiscardTempStorage.Add(module1);
             var module2 = board.Deck.First();
             board.Deck.Remove(module2);
-            board.TempStorage.Add(module2);
+            board.DiscardTempStorage.Add(module2);
 
             return discardGetter.Process(board);
         }

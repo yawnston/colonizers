@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Game.Commands;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Game.Commands;
-using MediatR;
 
 namespace Game.Entities.Colonists
 {
@@ -19,14 +16,13 @@ namespace Game.Entities.Colonists
 
         public override void PerformClassDrawAction(BoardState boardState)
         {
-            int extraOmnium = 0;
-            foreach (var m in (from module in boardState.Players[boardState.PlayerTurn - 1].Colony where module.Type == Module.Color.Green select module)) extraOmnium++;
+            int extraOmnium = boardState.Players[boardState.PlayerTurn - 1].Colony.Count(module => module.Type == Module.Color.Green);
             boardState.Players[boardState.PlayerTurn - 1].Omnium += extraOmnium;
         }
 
-        public override string ToString()
+        public Ecologist()
         {
-            return "Ecologist";
+            Name = "Ecologist";
         }
     }
 }

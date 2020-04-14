@@ -1,11 +1,8 @@
 ﻿using Game.ActionGetters;
 using Game.Commands;
-using Game.Entities;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,13 +22,15 @@ namespace Game.CommandHandlers
             var board = request.BoardState;
             if (board.GamePhase != BoardState.Phase.Discard) throw new InvalidOperationException(request.ToString());
 
-            board.Players[board.PlayerTurn - 1].Hand.Add(request.Module);
-            foreach(var m in (from mod in request.BoardState.TempStorage where mod != request.Module select mod))
+            var module = request.BoardState.DiscardTempStorage.FirstOrDefault(m => m.Name == request.Module);
+            if (module is null) throw new InvalidOperationException($"Module to keep {module} is not in the temp storage.");
+            board.Players[board.PlayerTurn - 1].Hand.Add(module);
+            foreach (var m in request.BoardState.DiscardTempStorage.Where(x => x != module))
             {
                 board.Deck.Add(m); // add the discarded modules to the bottom of the deck
             }
             board.GamePhase = BoardState.Phase.Power;
-            board.TempStorage = null;
+            board.DiscardTempStorage = null;
 
             return powerGetter.Process(board);
         }
