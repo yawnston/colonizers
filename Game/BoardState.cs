@@ -1,4 +1,6 @@
 ﻿using Game.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,6 +51,7 @@ namespace Game
         /// <summary>
         /// The current game phase
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public Phase GamePhase { get; set; } = Phase.ColonistPick;
 
         /// <summary>
@@ -67,5 +70,24 @@ namespace Game
             bool anyPlayerFinished = Players.Any(p => p.Colony.Count == GameConstants.MaxColonySize);
             return anyPlayerFinished;
         }
+
+        /// <summary>
+        /// Clone this board instance and apply a given player's information set
+        /// </summary>
+        /// <param name="player">The player whose information set will be applied</param>
+        /// <returns>A new board state from the point of view of the given player</returns>
+        public BoardState CloneWithInformationSet(int player) => new BoardState
+        {
+            AvailableColonists = GamePhase == Phase.ColonistPick && PlayerTurn == player
+                ? AvailableColonists
+                : AvailableColonists.Select(_ => Colonist.Unknown).ToList(),
+            Deck = Deck.Select(_ => Module.Unknown).ToList(),
+            DiscardTempStorage = DiscardTempStorage,
+            GamePhase = GamePhase,
+            PlayableColonists = PlayableColonists,
+            Players = Players.Select(p => p.CloneWithInformationSet(player)).ToList(),
+            PlayerTurn = PlayerTurn,
+            StartingDeck = StartingDeck
+        };
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Entities
 {
@@ -27,16 +28,34 @@ namespace Game.Entities
         /// <summary>
         /// Information the player has about other players' colonists
         /// </summary>
-        public Dictionary<int, List<Colonist>> ColonistInformation { get; set; } = new Dictionary<int, List<Colonist>>();
+        public Dictionary<int, List<Colonist>> ColonistInformation { get; set; } = CreateDefaultColonistInformation();
 
         public int ID { get; set; }
 
-        public PlayerInfo()
+        public PlayerInfo CloneWithInformationSet(int player) => new PlayerInfo
         {
+            Colonist = ID == player
+                ? Colonist
+                : Colonist.Unknown,
+            Omnium = Omnium,
+            Colony = Colony,
+            Hand = ID == player
+                ? Hand
+                : Hand.Select(_ => Module.Unknown).ToList(),
+            ID = ID,
+            ColonistInformation = ID == player
+                ? ColonistInformation
+                : CreateDefaultColonistInformation()
+        };
+
+        private static Dictionary<int, List<Colonist>> CreateDefaultColonistInformation()
+        {
+            var dict = new Dictionary<int, List<Colonist>>();
             foreach (int i in GameConstants.PlayerIDs)
             {
-                ColonistInformation.Add(i, new List<Colonist>());
+                dict.Add(i, new List<Colonist>());
             }
+            return dict;
         }
     }
 }

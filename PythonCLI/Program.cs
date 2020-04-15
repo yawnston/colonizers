@@ -32,10 +32,10 @@ namespace PythonCLI
 
             var players = new List<IPlayer>
             {
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\SimpleIntelligence\SimpleIntelligence.py"),
-                new HumanPlayer(),
-                new HumanPlayer(),
-                new HumanPlayer()
+                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player1Pipe"),
+                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\HeuristicIntelligence\HeuristicIntelligence.py", "Player2Pipe"),
+                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player3Pipe"),
+                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player4Pipe"),
             };
 
             try

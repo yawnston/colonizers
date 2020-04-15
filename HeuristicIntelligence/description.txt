@@ -1,0 +1,20 @@
+- colonistPick:
+	- pick color-related colonist if it makes a lot of omnium
+	- pick Visionary if 0-1 modules in hand
+	- otherwise pick randomly
+- draw:
+	- if at 0 omnium or 4+ cards then extract
+	- if at 0 cards then draw
+	- otherwise pick randomly
+- discard:
+	- if anyone has 7 or 8 modules then keep the highest value affordable module
+	- if player has 5+ modules then keep the highest bonus value module
+	- otherwise keep the module which synergizes with the most built or held modules (or randomly)
+- power:
+	- if opportunist: find player with most omnium and randomly choose from the information set
+	- if spy: find player with more cards and randomly choose from the information set
+		- if such a player does not exist then pass
+- build:
+	- if anyone has 7 or 8 modules then build the highest victory value module possible
+	- if player has 5+ modules then build the highest bonus value module
+	- otherwise build the module which synergizes with the most built or held modules (or randomly)

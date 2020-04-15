@@ -1,4 +1,5 @@
 ﻿using Game.Commands;
+using System;
 using System.Collections.Generic;
 
 namespace Game.Entities
@@ -12,5 +13,28 @@ namespace Game.Entities
         public abstract IList<IGameAction> GetActions(BoardState boardState);
 
         public string Name { get; protected set; }
+
+        /// <summary>
+        /// Represents a Colonist that a player does not know about
+        /// </summary>
+        public static Colonist Unknown { get; } = new UnknownColonist();
+
+        private class UnknownColonist : Colonist
+        {
+            public UnknownColonist()
+            {
+                Name = "Unknown";
+            }
+
+            public override IList<IGameAction> GetActions(BoardState boardState)
+            {
+                throw new InvalidOperationException("This class is not intended to be used in gameplay.");
+            }
+
+            public override void PerformClassDrawAction(BoardState boardState)
+            {
+                throw new InvalidOperationException("This class is not intended to be used in gameplay.");
+            }
+        }
     }
 }

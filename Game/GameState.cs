@@ -24,5 +24,18 @@ namespace Game
         /// Things the current player can do on their turn
         /// </summary>
         public IList<IGameAction> Actions { get; set; }
+
+        /// <summary>
+        /// Clone this game instance and apply a given player's information set
+        /// </summary>
+        /// <param name="player">The player whose information set will be applied</param>
+        /// <returns>A new game state from the point of view of the given player</returns>
+        public GameState CloneWithInformationSet(int player) => new GameState
+        {
+            Actions = Actions,
+            GameEndInfo = GameEndInfo,
+            GameOver = GameOver,
+            BoardState = BoardState.CloneWithInformationSet(player)
+        };
     }
 }
