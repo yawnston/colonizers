@@ -1,10 +1,6 @@
 ﻿using Game.Commands;
-using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Game.ActionGetters
 {
@@ -21,7 +17,12 @@ namespace Game.ActionGetters
             state.BoardState = boardState;
             state.Actions = new List<IGameAction>();
             state.Actions.Add(new TakeOmniumCommand { BoardState = boardState });
-            state.Actions.Add(new DrawModulesCommand { BoardState = boardState });
+
+            if (boardState.Players[boardState.PlayerTurn - 1].Hand.Count < GameConstants.MaxHandSize)
+            {
+                state.Actions.Add(new DrawModulesCommand { BoardState = boardState });
+            }
+
             return state;
         }
     }

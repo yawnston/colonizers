@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Game.Entities
 {
@@ -8,6 +7,9 @@ namespace Game.Entities
     {
         public enum Color { Green, Blue, Red, None }
 
+        public string Name { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
         public Color Type { get; set; }
 
         public int BuildCost { get; set; }
@@ -16,7 +18,18 @@ namespace Game.Entities
 
         public override string ToString()
         {
-            return $"Cost: {BuildCost}, Value: {VictoryValue}, Type: {Type.ToString()}";
+            return $"Name: {Name} Cost: {BuildCost}, Value: {VictoryValue}, Type: {Type.ToString()}";
         }
+
+        /// <summary>
+        /// Module which represents a module that a player doesn't know about
+        /// </summary>
+        public static Module Unknown { get; } = new Module
+        {
+            Name = "Unknown",
+            BuildCost = -1,
+            Type = Color.None,
+            VictoryValue = -1
+        };
     }
 }

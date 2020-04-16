@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Game.ActionGetters
 {
-    public interface IColonistPickGetter : IGetter
+    public interface IColonistPickGetter : IActionGetter
     {
     }
 }

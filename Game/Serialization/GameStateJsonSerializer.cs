@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Game.Serialization
@@ -15,15 +12,15 @@ namespace Game.Serialization
             result["Board"] = BoardStateJsonSerializer.Serialize(gameState.BoardState);
 
             var actions = new JArray();
-            foreach(var a in gameState.Actions)
+            foreach (var a in gameState.Actions)
             {
-                actions.Add(a.Serialize());
+                actions.Add(JsonConvert.SerializeObject(a));
             }
             result["Actions"] = actions;
 
             result["GameOver"] = false;
 
-            return result.ToString();
+            return JsonConvert.SerializeObject(result);
         }
 
         public static string SerializeGameOver(GameState gameState)
@@ -36,7 +33,7 @@ namespace Game.Serialization
 
             result["GameEndInfo"] = gameState.GameEndInfo.SerializeToJArray();
 
-            return result.ToString();
+            return JsonConvert.SerializeObject(result);
         }
     }
 }

@@ -14,9 +14,9 @@ At the start of each round, first every player chooses a Colonist. This means th
 Then, players will take turns, from first to last. The round ends when the last player's turn ends.
 
 **One turn**
-At the start of a player's turn, the player may choose to either spend their time gathering Omnium (receiving 2 Omnium), or researching new Modules to use in their colony (drawing 2 Modules from the deck, keeping one in the hand and putting the other back at the bottom of the deck).
+At the start of a player's turn, the player may choose to either spend their time gathering Omnium (receiving 2 Omnium), or researching new Modules to use in their colony (drawing 2 Modules from the deck, keeping one in the hand and putting the other back at the bottom of the deck). The player may not research new modules if their hand is already full (5 modules).
 
-Then, the player may use their Colonist's special active ability, if their colonist has one. Even if their Colonist has a special ability, the player may choose to not use it.
+Then, the player may use their Colonist's special active ability, if their colonist has one. Even if their Colonist has a special ability, the player may choose to not use it. Passive abilities are automatically used at this time.
 
 Lastly, a player may choose to build a Module from their hand, constructing it in their colony. To build a module, the player must pay its cost in Omnium. The module is them placed from that player's hand to their colony. Contents of a player's hand are secret to other players, but each player can see everyone else's colonies.
 
@@ -31,6 +31,6 @@ The game can also end with a draw if the Module deck is exhausted, though this i
  - **Ecologist -** gains 1 extra Omnium at the start of his turn for each Green Module in his colony.
  - **Miner -** gains 1 extra Omnium at the start of his turn for each Blue Module in his colony.
  - **General -** gains 1 extra Omnium at the start of his turn for each Red Module in his colony.
- - **Visionary -** draws 2 extra Modules at the start of his turn.
+ - **Visionary -** draws 1 extra Module at the start of his turn if his hand is not full.
  - **Spy -** may choose to swap hands with another Colonist during his turn. If no player controls the target Colonist, this ability has no effect.
 

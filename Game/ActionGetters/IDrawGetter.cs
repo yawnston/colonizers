@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Game.ActionGetters
 {
-    public interface IDrawGetter : IGetter
+    public interface IDrawGetter : IActionGetter
     {
     }
 }

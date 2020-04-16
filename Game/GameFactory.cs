@@ -1,8 +1,6 @@
 ﻿using Game.ActionGetters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Game
 {
@@ -12,11 +10,6 @@ namespace Game
         {
             var firstGetter = serviceProvider.GetService<IColonistPickGetter>();
             return firstGetter.Process(boardState).Result;
-        }
-
-        public static GameState NewGame(BoardState boardState, object serviceProvider)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Game.Commands;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Game.Commands;
-using MediatR;
 
 namespace Game.Entities.Colonists
 {
@@ -19,18 +16,18 @@ namespace Game.Entities.Colonists
 
         public override void PerformClassDrawAction(BoardState boardState)
         {
-            // Visionary draws 2 extra cards at the start of his turn
-            var module1 = boardState.Deck.First();
-            boardState.Deck.Remove(module1);
-            boardState.Players[boardState.PlayerTurn - 1].Hand.Add(module1);
-            var module2 = boardState.Deck.First();
-            boardState.Deck.Remove(module2);
-            boardState.Players[boardState.PlayerTurn - 1].Hand.Add(module2);
+            // Visionary draws 1 extra card at the start of his turn (if his hand is not full)
+            if (boardState.Players[boardState.PlayerTurn - 1].Hand.Count < GameConstants.MaxHandSize)
+            {
+                var module1 = boardState.Deck.First();
+                boardState.Deck.Remove(module1);
+                boardState.Players[boardState.PlayerTurn - 1].Hand.Add(module1);
+            }
         }
 
-        public override string ToString()
+        public Visionary()
         {
-            return "Visionary";
+            Name = "Visionary";
         }
     }
 }

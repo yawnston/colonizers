@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Game\Game.csproj", "{57400145-96F1-4D7A-9F8A-478BA4DB7707}"
 EndProject
@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI", "CLI\CLI.csproj", "{2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PythonCLI", "PythonCLI\PythonCLI.csproj", "{48BE2B9C-048A-419C-BD73-FE30DC7A1142}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SimpleIntelligence", "SimpleIntelligence\SimpleIntelligence.pyproj", "{EF27C924-2FA8-4A14-831C-CBFE030B2760}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "HeuristicIntelligence", "HeuristicIntelligence\HeuristicIntelligence.pyproj", "{EF27C924-2FA8-4A14-831C-CBFE030B2760}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GreedySimpleIntelligence", "GreedySimpleIntelligence\GreedySimpleIntelligence.pyproj", "{513DABB5-AFC4-46EA-88D0-70EEAB95E044}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "RandomIntelligence", "RandomIntelligence\RandomIntelligence.pyproj", "{513DABB5-AFC4-46EA-88D0-70EEAB95E044}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{EDAD1F3D-8F31-4D36-A5EC-8F171FCCF457}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebClient", "SampleWebClient\SampleWebClient.csproj", "{3B07E60E-5AED-4B9B-9F39-77EFB168215A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWebClient", "SampleWebClient\SampleWebClient.csproj", "{3B07E60E-5AED-4B9B-9F39-77EFB168215A}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AICore", "AICore\AICore.pyproj", "{D4B903CD-280C-4DE5-888D-C8BC50961714}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,8 @@ Global
 		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B07E60E-5AED-4B9B-9F39-77EFB168215A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B903CD-280C-4DE5-888D-C8BC50961714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B903CD-280C-4DE5-888D-C8BC50961714}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

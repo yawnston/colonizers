@@ -1,10 +1,6 @@
-﻿using Game.Entities;
-using MediatR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using static Game.GameConstants;
 
 namespace Game.Commands
 {
@@ -12,17 +8,11 @@ namespace Game.Commands
     {
         [JsonIgnore]
         public BoardState BoardState { get; set; }
-        public Colonist Colonist { get; set; }
 
-        public JObject Serialize()
-        {
-            var result = new JObject();
+        public string Colonist { get; set; }
 
-            result["Type"] = "ColonistPick";
-            result["Colonist"] = Colonist.ToString();
-
-            return result;
-        }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Action Type { get; set; } = Action.ColonistPick;
 
         public override string ToString()
         {

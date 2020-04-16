@@ -2,11 +2,9 @@
 using Game.Commands;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Game.CommandHandlers
 {
@@ -26,17 +24,17 @@ namespace Game.CommandHandlers
 
             var currentPlayer = board.Players[board.PlayerTurn - 1];
             int amountStolen = 0;
-            var targetPlayer = (from p in board.Players where p.Colonist.GetType() == request.Target.GetType() select p).FirstOrDefault();
-            if(targetPlayer != null)
+            var targetPlayer = board.Players.FirstOrDefault(p => p.Colonist.Name == request.Target);
+            if (targetPlayer != null)
             {
-                if(targetPlayer.Omnium < request.Amount)
+                if (targetPlayer.Omnium < 2)
                 {
                     amountStolen = targetPlayer.Omnium;
                     targetPlayer.Omnium = 0;
                 }
                 else
                 {
-                    amountStolen = request.Amount;
+                    amountStolen = 2;
                     targetPlayer.Omnium -= amountStolen;
                 }
                 currentPlayer.Omnium += amountStolen;
