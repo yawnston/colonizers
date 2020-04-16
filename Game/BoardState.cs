@@ -64,6 +64,11 @@ namespace Game
             AvailableColonists.Shuffle();
             AvailableColonists.RemoveAt(0); // Remove a random colonist at the start of each round
 
+            foreach (var player in Players) // Reset information sets every round
+            {
+                player.ColonistInformation = PlayerInfo.CreateDefaultColonistInformation();
+            }
+
             PlayerTurn = GameConstants.PlayerIDs.Min(); // Player turns are based on ID
             GamePhase = Phase.ColonistPick;
 
@@ -85,9 +90,11 @@ namespace Game
             DiscardTempStorage = DiscardTempStorage,
             GamePhase = GamePhase,
             PlayableColonists = PlayableColonists,
-            Players = Players.Select(p => p.CloneWithInformationSet(player)).ToList(),
+            Players = Players.Select(p => p.CloneWithInformationSet(player, this)).ToList(),
             PlayerTurn = PlayerTurn,
             StartingDeck = StartingDeck
         };
+
+        public PlayerInfo GetCurrentPlayer() => Players[PlayerTurn - 1];
     }
 }

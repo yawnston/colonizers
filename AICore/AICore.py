@@ -40,10 +40,17 @@ class AIBase(ABC):
             self.pipe.seek(0)
 
             # calculate response and send it back through the pipe
-            mesageToSend = self.messageCallback(json.loads(receivedMessage))
+            gameState = json.loads(receivedMessage)
+            self.fixColonistInfoDictKeys(gameState)
+            mesageToSend = self.messageCallback(gameState)
             self.pipe.write(struct.pack('I', len(mesageToSend)))
             self.pipe.write(mesageToSend.encode("ascii"))
             self.pipe.seek(0)
+
+    # convert the keys in colonist into dict from str to int
+    def fixColonistInfoDictKeys(self, gameState):
+        for player in gameState["BoardState"]["Players"]:
+            player["ColonistInformation"] = {int(k):v for k,v in player["ColonistInformation"].items()}
 
 #
 # Some utility functions for working with the game state
@@ -70,6 +77,11 @@ def indexOfFirstOrDefault(iterable, condition):
 # Get player on turn
 def getCurrentPlayer(gameState):
     return getPlayerByNumber(gameState, gameState["BoardState"]["PlayerTurn"])
+
+# Get all players except the player on turn
+def getOtherPlayers(gameState):
+    currentPlayer = getCurrentPlayer(gameState)
+    return [p for p in gameState["BoardState"]["Players"] if p["ID"] != currentPlayer["ID"]]
 
 # Return player by number
 def getPlayerByNumber(gameState, playerNumber):

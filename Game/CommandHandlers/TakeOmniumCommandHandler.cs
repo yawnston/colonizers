@@ -1,9 +1,9 @@
 ﻿using Game.ActionGetters;
 using Game.Commands;
+using Game.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +11,7 @@ namespace Game.CommandHandlers
 {
     class TakeOmniumCommandHandler : IRequestHandler<TakeOmniumCommand, GameState>
     {
-        readonly IPowerGetter powerGetter;
+        private readonly IPowerGetter powerGetter;
 
         public TakeOmniumCommandHandler(IPowerGetter powerGetter)
         {
@@ -21,11 +21,16 @@ namespace Game.CommandHandlers
         public Task<GameState> Handle(TakeOmniumCommand request, CancellationToken cancellationToken)
         {
             var board = request.BoardState;
+            var currentPlayer = board.GetCurrentPlayer();
             if (board.GamePhase != BoardState.Phase.Draw) throw new InvalidOperationException(request.ToString());
 
-            board.Players[board.PlayerTurn - 1].Colonist.PerformClassDrawAction(board);
+            foreach (var player in board.Players) // Colonist is revealed at start of each player's turn
+            {
+                player.ColonistInformation[board.PlayerTurn] = new List<Colonist> { currentPlayer.Colonist };
+            }
 
-            board.Players[board.PlayerTurn - 1].Omnium += 2;
+            currentPlayer.Colonist.PerformClassDrawAction(board);
+            currentPlayer.Omnium += 2;
 
             board.GamePhase = BoardState.Phase.Power;
             return powerGetter.Process(board);

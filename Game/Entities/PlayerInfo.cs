@@ -32,9 +32,10 @@ namespace Game.Entities
 
         public int ID { get; set; }
 
-        public PlayerInfo CloneWithInformationSet(int player) => new PlayerInfo
+        public PlayerInfo CloneWithInformationSet(int player, BoardState boardState) => new PlayerInfo
         {
-            Colonist = ID == player
+            // Player's colonist is revealed to others at the start of his turn
+            Colonist = ID == player || (boardState.GamePhase > BoardState.Phase.ColonistPick && boardState.PlayerTurn >= ID)
                 ? Colonist
                 : Colonist.Unknown,
             Omnium = Omnium,
@@ -48,7 +49,7 @@ namespace Game.Entities
                 : CreateDefaultColonistInformation()
         };
 
-        private static Dictionary<int, List<Colonist>> CreateDefaultColonistInformation()
+        public static Dictionary<int, List<Colonist>> CreateDefaultColonistInformation()
         {
             var dict = new Dictionary<int, List<Colonist>>();
             foreach (int i in GameConstants.PlayerIDs)
