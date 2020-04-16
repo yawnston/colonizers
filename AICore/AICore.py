@@ -1,6 +1,7 @@
 import time
 import struct
 import os
+import sys
 import json
 from abc import ABC, abstractmethod
 
@@ -26,31 +27,59 @@ class AIBase(ABC):
     def messageCallback(self, gameState):
         pass
 
-    def messageLoop(self):
-        while True:
-            # read message from pipe
-            # messages have a simple protocol of an int32, which specifies
-            # message (ASCII) length in bytes
-            lengthBytes = self.pipe.read(4)
-            if not lengthBytes:
-                print('Pipe closed, exiting AI')
-                break
-            length = struct.unpack('I', lengthBytes)[0]
-            receivedMessage = self.pipe.read(length).decode('ascii')               
-            self.pipe.seek(0)
+    # Get a determinized version of the current game state
+    def determinize(self):
+        messageToSend = "determinize"
+        self.writeMessage(messageToSend)
+        return self.readMessage()
 
-            # calculate response and send it back through the pipe
-            gameState = json.loads(receivedMessage)
-            self.fixColonistInfoDictKeys(gameState)
-            mesageToSend = self.messageCallback(gameState)
-            self.pipe.write(struct.pack('I', len(mesageToSend)))
-            self.pipe.write(mesageToSend.encode("ascii"))
-            self.pipe.seek(0)
+    # Simulate the given move and get the resulting game state
+    def simulate(self, boardState, move):
+        dto = SimulationDTO(boardState, move)
+        messageToSend = json.dumps(dto.__dict__)
+        self.writeMessage(messageToSend)
+        return self.readMessage()
+
+    # run the AI with the given pipe as the communication channel
+    # to the game engine
+    def run(self, pipeName):
+        self.initPipe(pipeName)
+        while True:
+            gameState = self.readMessage()
+            messageToSend = self.messageCallback(gameState)
+            self.writeMessage(messageToSend)
+
+    # read message from pipe
+    # messages have a simple protocol of an int32, which specifies
+    # message (ASCII) length in bytes
+    def readMessage(self):
+        lengthBytes = self.pipe.read(4)
+        if not lengthBytes:
+            print('Pipe closed, exiting AI')
+            sys.exit()
+        length = struct.unpack('I', lengthBytes)[0]
+        receivedMessage = self.pipe.read(length).decode('ascii')               
+        self.pipe.seek(0)
+        gameState = json.loads(receivedMessage)
+        self.fixColonistInfoDictKeys(gameState)
+        return gameState
+
+    # write message to pipe
+    def writeMessage(self, message):
+        self.pipe.write(struct.pack('I', len(message)))
+        self.pipe.write(message.encode("ascii"))
+        self.pipe.seek(0)
 
     # convert the keys in colonist into dict from str to int
     def fixColonistInfoDictKeys(self, gameState):
         for player in gameState["BoardState"]["Players"]:
             player["ColonistInformation"] = {int(k):v for k,v in player["ColonistInformation"].items()}
+
+# DTO for requesting simulation from the game engine
+class SimulationDTO:
+    def __init__(self, boardState, action):
+        self.BoardState = boardState
+        self.Action = action
 
 #
 # Some utility functions for working with the game state
@@ -91,3 +120,29 @@ def getPlayerByNumber(gameState, playerNumber):
 def getHandSize(gameState, playerNumber):
     player = getPlayerByNumber(gameState, playerNumber)
     return len(player["Hand"])
+
+# Get string representations of all available actions
+def getActionStrings(gameState):
+    return [getActionString(a) for a in gameState["Actions"]]
+
+# Get string representation of the action
+def getActionString(action):
+    name = action["Type"]
+    if name == "BuildModule" or name == "KeepModule":
+        name += (" " + action["Module"])
+    elif name == "StealOmnium" or name == "SwapHands":
+        name += (" " + action["Target"])
+    elif name == "ColonistPick":
+        name += (" " + action["Colonist"])
+    return name
+
+# Get index of action by its action string
+def indexOfActionByString(gameState, actionString):
+    strList = [getActionString(a) for a in gameState["Actions"]]
+    return strList.index(actionString)
+
+# Get end ranking for the given player
+# From 1 (best) to 4 (worst)
+def getPlayerRanking(gameState, playerNumber):
+    playerEndInfo = next(p for p in gameState["GameEndInfo"]["Players"] if p["Player"]["ID"] == playerNumber)
+    return playerEndInfo["Ranking"]

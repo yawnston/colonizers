@@ -8,7 +8,7 @@ namespace Game
         private static readonly Random random = new Random(GameConstants.ShuffleRandomSeed);
 
         /// <summary>
-        /// Fischer-Yates shuffle (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
+        /// Randomly shuffle a list using the Fischer-Yates shuffle (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
         /// </summary>
         /// <param name="listToShuffle">List to shuffle (in-place)</param>
         public static void Shuffle<T>(this IList<T> listToShuffle)

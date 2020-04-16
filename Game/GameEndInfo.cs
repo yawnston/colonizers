@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Game
 {
@@ -12,7 +10,7 @@ namespace Game
         public JArray SerializeToJArray()
         {
             var serializedPlayers = new JArray();
-            foreach(var p in Players)
+            foreach (var p in Players)
             {
                 serializedPlayers.Add(p.Serialize());
             }
