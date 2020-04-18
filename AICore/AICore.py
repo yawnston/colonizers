@@ -19,7 +19,8 @@ class AIBase(ABC):
                 print('Pipe opened: ' + pipeName)
                 return
             except Exception as e:
-                print('Error while connecting to pipe, waiting: ' + e)
+                print('Error while connecting to pipe, waiting: ')
+                print(e)
                 time.sleep(2)
 
     # Implement in descendants to communicate with game engine

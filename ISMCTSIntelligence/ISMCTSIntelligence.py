@@ -1,6 +1,8 @@
 import sys
 sys.path.insert(0, r"C:\Users\danie\Desktop\Skola\Colonizers")
 from AICore.AICore import *
+from HeuristicIntelligence.HeuristicIntelligence import HeuristicAI
+
 
 from random import seed, randint, choice
 from math import sqrt, log
@@ -71,7 +73,7 @@ class ICMTS_AI(AIBase):
 
             # SIMULATION
             while not gameState["GameOver"]:
-                gameState = self.simulate(gameState["BoardState"], choice(getActionStrings(gameState)))
+                gameState = self.simulateActionHeuristically(gameState)
 
             # BACKPROPAGATION
             while currentNode != None:
@@ -82,20 +84,32 @@ class ICMTS_AI(AIBase):
 
         # choose most visited node
         chosenActionString = max(rootNode.children, key=lambda c: c.visitCount).action
+        print("ICMTS choosing action: " + chosenActionString)
         return indexOfActionByString(actualGameState, chosenActionString)
+
+    # Simulate a single action during playout randomly
+    def simulateActionRandomly(self, gameState):
+        return self.simulate(gameState["BoardState"], choice(getActionStrings(gameState)))
+
+    # Simulate a single action during playout using the heuristic AI
+    def simulateActionHeuristically(self, gameState):
+        ai = HeuristicAI()
+        chosenActionIndex = ai.pickAction(gameState)
+        return self.simulate(gameState["BoardState"], getActionString(gameState["Actions"][chosenActionIndex]))
 
     # Convert player ranking to a scale of 1 to 0
     def evaluatePlayerRanking(self, ranking):
         if ranking == 1:
             return 1
         if ranking == 2:
-            return 0.5
+            return 0.2
         if ranking == 3:
             return 0.1
         return 0
 
-if len(sys.argv) != 2:
-    raise Exception('AI Script must have 1 argument - name of named pipe')
-#seed(15) # Seed AI for reproducibility
-ai = ICMTS_AI()
-ai.run(sys.argv[1])
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        raise Exception('AI Script must have 1 argument - name of named pipe')
+    #seed(15) # Seed AI for reproducibility
+    ai = ICMTS_AI()
+    ai.run(sys.argv[1])

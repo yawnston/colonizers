@@ -15,8 +15,9 @@ class RandomAI(AIBase):
         actionCount = len(gameState["Actions"])
         return randint(0, actionCount - 1)
 
-if len(sys.argv) != 2:
-    raise Exception('AI Script must have 1 argument - name of named pipe')
-#seed(42) # Seed AI for reproducibility
-ai = RandomAI()
-ai.run(sys.argv[1])
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        raise Exception('AI Script must have 1 argument - name of named pipe')
+    #seed(42) # Seed AI for reproducibility
+    ai = RandomAI()
+    ai.run(sys.argv[1])

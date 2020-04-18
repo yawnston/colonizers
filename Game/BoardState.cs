@@ -121,6 +121,21 @@ namespace Game
             return clonedBoardState;
         }
 
+        /// <summary>
+        /// Reveal all colonist information to all players.
+        /// Used during simulation to keep the information sets consistent.
+        /// </summary>
+        public void RevealColonistInformation()
+        {
+            foreach (var playerToReveal in Players)
+            {
+                foreach (var player in Players)
+                {
+                    player.ColonistInformation[playerToReveal.ID] = new List<Colonist> { playerToReveal.Colonist };
+                }
+            }
+        }
+
         private void DeterminizeColonists(int player)
         {
             var currentPlayer = Players[player - 1];
@@ -135,7 +150,7 @@ namespace Game
                     otherPlayer.Colonist = chosenColonist;
                     foreach (var playerToUpdate in Players)
                     {
-                        for (int i = 0; i < GameConstants.PlayerCount; i++)
+                        for (int i = 1; i <= GameConstants.PlayerCount; i++)
                         {
                             playerToUpdate.ColonistInformation[i] = playerToUpdate.ColonistInformation[i].Where(x => x.Name != chosenColonist.Name).ToList();
                         }

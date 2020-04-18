@@ -77,6 +77,7 @@ namespace Game.Players
                     {
                         var simulationDTO = JsonConvert.DeserializeObject<SimulationDTO>(result, serializerSettings);
                         var simulatedGameState = await resolver.Resolve(simulationDTO.ToGameAction()).ConfigureAwait(false);
+                        simulatedGameState.BoardState.RevealColonistInformation(); // Keep information sets consistent in a determinized game
                         WriteToPipe(JsonConvert.SerializeObject(simulatedGameState, serializerSettings));
                     }
                 }
