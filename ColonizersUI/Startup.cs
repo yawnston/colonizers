@@ -45,7 +45,7 @@ namespace ColonizersUI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Game}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             // Open the Electron-Window here

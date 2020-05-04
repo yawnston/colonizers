@@ -21,7 +21,9 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AICore", "AICore\AICore.pyp
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ISMCTSIntelligence", "ISMCTSIntelligence\ISMCTSIntelligence.pyproj", "{2F45E0BE-8EB0-4E8A-9FD5-DDE9F955FB09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColonizersUI", "ColonizersUI\ColonizersUI.csproj", "{B7878F6E-4494-4613-92FF-FCAAA0FC2965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColonizersUI", "ColonizersUI\ColonizersUI.csproj", "{B7878F6E-4494-4613-92FF-FCAAA0FC2965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "Desktop\Desktop.csproj", "{D2D5888F-793E-407A-A953-D4F89356BAC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{B7878F6E-4494-4613-92FF-FCAAA0FC2965}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7878F6E-4494-4613-92FF-FCAAA0FC2965}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7878F6E-4494-4613-92FF-FCAAA0FC2965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,6 +12,8 @@ namespace Game.Extensions
         /// </summary>
         public static IServiceCollection AddColonizersGame(this IServiceCollection services)
         {
+            // All services are stateless - we can register them as singletons.
+            // If registered as scoped or transient, it causes problems with callbacks registered by ASP.NET Core controller methods.
             return services.AddMediatR(typeof(Resolver).GetTypeInfo().Assembly)
               .AddScoped<IMediator, Mediator>()
               .AddScoped<IColonistPickGetter, ColonistPickGetter>()
