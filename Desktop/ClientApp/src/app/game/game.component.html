@@ -1,0 +1,7 @@
+<p>Fetching game data from the server</p>
+
+<p *ngIf="!gameState"><em>Loading...</em></p>
+
+<table *ngIf="gameState">
+  {{ gameState }}
+</table>

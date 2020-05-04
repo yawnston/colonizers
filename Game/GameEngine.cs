@@ -27,19 +27,34 @@ namespace Game
         public async Task<GameEndInfo> RunGame(IReadOnlyList<IPlayer> players)
         {
             BoardState boardState = BoardFactory.Standard();
-            GameState gameState = GameFactory.NewGame(boardState, serviceProvider);
+            GameState currentGameState = GameFactory.NewGame(boardState, serviceProvider);
 
-            while (!gameState.GameOver)
+            while (!currentGameState.GameOver)
             {
                 IPlayer currentPlayer = players[boardState.PlayerTurn - 1];
-                int moveId = await currentPlayer.GetMove(gameState, resolver).ConfigureAwait(false);
-                var selectedMove = gameState.Actions[moveId];
-                gameState = await resolver.Resolve(selectedMove).ConfigureAwait(false);
-                boardState = gameState.BoardState;
+                int moveId = await currentPlayer.GetMove(currentGameState, resolver).ConfigureAwait(false);
+                var selectedMove = currentGameState.Actions[moveId];
+                currentGameState = await resolver.Resolve(selectedMove).ConfigureAwait(false);
+                boardState = currentGameState.BoardState;
             }
 
             // Game is over -> return the info from gameState (guaranteed to be there when GameOver is true)
-            return gameState.GameEndInfo;
+            return currentGameState.GameEndInfo;
+        }
+
+        public GameState InitializeGame()
+        {
+            BoardState boardState = BoardFactory.Standard();
+            return GameFactory.NewGame(boardState, serviceProvider);
+        }
+
+        public async Task<GameState> ProcessTurn(GameState gameState, IReadOnlyList<IPlayer> players)
+        {
+            var boardState = gameState.BoardState;
+            IPlayer currentPlayer = players[boardState.PlayerTurn - 1];
+            int moveId = await currentPlayer.GetMove(gameState, resolver).ConfigureAwait(false);
+            var selectedMove = gameState.Actions[moveId];
+            return await resolver.Resolve(selectedMove).ConfigureAwait(false);
         }
     }
 }

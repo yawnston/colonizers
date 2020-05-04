@@ -193,11 +193,11 @@ class HeuristicAI(AIBase):
         value -= (len(getCurrentPlayer(gameState)["ColonistInformation"][player["ID"]]) - 1)
         return value
 
-seed(97) # Seed AI for reproducibility
-if len(sys.argv) != 2:
-    raise Exception('AI Script must have 1 argument - name of named pipe')
-ai = HeuristicAI()
-ai.initPipe(sys.argv[1])
-ai.messageLoop()
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        raise Exception('AI Script must have 1 argument - name of named pipe')
+    #seed(97) # Seed AI for reproducibility
+    ai = HeuristicAI()
+    ai.run(sys.argv[1])
 
 

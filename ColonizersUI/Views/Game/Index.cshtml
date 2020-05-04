@@ -1,0 +1,43 @@
+﻿@model ColonizersUI.Models.GameStateViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Game</title>
+</head>
+<body>
+
+<div>
+    <h4>GameStateViewModel</h4>
+    <hr />
+    @Model.GameState
+    <dl class="row">
+    </dl>
+</div>
+<div>
+    <button class="demo-button" id="async-msg">Process next turn</button>
+    <span class="demo-response" id="async-reply"></span>
+</div>
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+</body>
+</html>
+<script>
+    (function () {
+        const { ipcRenderer } = require("electron");
+        document.getElementById("async-msg").addEventListener("click", () => {
+            ipcRenderer.send("get-game-status-async", 'ping');
+        });
+        ipcRenderer.on('game-status-async', (event, arg) => {
+            const message = `Asynchronous message reply: ${arg}`;
+            document.getElementById('async-reply').innerHTML = message;
+        });
+
+        // Before navigating away or closing app, dispose AI processes and pipes
+        window.addEventListener('beforeunload', (event) => {
+            ipcRenderer.send("dispose-game-async", 'ping');
+        });
+    }());
+</script>

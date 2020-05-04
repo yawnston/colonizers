@@ -37,5 +37,14 @@ namespace Game
             GameOver = GameOver,
             BoardState = BoardState.CloneWithInformationSet(player)
         };
+
+        public GameState CloneAndDeterminize() => new GameState
+        {
+            // Possible actions don't change by determinizing since the current player is used
+            Actions = Actions,
+            GameEndInfo = GameEndInfo,
+            GameOver = GameOver,
+            BoardState = BoardState.CloneAndDeterminize(BoardState.PlayerTurn)
+        };
     }
 }

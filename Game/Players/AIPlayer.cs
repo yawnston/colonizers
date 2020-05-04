@@ -20,7 +20,7 @@ namespace Game.Players
         {
             ProcessStartInfo start = new ProcessStartInfo
             {
-                FileName = @"C:\Users\danie\Anaconda3\python.exe",
+                FileName = @"C:\Users\danie\Anaconda3\python.exe", // TODO: put in config file
                 Arguments = $"{scriptName} {pipeName}",
                 UseShellExecute = false
             };
@@ -54,26 +54,32 @@ namespace Game.Players
         {
             try
             {
-                WriteToPipe(JsonConvert.SerializeObject(gameState.CloneWithInformationSet(gameState.BoardState.PlayerTurn)));
+                var serializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+                WriteToPipe(JsonConvert.SerializeObject(gameState.CloneWithInformationSet(gameState.BoardState.PlayerTurn), serializerSettings));
 
                 while (true)
                 {
                     string result = ReadFromPipe();
 
-                    // AI has chosen a move to make - TODO: parse better?
+                    // AI has chosen a move to make - we know because it's an int
                     if (int.TryParse(result, out int chosenMove))
                     {
                         return chosenMove;
                     }
-
-                    // AI needs to simulate a move - it sends a game state and an action
-                    // This action is the only one left in the Actions list
-                    var simulationDTO = JsonConvert.DeserializeObject<SimulationDTO>(result);
-                    var simulatedGameState = await resolver.Resolve(simulationDTO.ToGameAction()).ConfigureAwait(false);
-                    await process.StandardInput.WriteLineAsync("TODO").ConfigureAwait(false);
-                    await process.StandardInput.FlushAsync().ConfigureAwait(false);
-
-                    // TODO: add determinization of information sets
+                    // AI wants to determinize a state
+                    else if (result == "determinize")
+                    {
+                        var determinizedState = gameState.CloneAndDeterminize();
+                        WriteToPipe(JsonConvert.SerializeObject(determinizedState, serializerSettings));
+                    }
+                    // AI wants to simulate a move -> payload is a JSON SimulationDTO
+                    else
+                    {
+                        var simulationDTO = JsonConvert.DeserializeObject<SimulationDTO>(result, serializerSettings);
+                        var simulatedGameState = await resolver.Resolve(simulationDTO.ToGameAction()).ConfigureAwait(false);
+                        simulatedGameState.BoardState.RevealColonistInformation(); // Keep information sets consistent in a determinized game
+                        WriteToPipe(JsonConvert.SerializeObject(simulatedGameState, serializerSettings));
+                    }
                 }
             }
             catch (EndOfStreamException)

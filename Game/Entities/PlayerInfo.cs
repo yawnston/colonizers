@@ -26,7 +26,8 @@ namespace Game.Entities
         public IList<Module> Colony { get; set; } = new List<Module>();
 
         /// <summary>
-        /// Information the player has about other players' colonists
+        /// Information the player has about other players' colonists.
+        /// May not be consistent if the board state is determinized.
         /// </summary>
         public Dictionary<int, List<Colonist>> ColonistInformation { get; set; } = CreateDefaultColonistInformation();
 
@@ -48,6 +49,19 @@ namespace Game.Entities
                 ? ColonistInformation
                 : CreateDefaultColonistInformation()
         };
+
+        public PlayerInfo DeepClone()
+        {
+            var newInfo = (PlayerInfo)this.MemberwiseClone();
+            newInfo.Hand = new List<Module>(Hand);
+            newInfo.Colony = new List<Module>(Colony);
+            newInfo.ColonistInformation = CreateDefaultColonistInformation();
+            foreach (var kvp in ColonistInformation)
+            {
+                newInfo.ColonistInformation[kvp.Key] = new List<Colonist>(kvp.Value);
+            }
+            return newInfo;
+        }
 
         public static Dictionary<int, List<Colonist>> CreateDefaultColonistInformation()
         {
