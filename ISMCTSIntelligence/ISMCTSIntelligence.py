@@ -52,6 +52,9 @@ class ICMTS_AI(AIBase):
     def pickAction(self, actualGameState):
         rootNode = MCTSTreeNode()
         for i in range(100):
+            if i % 10 == 0:
+                print("ISMCTS simulating games - iteration " + str(i));
+
             currentNode = rootNode
 
             # DETERMINIZATION
@@ -84,7 +87,7 @@ class ICMTS_AI(AIBase):
 
         # choose most visited node
         chosenActionString = max(rootNode.children, key=lambda c: c.visitCount).action
-        print("ICMTS choosing action: " + chosenActionString)
+        print("ISMCTS choosing action: " + chosenActionString)
         return indexOfActionByString(actualGameState, chosenActionString)
 
     # Simulate a single action during playout randomly

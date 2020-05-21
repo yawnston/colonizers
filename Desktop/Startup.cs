@@ -1,3 +1,4 @@
+using Desktop.Services;
 using ElectronNET.API;
 using Game.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +32,10 @@ namespace Desktop
             });
 
             services.AddColonizersGame();
+
+            services.AddScoped<GameService>();
+            services.AddSingleton<StateService>();
+            services.AddSingleton<PlayerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +82,11 @@ namespace Desktop
             });
 
             // Open the Electron-Window here
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+            Task.Run(async () =>
+            {
+                var browserWindow = await Electron.WindowManager.CreateWindowAsync();
+                browserWindow.Maximize();
+            });
         }
     }
 }

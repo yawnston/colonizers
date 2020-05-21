@@ -1,43 +1,51 @@
-﻿using Game;
-using Game.Players;
+﻿using Desktop.Services;
+using Game;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Desktop.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class GameController : ControllerBase
     {
 
-        private static GameEngine gameEngine;
         private readonly ILogger<GameController> logger;
+        private readonly GameService gameService;
 
-        public GameController(GameEngine gameEngine, ILogger<GameController> logger)
+        public GameController(GameService playerService, ILogger<GameController> logger)
         {
-            GameController.gameEngine = gameEngine;
             this.logger = logger;
+            this.gameService = playerService;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpPost("start")]
+        public async Task<IActionResult> StartGame()
         {
-            var players = new List<IPlayer>
-            {
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player1Pipe"),
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\HeuristicIntelligence\HeuristicIntelligence.py", "Player2Pipe"),
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player3Pipe"),
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player4Pipe"),
-                //new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\ISMCTSIntelligence\ISMCTSIntelligence.py", "Player4Pipe"),
-            };
-
             logger.LogInformation("Starting game.");
-            var gameState = gameEngine.InitializeGame();
-
-            gameState = await gameEngine.ProcessTurn(gameState, players);
+            var gameState = await gameService.InitializeGame();
 
             return Ok(gameState);
+        }
+
+        [HttpPost("aiturn")]
+        public async Task<IActionResult> ProcessAITurn()
+        {
+            return Ok(await gameService.ProcessAITurn());
+        }
+
+        [HttpPost("playerturn")]
+        public async Task<IActionResult> ProcessPlayerTurn([FromBody] int move)
+        {
+            return Ok(await gameService.ProcessPlayerTurn(move));
+        }
+
+        [HttpPost("dispose")]
+        public IActionResult DisposeGame()
+        {
+            gameService.DisposePlayers();
+            return Ok();
         }
     }
 }

@@ -14,3 +14,13 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.vertical-flex {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body {
+    height: 100%;
+}

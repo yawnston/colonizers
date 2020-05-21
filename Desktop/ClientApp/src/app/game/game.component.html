@@ -1,7 +1,32 @@
-<p>Fetching game data from the server</p>
+<div class="vertical-flex">
+  <p>Fetching game data from the server</p>
 
-<p *ngIf="!gameState"><em>Loading...</em></p>
+  <p *ngIf="!gameState"><em>Loading...</em></p>
 
-<table *ngIf="gameState">
-  {{ gameState }}
-</table>
+  <div *ngIf="gameState" class="container-fluid vertical-flex">
+    <div *ngIf="gameState.gameOver">
+      <app-game-end></app-game-end>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]"></app-player>
+      </div>
+      <div class="col">
+        <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]"></app-player>
+      </div>
+    </div>
+    <div class="row" style="flex:1">
+      <app-board [boardState]="gameState.boardState"></app-board>
+      <button (click)="processAITurn()" type="button">NEXT AI TURN</button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]"></app-player>
+      </div>
+      <div class="col">
+        <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]"></app-player>
+      </div>
+    </div>
+  </div>
+</div>
+

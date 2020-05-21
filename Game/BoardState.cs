@@ -45,7 +45,7 @@ namespace Game
         public IList<Module> DiscardTempStorage { get; set; } = new List<Module>();
 
         /// <summary>
-        /// Indicates which player currently has their turn
+        /// Indicates which player currently has their turn, from 1 to 4
         /// </summary>
         public int PlayerTurn { get; set; } = GameConstants.PlayerIDs.Min();
 

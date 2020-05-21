@@ -1,26 +1,40 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { GameState } from '../services/models/gamestate';
+import { GameService } from '../services/game.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css']
+  styleUrls: ['./game.component.css'],
+  host: { class: 'vertical-flex' },
 })
-export class GameComponent implements OnInit {
-  gameState: any;
+export class GameComponent implements OnInit, OnDestroy {
+    
+  gameState: GameState;
+  playerLoadingObs: Observable<boolean>[] = [...Array(4)].map(_ => of(false));
 
-  constructor(http: HttpClient,
-    @Inject('BASE_URL') baseUrl: string) {
+  constructor(private gameService: GameService) {
 
-    http.get(baseUrl + 'game')
-      .pipe(take(1))
-      .subscribe(result => {
-        this.gameState = JSON.stringify(result, undefined, 1);
-    }, error => console.error(error));
   }
 
-  ngOnInit() {
+  processAITurn(): void {
+    const playerTurn = this.gameState.boardState.playerTurn;
+    this.playerLoadingObs[playerTurn - 1] = this.gameService.isLoading$;
+
+    this.gameService.processAITurn$().subscribe(x => {
+      this.playerLoadingObs[playerTurn - 1] = of(false);
+      this.gameState = x;
+    });
   }
 
+  ngOnInit(): void {
+    this.gameService.initGame$().subscribe(x => {
+      this.gameState = x;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.gameService.disposeGame();
+  }
 }

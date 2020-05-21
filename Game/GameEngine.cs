@@ -50,6 +50,11 @@ namespace Game
 
         public async Task<GameState> ProcessTurn(GameState gameState, IReadOnlyList<IPlayer> players)
         {
+            if (gameState.GameOver)
+            {
+                throw new InvalidOperationException("Cannot process turn, the game is already over.");
+            }
+
             var boardState = gameState.BoardState;
             IPlayer currentPlayer = players[boardState.PlayerTurn - 1];
             int moveId = await currentPlayer.GetMove(gameState, resolver).ConfigureAwait(false);

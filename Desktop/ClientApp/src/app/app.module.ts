@@ -10,6 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GameComponent } from './game/game.component';
+import { PlayerComponent } from './player/player.component';
+import { BoardComponent } from './board/board.component';
+import { GameEndComponent } from './game-end/game-end.component'
+import { ModuleComponent } from './module/module.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,10 @@ import { GameComponent } from './game/game.component';
     CounterComponent,
     FetchDataComponent,
     GameComponent,
+    PlayerComponent,
+    BoardComponent,
+    GameEndComponent,
+    ModuleComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
