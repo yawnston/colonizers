@@ -1,12 +1,11 @@
 <div class="vertical-flex">
-  <p>Fetching game data from the server</p>
-
   <p *ngIf="!gameState"><em>Loading...</em></p>
 
+  <div *ngIf="gameState?.gameOver">
+    <app-game-end [gameEndInfo]="gameState?.gameEndInfo"></app-game-end>
+  </div>
+
   <div *ngIf="gameState" class="container-fluid vertical-flex">
-    <div *ngIf="gameState.gameOver">
-      <app-game-end></app-game-end>
-    </div>
     <div class="row">
       <div class="col">
         <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]"></app-player>
@@ -17,7 +16,7 @@
     </div>
     <div class="row" style="flex:1">
       <app-board [boardState]="gameState.boardState"></app-board>
-      <button (click)="processAITurn()" type="button">NEXT AI TURN</button>
+      <button (click)="processAITurn()" type="button">START GAME</button>
     </div>
     <div class="row">
       <div class="col">

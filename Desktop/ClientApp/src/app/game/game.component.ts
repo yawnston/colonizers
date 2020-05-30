@@ -10,7 +10,6 @@ import { Observable, of } from 'rxjs';
   host: { class: 'vertical-flex' },
 })
 export class GameComponent implements OnInit, OnDestroy {
-    
   gameState: GameState;
   playerLoadingObs: Observable<boolean>[] = [...Array(4)].map(_ => of(false));
 
@@ -18,14 +17,32 @@ export class GameComponent implements OnInit, OnDestroy {
 
   }
 
-  processAITurn(): void {
-    const playerTurn = this.gameState.boardState.playerTurn;
-    this.playerLoadingObs[playerTurn - 1] = this.gameService.isLoading$;
+  processTurn(): void {
+    if (false) {
+      // TODO: human player
+      this.processHumanTurn();
+    }
+    else {
+      // AI player
+      this.processAITurn();
+    }
+  }
 
-    this.gameService.processAITurn$().subscribe(x => {
-      this.playerLoadingObs[playerTurn - 1] = of(false);
-      this.gameState = x;
-    });
+  processAITurn(): void {
+    if (this.gameState && !this.gameState.gameOver) {
+      const playerTurn = this.gameState.boardState.playerTurn;
+      this.playerLoadingObs[playerTurn - 1] = this.gameService.isLoading$;
+
+      this.gameService.processAITurn$().subscribe(x => {
+        this.playerLoadingObs[playerTurn - 1] = of(false);
+        this.gameState = x;
+        this.processTurn();
+      });
+    }
+  }
+
+  processHumanTurn(): void {
+    // TODO: process human turn (somehow set turn to enable actions and end)
   }
 
   ngOnInit(): void {
