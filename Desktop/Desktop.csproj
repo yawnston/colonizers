@@ -59,4 +59,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\AICore\**" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="AICore\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  
 </Project>

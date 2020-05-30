@@ -7,7 +7,9 @@
 }
 
 .module-blue {
-    background-color: dodgerblue;
+    border: 2px solid dodgerblue;
+    border-radius: 25px;
+/*    background-color: dodgerblue;*/
 }
 
 .module-white {

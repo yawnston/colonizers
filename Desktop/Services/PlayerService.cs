@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Desktop.Services
 {
@@ -24,13 +26,13 @@ namespace Desktop.Services
                 DisposePlayers();
             }
 
+            string scriptFolderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AICore");
             Players = new List<IPlayer>
             {
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player1Pipe"),
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\HeuristicIntelligence\HeuristicIntelligence.py", "Player2Pipe"),
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player3Pipe"),
-                new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\RandomIntelligence\RandomIntelligence.py", "Player4Pipe"),
-                //new AIPlayer(@"C:\Users\danie\Desktop\Skola\Colonizers\ISMCTSIntelligence\ISMCTSIntelligence.py", "Player4Pipe"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player1Pipe"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe"),
             };
         }
 

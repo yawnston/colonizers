@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Desktop.Controllers
@@ -30,7 +31,8 @@ namespace Desktop.Controllers
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                //Summary = Summaries[rng.Next(Summaries.Length)],
+                Summary = System.Reflection.Assembly.GetExecutingAssembly().Location,
             })
             .ToArray();
         }
