@@ -93,7 +93,7 @@ namespace Experiments
 
             ExperimentRunner runner = new ExperimentRunner(serviceProvider);
 
-            List<ExperimentResult> results = await runner.RunMultipleGames(playersFactory, 50);
+            List<ExperimentResult> results = await runner.RunMultipleGames(playersFactory, 1);
             WriteResults(results, "MaxnVsHeuristic.json");
             return results;
         }

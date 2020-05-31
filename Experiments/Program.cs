@@ -23,7 +23,11 @@ namespace Experiments
 
             var scenarios = new Scenarios(serviceProvider, scriptFolderPath);
 
-            var results = await scenarios.FourRandoms();
+            //await scenarios.FourRandoms();
+            await scenarios.FourHeuristics();
+            //await scenarios.OneOfEach();
+            //await scenarios.MaxnVsHeuristic();
+            //await scenarios.ISMCTSVsHeuristic();
         }
     }
 }
