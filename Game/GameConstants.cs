@@ -55,7 +55,7 @@ namespace Game
         /// <summary>
         /// Seed for random generator which shuffles decks. Not a constant because it is expected to change.
         /// </summary>
-        public static int ShuffleRandomSeed { get; } = 42;
+        public static int ShuffleRandomSeed { get; set; } = 42;
 
 
         static GameConstants()

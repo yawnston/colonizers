@@ -17,6 +17,6 @@ class RandomAI(AIBase):
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         raise Exception('AI Script must have 1 argument - name of named pipe')
-    #seed(42) # Seed AI for reproducibility
+    seed(42) # Seed AI for reproducibility
     ai = RandomAI()
     ai.run(sys.argv[1])

@@ -71,9 +71,8 @@ class MaxnAI(AIBase):
         return max(self.maxnPayoffs(node, depth), key=lambda p: p[node.player - 1])
 
 if __name__ == "__main__":
-    sys.argv.append("Player1Pipe")
     if len(sys.argv) != 2:
         raise Exception('AI Script must have 1 argument - name of named pipe')
-    #seed(42) # Seed AI for reproducibility
+    seed(99) # Seed AI for reproducibility
     ai = MaxnAI()
     ai.run(sys.argv[1])

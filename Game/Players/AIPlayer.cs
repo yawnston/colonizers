@@ -16,8 +16,11 @@ namespace Game.Players
         private readonly BinaryReader pipeReader;
         private readonly BinaryWriter pipeWriter;
 
-        public AIPlayer(string scriptName, string pipeName)
+        public string Name { get; set; }
+
+        public AIPlayer(string scriptName, string pipeName, string playerName)
         {
+            Name = playerName;
             ProcessStartInfo start = new ProcessStartInfo
             {
                 //FileName = @"C:\Users\danie\Anaconda3\python.exe", // TODO: put in config file

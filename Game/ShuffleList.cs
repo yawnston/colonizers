@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game
 {
-    static class ShuffleList
+    public static class ShuffleList
     {
         private static readonly Random random = new Random(GameConstants.ShuffleRandomSeed);
 

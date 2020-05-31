@@ -53,7 +53,7 @@ class ICMTS_AI(AIBase):
             return 0;
 
         rootNode = MCTSTreeNode()
-        for i in range(100):
+        for i in range(200):
             if i % 10 == 0:
                 print("ISMCTS simulating games - iteration " + str(i));
 
@@ -115,6 +115,6 @@ class ICMTS_AI(AIBase):
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         raise Exception('AI Script must have 1 argument - name of named pipe')
-    #seed(15) # Seed AI for reproducibility
+    seed(15) # Seed AI for reproducibility
     ai = ICMTS_AI()
     ai.run(sys.argv[1])

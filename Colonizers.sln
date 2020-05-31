@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Game\Game.csproj", "{57400145-96F1-4D7A-9F8A-478BA4DB7707}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PythonCLI", "PythonCLI\PythonCLI.csproj", "{48BE2B9C-048A-419C-BD73-FE30DC7A1142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Experiments", "Experiments\Experiments.csproj", "{48BE2B9C-048A-419C-BD73-FE30DC7A1142}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AICore", "AICore\AICore.pyproj", "{D4B903CD-280C-4DE5-888D-C8BC50961714}"
 EndProject
