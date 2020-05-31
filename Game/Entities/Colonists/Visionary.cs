@@ -16,8 +16,9 @@ namespace Game.Entities.Colonists
 
         public override void PerformClassDrawAction(BoardState boardState)
         {
-            // Visionary draws 1 extra card at the start of his turn (if his hand is not full)
-            if (boardState.Players[boardState.PlayerTurn - 1].Hand.Count < GameConstants.MaxHandSize)
+            // Visionary draws 1 extra card at the start of his turn (if his hand is not full and deck is not empty)
+            if (boardState.Players[boardState.PlayerTurn - 1].Hand.Count < GameConstants.MaxHandSize
+                && boardState.Deck.Count > 0)
             {
                 var module1 = boardState.Deck.First();
                 boardState.Deck.Remove(module1);

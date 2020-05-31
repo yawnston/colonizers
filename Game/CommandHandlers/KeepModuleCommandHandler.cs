@@ -24,7 +24,11 @@ namespace Game.CommandHandlers
 
             var module = request.BoardState.DiscardTempStorage.FirstOrDefault(m => m.Name == request.Module);
             if (module is null) throw new InvalidOperationException($"Module to keep {module} is not in the temp storage.");
-            board.Players[board.PlayerTurn - 1].Hand.Add(module);
+            if (board.Players[board.PlayerTurn - 1].Hand.Count < GameConstants.MaxHandSize)
+            {
+                // If player's hand is full when they attempt to keep, the kept module is removed from play
+                board.Players[board.PlayerTurn - 1].Hand.Add(module);
+            }
             foreach (var m in request.BoardState.DiscardTempStorage.Where(x => x != module))
             {
                 board.Deck.Add(m); // add the discarded modules to the bottom of the deck

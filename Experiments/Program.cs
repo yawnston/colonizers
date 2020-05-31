@@ -24,8 +24,8 @@ namespace Experiments
             var scenarios = new Scenarios(serviceProvider, scriptFolderPath);
 
             //await scenarios.FourRandoms();
-            await scenarios.FourHeuristics();
-            //await scenarios.OneOfEach();
+            //await scenarios.FourHeuristics();
+            await scenarios.OneOfEach();
             //await scenarios.MaxnVsHeuristic();
             //await scenarios.ISMCTSVsHeuristic();
         }
