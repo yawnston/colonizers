@@ -29,7 +29,7 @@ namespace Desktop.Services
             string scriptFolderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AICore");
             Players = new List<IPlayer>
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player1Pipe"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player1Pipe"),
                 new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe"),
                 new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe"),
                 new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe"),

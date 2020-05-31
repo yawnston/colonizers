@@ -48,6 +48,10 @@ class ICMTS_AI(AIBase):
         return str(self.pickAction(gameState)) # important to return string, not number
 
     def pickAction(self, actualGameState):
+        # Small optimization when we don't have a choice
+        if len(actualGameState["Actions"]) == 1:
+            return 0;
+
         rootNode = MCTSTreeNode()
         for i in range(100):
             if i % 10 == 0:

@@ -24,6 +24,9 @@
     <Compile Include="AICore.py" />
     <Compile Include="HeuristicIntelligence.py" />
     <Compile Include="ISMCTSIntelligence.py" />
+    <Compile Include="MaxnIntelligence.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RandomIntelligence.py" />
     <Compile Include="__init__.py">
       <SubType>Code</SubType>
