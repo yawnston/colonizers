@@ -73,7 +73,7 @@ namespace Experiments
 
             ExperimentRunner runner = new ExperimentRunner(serviceProvider);
 
-            List<ExperimentResult> results = await runner.RunMultipleGames(playersFactory, 1);
+            List<ExperimentResult> results = await runner.RunMultipleGames(playersFactory, 50);
             WriteResults(results, "OneOfEach.json");
             return results;
         }
