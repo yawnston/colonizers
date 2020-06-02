@@ -14,9 +14,7 @@ export class GameComponent implements OnInit, OnDestroy {
   gameState: GameState;
   playerLoadingObs: Observable<boolean>[] = [...Array(4)].map(_ => of(false));
 
-  constructor(private gameService: GameService) {
-
-  }
+  constructor(private gameService: GameService) { }
 
   processTurn(): void {
     if (false) {

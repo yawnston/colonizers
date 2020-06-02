@@ -1,0 +1,16 @@
+.add-btn {
+  display: inline;
+  width: 230px;
+  margin: 0em 1em 1em 1em;
+}
+
+.start-btn {
+  width: 200px;
+  margin: .5em;
+  font-size: 20px;
+}
+
+.inline-margin {
+  display: inline;
+  margin: .5em;
+}

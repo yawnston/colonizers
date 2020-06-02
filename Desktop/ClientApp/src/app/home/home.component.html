@@ -1,24 +1,40 @@
-<h1>Welcome to Colonizers</h1>
-<!--<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>-->
+<div style="text-align:center">
+  <h1>Welcome to Colonizers</h1>
+  <p>Please select the players you wish to have in the game:</p>
 
-<p>Please select the players you wish to have in the game:</p>
+  <div *ngFor="let i of [1,2,3,4]" style="margin:.5em">
+    <h4 class="inline-margin"><span class="badge badge-secondary">Player {{ i }}:</span></h4>
+    <app-scripts class="inline-margin" [scripts]="scripts" (selection)="onPlayerSelect($event, i)"></app-scripts>
+  </div>
 
-<div *ngFor="let i of [1,2,3,4]">
-  <p>Select player {{ i }}</p>
-  <app-scripts [scripts]="scripts" (selection)="onPlayerSelect($event, i)"></app-scripts>
+  <hr />
+
+  <p>You may also add new AI scripts or folders to the game:</p>
+  <div>
+    <button type="button" class="btn btn-primary add-btn" (click)="addAIScript()">Add AI script</button>
+    <button type="button" class="btn btn-primary add-btn" (click)="addAIFolder()">Add AI folder</button>
+  </div>
+  <p>
+    A copy of the AI files you select will be stored in the game's installation folder.
+    This copy will then be available as an in-game option for AI players.
+    Please refer to the documentation to find the structure required for your AI to function.
+  </p>
+
+  <hr />
+
+  <div>
+    <p>You can modify the path to the Python executable used to execute the game's AI scritps.</p>
+    <p>The currently used path is: <code>{{ pythonExecutable }}</code></p>
+    <button type="button" class="btn btn-secondary add-btn" (click)="selectPythonExecutable()">
+      Select Python executable
+    </button>
+  </div>
+
+  <hr />
+
+  <div *ngIf="!pythonExecutable">
+    <p class="text-danger">You have not selected a Python executable. You may not start a game until you do so.</p>
+  </div>
+  <button type="button" class="btn btn-danger start-btn"
+          [disabled]="!pythonExecutable" (click)="startGame()">START GAME</button>
 </div>
-
-<p>You may also add new players to the game:</p>
-
-<button>START GAME</button>

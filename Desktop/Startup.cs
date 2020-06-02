@@ -37,6 +37,7 @@ namespace Desktop
             services.AddScoped<GameService>();
             services.AddSingleton<StateService>();
             services.AddSingleton<PlayerService>();
+            services.AddSingleton<FileDialogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
