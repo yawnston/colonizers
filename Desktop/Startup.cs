@@ -1,5 +1,6 @@
 using Desktop.Services;
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Game.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,6 +69,7 @@ namespace Desktop
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
+            // Serve Angular SPA along with ASP.NET Core
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -81,10 +83,14 @@ namespace Desktop
                 }
             });
 
-            // Open the Electron-Window here
+            // Open the Electron window and configure it
             Task.Run(async () =>
             {
-                var browserWindow = await Electron.WindowManager.CreateWindowAsync();
+                System.Console.WriteLine($"Electron active: {HybridSupport.IsElectronActive}");
+                BrowserWindow browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+                {
+                    Title = "Colonizers"
+                });
                 browserWindow.Maximize();
             });
         }

@@ -18,7 +18,7 @@ namespace Desktop.Services
             this.logger = logger;
         }
 
-        public void InitPlayers()
+        public void InitPlayers(string[] playerNames)
         {
             if (Players != null)
             {
@@ -26,21 +26,77 @@ namespace Desktop.Services
                 DisposePlayers();
             }
 
-            string scriptFolderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AICore");
-            Players = new List<IPlayer>
+            string[] pipeNames = new[] { "Player1Pipe", "Player2Pipe", "Player3Pipe", "Player4Pipe" };
+
+            Players = new List<IPlayer>();
+            for (int i = 0; i < pipeNames.Length; i++)
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player1Pipe", "Maxn"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe", "Random"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe", "Random"),
-            };
+                Players.Add(CreatePlayer(playerNames[i], pipeNames[i]));
+            }
+
+            //Players = new List<IPlayer>
+            //{
+            //    new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player1Pipe", "Maxn"),
+            //    new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
+            //    new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe", "Random"),
+            //    new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe", "Random"),
+            //};
+        }
+
+        private IPlayer CreatePlayer(string playerName, string pipeName)
+        {
+            if (playerName == "Human Player")
+            {
+                // Human players do not use pipes, therefore pipeName is not used here
+                return new HumanPlayer { Name = "Human Player" };
+            }
+
+            // Else it is an AI player
+            return CreateAIPlayer(playerName, pipeName);
+        }
+
+        private AIPlayer CreateAIPlayer(string playerName, string pipeName)
+        {
+            string scriptFolderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AICore");
+            string scriptPath;
+
+            // Try looking for the AI as a top-level script
+            string[] aiScript = Directory.GetFiles(scriptFolderPath, $"{playerName}.py");
+            if (aiScript.Length != 0)
+            {
+                scriptPath = aiScript[0];
+            }
+            else
+            {
+                // Try looking for the AI as a folder
+                // AI folders must have the name "<Name>Intelligence" and they must contain a script named "main.py"
+                // This script is the AI's entrypoint which is called by the game engine
+                string[] aiDir = Directory.GetDirectories(scriptFolderPath, playerName);
+                if (aiDir.Length != 0)
+                {
+                    scriptPath = Path.Combine(aiDir[0], "main.py");
+                    if (!File.Exists(scriptPath))
+                    {
+                        throw new InvalidOperationException($"AI folder {playerName} was found, but entrypoint \"main.py\" script was not found in the folder.");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException($"The AI named {playerName} was not found.");
+                }
+            }
+
+            // All AI names must follow the pattern "<Name>Intelligence"
+            string name = playerName.Substring(0, playerName.LastIndexOf("Intelligence"));
+
+            return new AIPlayer(scriptPath, pipeName, name);
         }
 
         public void DisposePlayers()
         {
             if (Players != null)
             {
-                foreach (var p in Players)
+                foreach (IPlayer p in Players)
                 {
                     p.Dispose();
                 }

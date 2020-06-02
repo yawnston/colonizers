@@ -14,9 +14,9 @@ export class GameService {
 
   public isLoading$: Subject<boolean> = new BehaviorSubject(false);
 
-  public initGame$(): Observable<GameState> {
+  public initGame$(playerNames: string[]): Observable<GameState> {
     this.isLoading$.next(true);
-    return this.http.post<GameState>(this.baseUrl + 'api/game/start', undefined)
+    return this.http.post<GameState>(this.baseUrl + 'api/game/start', playerNames)
       .pipe(
         take(1),
         tap(_ => this.isLoading$.next(false)),

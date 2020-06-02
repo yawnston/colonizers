@@ -5,9 +5,9 @@
   },
   "singleInstance": false,
   "build": {
-    "appId": "com.Desktop.app",
-    "productName": "Desktop",
-    "copyright": "Copyright © 2019",
+    "appId": "com.colonizers.app",
+    "productName": "Colonizers",
+    "copyright": "Copyright © 2020",
     "buildVersion": "1.0.0",
     "compression": "maximum",
     "directories": {
@@ -24,9 +24,13 @@
       {
         "from": "./ElectronHostHook/node_modules",
         "to": "ElectronHostHook/node_modules",
-        "filter": ["**/*"]
+        "filter": [ "**/*" ]
       },
       "**/*"
-    ]
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }

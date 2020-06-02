@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Module, Color } from '../services/models/gamestate';
+import { Module, Color } from '../services/game/models/gamestate';
 
 @Component({
   selector: 'app-module',

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PlayerInfo } from '../services/models/gamestate';
+import { PlayerInfo } from '../services/game/models/gamestate';
 import { Observable } from 'rxjs';
 
 @Component({

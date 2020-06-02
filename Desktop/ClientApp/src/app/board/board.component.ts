@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BoardState } from '../services/models/gamestate';
+import { BoardState } from '../services/game/models/gamestate';
 
 @Component({
   selector: 'app-board',

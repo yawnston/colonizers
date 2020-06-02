@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GameState } from '../services/models/gamestate';
-import { GameService } from '../services/game.service';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { GameState } from '../services/game/models/gamestate';
+import { GameService } from '../services/game/game.service';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
   host: { class: 'vertical-flex' },
 })
 export class GameComponent implements OnInit, OnDestroy {
+  @Input() playerNames: string[];
   gameState: GameState;
   playerLoadingObs: Observable<boolean>[] = [...Array(4)].map(_ => of(false));
 
@@ -46,7 +47,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.gameService.initGame$().subscribe(x => {
+    this.gameService.initGame$(this.playerNames).subscribe(x => {
       this.gameState = x;
     });
   }

@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { GameEndInfo, PlayerEndInfo } from '../services/models/gamestate';
+import { GameEndInfo, PlayerEndInfo } from '../services/game/models/gamestate';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 

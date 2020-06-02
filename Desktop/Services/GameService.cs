@@ -18,9 +18,9 @@ namespace Desktop.Services
             this.playerService = playerService;
         }
 
-        public Task<GameState> InitializeGame()
+        public Task<GameState> InitializeGame(string[] playerNames)
         {
-            playerService.InitPlayers();
+            playerService.InitPlayers(playerNames);
             var gameState = gameEngine.InitializeGame();
             stateService.GameState = gameState;
             return Task.FromResult(gameState);

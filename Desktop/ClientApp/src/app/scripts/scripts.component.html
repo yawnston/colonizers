@@ -1,0 +1,9 @@
+<div ngbDropdown class="d-inline-block">
+  <button class="btn btn-outline-primary" ngbDropdownToggle>{{ selectedScript }}</button>
+  <div ngbDropdownMenu>
+    <button *ngFor="let script of scripts"
+            ngbDropdownItem (click)="selectScript(script)">
+      {{ script }}
+    </button>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { PlayerComponent } from './player/player.component';
 import { BoardComponent } from './board/board.component';
 import { GameEndComponent } from './game-end/game-end.component'
 import { ModuleComponent } from './module/module.component';
+import { ScriptsComponent } from './scripts/scripts.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ModuleComponent } from './module/module.component';
     BoardComponent,
     GameEndComponent,
     ModuleComponent,
+    ScriptsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
