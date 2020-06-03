@@ -49,12 +49,18 @@ namespace Desktop.Controllers
             return Ok(aiFiles.Concat(aiDirs));
         }
 
+        /// <summary>
+        /// Add an AI script through a file select dialog.
+        /// </summary>
         [HttpPost("addscript")]
         public async Task<IActionResult> AddSingleScript()
         {
             return Ok(await fileDialogService.AddSingleScript());
         }
 
+        /// <summary>
+        /// Add an AI folder through a file select dialog.
+        /// </summary>
         [HttpPost("addfolder")]
         public async Task<IActionResult> AddFolderScript()
         {

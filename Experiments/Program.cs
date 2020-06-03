@@ -1,10 +1,5 @@
-﻿using Game;
-using Game.Extensions;
-using Game.Players;
+﻿using Game.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -15,37 +10,37 @@ namespace Experiments
     {
         public static async Task Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
+            ServiceProvider serviceProvider = new ServiceCollection()
               .AddColonizersGame()
               .BuildServiceProvider();
 
             string scriptFolderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AICore");
 
-            var scenarios = new Scenarios(serviceProvider, scriptFolderPath);
+            Scenarios scenarios = new Scenarios(serviceProvider, scriptFolderPath);
 
             string pythonExecutable = args[2];
 
-            switch (Int32.Parse(args[1]))
+            switch (int.Parse(args[1]))
             {
                 case 1:
-                    await scenarios.FourRandoms();
+                    await scenarios.FourRandoms(pythonExecutable);
                     break;
                 case 2:
-                    await scenarios.FourHeuristics();
+                    await scenarios.FourHeuristics(pythonExecutable);
                     break;
                 case 3:
-                    await scenarios.OneOfEach();
+                    await scenarios.OneOfEach(pythonExecutable);
                     break;
                 case 4:
-                    await scenarios.MaxnVsHeuristic();
+                    await scenarios.MaxnVsHeuristic(pythonExecutable);
                     break;
                 case 5:
-                    await scenarios.ISMCTSVsHeuristic();
+                    await scenarios.ISMCTSVsHeuristic(pythonExecutable);
                     break;
 
             }
 
-            // TODO: configure python path
+            System.Console.WriteLine("Experiment run finished! Results have been written to the output JSON file.");
         }
     }
 }

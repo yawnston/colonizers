@@ -18,13 +18,13 @@ namespace Game.Players
 
         public string Name { get; set; }
 
-        public AIPlayer(string scriptName, string pipeName, string playerName)
+        public AIPlayer(string scriptName, string pipeName, string playerName, string pythonExecutable)
         {
             Name = playerName;
             ProcessStartInfo start = new ProcessStartInfo
             {
-                //FileName = @"C:\Users\danie\Anaconda3\python.exe", // TODO: put in config file
-                FileName = @"C:\Users\d.crha\AppData\Local\Programs\Python\Python37\python3.exe",
+                // TODO: do something to handle when the executable is not a valid python executable
+                FileName = pythonExecutable,
                 Arguments = $"{scriptName} {pipeName}",
                 UseShellExecute = false
             };

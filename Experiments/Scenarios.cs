@@ -18,16 +18,16 @@ namespace Experiments
             this.scriptFolderPath = scriptFolderPath;
         }
 
-        public async Task<List<ExperimentResult>> FourRandoms()
+        public async Task<List<ExperimentResult>> FourRandoms(string pythonExecutable)
         {
             List<IPlayer> playersFactory()
             {
                 return new List<IPlayer>
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player1Pipe", "Random"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player2Pipe", "Random"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe", "Random"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe", "Random"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player1Pipe", "Random", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player2Pipe", "Random", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe", "Random", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe", "Random", pythonExecutable),
             };
             }
 
@@ -38,16 +38,16 @@ namespace Experiments
             return results;
         }
 
-        public async Task<List<ExperimentResult>> FourHeuristics()
+        public async Task<List<ExperimentResult>> FourHeuristics(string pythonExecutable)
         {
             List<IPlayer> playersFactory()
             {
                 return new List<IPlayer>
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player1Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player3Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player4Pipe", "Heuristic"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player1Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player3Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player4Pipe", "Heuristic", pythonExecutable),
             };
             }
 
@@ -58,16 +58,16 @@ namespace Experiments
             return results;
         }
 
-        public async Task<List<ExperimentResult>> OneOfEach()
+        public async Task<List<ExperimentResult>> OneOfEach(string pythonExecutable)
         {
             List<IPlayer> playersFactory()
             {
                 return new List<IPlayer>
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player1Pipe", "Random"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player3Pipe", "Maxn"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "ISMCTSIntelligence.py"), "Player4Pipe", "ISMCTS"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player1Pipe", "Random", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player3Pipe", "Maxn", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "ISMCTSIntelligence.py"), "Player4Pipe", "ISMCTS", pythonExecutable),
             };
             }
 
@@ -78,16 +78,16 @@ namespace Experiments
             return results;
         }
 
-        public async Task<List<ExperimentResult>> MaxnVsHeuristic()
+        public async Task<List<ExperimentResult>> MaxnVsHeuristic(string pythonExecutable)
         {
             List<IPlayer> playersFactory()
             {
                 return new List<IPlayer>
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player1Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player3Pipe", "Maxn"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player4Pipe", "Maxn"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player1Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player3Pipe", "Maxn", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player4Pipe", "Maxn", pythonExecutable),
             };
             }
 
@@ -98,16 +98,16 @@ namespace Experiments
             return results;
         }
 
-        public async Task<List<ExperimentResult>> ISMCTSVsHeuristic()
+        public async Task<List<ExperimentResult>> ISMCTSVsHeuristic(string pythonExecutable)
         {
             List<IPlayer> playersFactory()
             {
                 return new List<IPlayer>
             {
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player1Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "ISMCTSIntelligence.py"), "Player3Pipe", "ISMCTS"),
-                new AIPlayer(Path.Combine(scriptFolderPath, "ISMCTSIntelligence.py"), "Player4Pipe", "ISMCTS"),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player1Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "ISMCTSIntelligence.py"), "Player3Pipe", "ISMCTS", pythonExecutable),
+                new AIPlayer(Path.Combine(scriptFolderPath, "ISMCTSIntelligence.py"), "Player4Pipe", "ISMCTS", pythonExecutable),
             };
             }
 

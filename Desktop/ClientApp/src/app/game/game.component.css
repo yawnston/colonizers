@@ -1,0 +1,46 @@
+.player-top-left {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.player-top-right {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.player-bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+}
+
+.player-bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+.vertical-center {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.board-left {
+  left: 50px;
+}
+
+.board-right {
+  right: 50px;
+}
+
+.game-btn {
+  display: grid;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 150px;
+}

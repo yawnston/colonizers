@@ -13,12 +13,18 @@ import { Router } from '@angular/router';
 export class GameComponent implements OnInit, OnDestroy {
   @Input() playerNames: string[];
   gameState: GameState;
+
+  // Observables indicating whether the given AI player is currently calculating a decision.
   playerLoadingObs: Observable<boolean>[] = [...Array(4)].map(_ => of(false));
+
+  // Indicates whether the game has started.
+  isGameRunning: boolean = false;
 
   constructor(private gameService: GameService,
     private router: Router) { }
 
   processTurn(): void {
+    this.isGameRunning = true;
     if (false) {
       // TODO: human player
       this.processHumanTurn();

@@ -10,12 +10,15 @@ namespace Desktop.Services
     public class PlayerService : IDisposable
     {
         private readonly ILogger<PlayerService> logger;
+        private readonly PythonExecutableService pythonExecutableService;
 
         public List<IPlayer> Players { get; set; }
 
-        public PlayerService(ILogger<PlayerService> logger)
+        public PlayerService(ILogger<PlayerService> logger,
+            PythonExecutableService pythonExecutableService)
         {
             this.logger = logger;
+            this.pythonExecutableService = pythonExecutableService;
         }
 
         public void InitPlayers(string[] playerNames)
@@ -33,14 +36,6 @@ namespace Desktop.Services
             {
                 Players.Add(CreatePlayer(playerNames[i], pipeNames[i]));
             }
-
-            //Players = new List<IPlayer>
-            //{
-            //    new AIPlayer(Path.Combine(scriptFolderPath, "MaxnIntelligence.py"), "Player1Pipe", "Maxn"),
-            //    new AIPlayer(Path.Combine(scriptFolderPath, "HeuristicIntelligence.py"), "Player2Pipe", "Heuristic"),
-            //    new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player3Pipe", "Random"),
-            //    new AIPlayer(Path.Combine(scriptFolderPath, "RandomIntelligence.py"), "Player4Pipe", "Random"),
-            //};
         }
 
         private IPlayer CreatePlayer(string playerName, string pipeName)
@@ -89,7 +84,7 @@ namespace Desktop.Services
             // All AI names must follow the pattern "<Name>Intelligence"
             string name = playerName.Substring(0, playerName.LastIndexOf("Intelligence"));
 
-            return new AIPlayer(scriptPath, pipeName, name);
+            return new AIPlayer(scriptPath, pipeName, name, pythonExecutableService.GetPath());
         }
 
         public void DisposePlayers()

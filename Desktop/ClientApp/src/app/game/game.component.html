@@ -1,31 +1,32 @@
-<button class="btn btn-primary add-btn" (click)="abandonGame()">Abandon Game</button>
-<div class="vertical-flex">
+<div>
   <p *ngIf="!gameState"><em>Loading...</em></p>
 
   <div *ngIf="gameState?.gameOver">
     <app-game-end [gameEndInfo]="gameState?.gameEndInfo"></app-game-end>
   </div>
 
-  <div *ngIf="gameState" class="container-fluid vertical-flex">
-    <div class="row">
-      <div class="col">
-        <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]"></app-player>
-      </div>
-      <div class="col">
-        <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]"></app-player>
-      </div>
+  <div *ngIf="gameState">
+    <div class="player-top-left">
+      <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]"></app-player>
     </div>
-    <div class="row" style="flex:1">
+    <div class="player-top-right">
+      <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]"></app-player>
+    </div>
+
+    <div class="vertical-center board-left">
       <app-board [boardState]="gameState.boardState"></app-board>
-      <button (click)="processAITurn()" type="button">START GAME</button>
     </div>
-    <div class="row">
-      <div class="col">
-        <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]"></app-player>
-      </div>
-      <div class="col">
-        <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]"></app-player>
-      </div>
+
+    <div class="vertical-center board-right">
+      <button type="button" class="btn btn-primary game-btn" (click)="processTurn()" [disabled]="isGameRunning">Start Game</button>
+      <button type="button" class="btn btn-danger game-btn" (click)="abandonGame()">Abandon Game</button>
+    </div>
+
+    <div class="player-bottom-left">
+      <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]"></app-player>
+    </div>
+    <div class="player-bottom-right">
+      <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]"></app-player>
     </div>
   </div>
 </div>
