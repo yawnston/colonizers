@@ -22,6 +22,7 @@ import { PlayerColonyComponent } from './player-colony/player-colony.component';
 import { ColonistPickComponent } from './colonist-pick/colonist-pick.component';
 import { DrawComponent } from './draw/draw.component';
 import { DiscardComponent } from './discard/discard.component';
+import { PowerComponent } from './power/power.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { DiscardComponent } from './discard/discard.component';
     ColonistPickComponent,
     DrawComponent,
     DiscardComponent,
+    PowerComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

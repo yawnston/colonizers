@@ -4,8 +4,8 @@
       Choose a colonist for this round:
     </div>
     <div class="eqi-container">
-      <div class="colonist-portrait-wrapper" *ngFor="let colonist of getAllColonistNames()">
-        <app-player-portrait [colonist]="colonist" (click)="pick(colonist)"></app-player-portrait>
+      <div class="colonist-portrait-wrapper" *ngFor="let colonist of getAllColonistNames()" (click)="pick(colonist)">
+        <app-player-portrait [colonist]="colonist"></app-player-portrait>
       </div>
     </div>
   </div>

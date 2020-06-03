@@ -1,0 +1,15 @@
+<div class="shadow card colonist-pick-container">
+  <div class="card-body">
+    <div style="text-align:center;margin-bottom:10px">
+      Choose a target for your colonist's ability (or do nothing):
+    </div>
+    <div class="eqi-container">
+      <div class="colonist-portrait-wrapper" *ngFor="let colonist of getAllColonistNames()" (click)="target(colonist)">
+        <app-player-portrait [colonist]="colonist"></app-player-portrait>
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary" (click)="target(undefined)">Do nothing</button>
+      </div>
+    </div>
+  </div>
+</div>

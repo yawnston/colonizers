@@ -26,8 +26,10 @@ export class ColonistPickComponent implements OnInit {
   }
 
   pick(colonist) {
-    const index = this.gameState.actions.findIndex(x => x.colonist == colonist);
-    this.onPick.next(index);
+    if (colonist) {
+      const index = this.gameState.actions.findIndex(x => x.colonist == colonist);
+      this.onPick.next(index);
+    }
   }
 
 }

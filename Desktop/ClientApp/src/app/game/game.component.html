@@ -29,6 +29,10 @@
       <app-discard [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-discard>
     </div>
 
+    <div *ngIf="isWaitingForHumanPlayer && isPowerPhase()">
+      <app-power [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-power>
+    </div>
+
     <div class="vertical-center board-right">
       <button type="button" class="btn btn-primary game-btn" (click)="processTurn()" [disabled]="isGameRunning">Start Game</button>
       <button type="button" class="btn btn-danger game-btn" (click)="abandonGame()">Abandon Game</button>
