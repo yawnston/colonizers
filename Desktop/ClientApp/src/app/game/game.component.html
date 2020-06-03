@@ -17,6 +17,14 @@
       <app-board [boardState]="gameState.boardState"></app-board>
     </div>
 
+    <div *ngIf="isWaitingForHumanPlayer && isColonistPickPhase()">
+      <app-colonist-pick [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-colonist-pick>
+    </div>
+
+    <div *ngIf="isWaitingForHumanPlayer && isDrawPhase()">
+      <app-draw [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-draw>
+    </div>
+
     <div class="vertical-center board-right">
       <button type="button" class="btn btn-primary game-btn" (click)="processTurn()" [disabled]="isGameRunning">Start Game</button>
       <button type="button" class="btn btn-danger game-btn" (click)="abandonGame()">Abandon Game</button>

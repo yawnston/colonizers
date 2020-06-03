@@ -1,0 +1,12 @@
+<div class="shadow card colonist-pick-container">
+  <div class="card-body">
+    <div style="text-align:center;margin-bottom:10px">
+      Choose a colonist for this round:
+    </div>
+    <div class="eqi-container">
+      <div class="colonist-portrait-wrapper" *ngFor="let colonist of getAllColonistNames()">
+        <app-player-portrait [colonist]="colonist" (click)="pick(colonist)"></app-player-portrait>
+      </div>
+    </div>
+  </div>
+</div>

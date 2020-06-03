@@ -1,0 +1,19 @@
+<div class="shadow card colonist-pick-container">
+  <div class="card-body">
+    <div style="text-align:center;margin-bottom:10px">
+      Choose whether to draw modules, or extract Omnium:
+    </div>
+    <div class="fl">
+      <div style="display:block;text-align:center">
+        <div>
+          <button type="button" class="btn btn-primary" (click)="draw()"
+                  style="margin-bottom:25px;margin-top:20px"
+                  [disabled]="!canDraw">
+            Draw modules
+          </button>
+        </div>
+        <div><button type="button" class="btn btn-primary" (click)="omnium()">Extract Omnium</button></div>
+      </div>
+    </div>
+  </div>
+</div>

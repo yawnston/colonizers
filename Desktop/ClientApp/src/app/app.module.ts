@@ -19,6 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlayerPortraitComponent } from './player-portrait/player-portrait.component';
 import { PlayerHandComponent } from './player-hand/player-hand.component';
 import { PlayerColonyComponent } from './player-colony/player-colony.component';
+import { ColonistPickComponent } from './colonist-pick/colonist-pick.component';
+import { DrawComponent } from './draw/draw.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { PlayerColonyComponent } from './player-colony/player-colony.component';
     PlayerPortraitComponent,
     PlayerHandComponent,
     PlayerColonyComponent,
+    ColonistPickComponent,
+    DrawComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

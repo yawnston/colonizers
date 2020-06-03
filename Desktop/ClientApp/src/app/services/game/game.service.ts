@@ -14,6 +14,8 @@ export class GameService {
   // Field used for storing the initial game state, since HomeComponent is the one doing the initialization
   initialGameState: GameState;
 
+  playerNames: string[];
+
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string) { }
 
@@ -21,6 +23,7 @@ export class GameService {
 
   public initGame$(playerNames: string[]): Observable<GameState> {
     this.isLoading$.next(true);
+    this.playerNames = playerNames;
     return this.http.post<GameState>(this.baseUrl + 'api/game/start', playerNames)
       .pipe(
         take(1),

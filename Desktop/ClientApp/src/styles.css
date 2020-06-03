@@ -31,3 +31,9 @@ html, body {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+.eqi-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
