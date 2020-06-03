@@ -4,12 +4,12 @@
 }
 
 .module-green {
-  border: 4px solid dodgerblue;
+  border: 4px solid darkgreen;
   border-radius: 25px;
 }
 
 .module-blue {
-  border: 4px dashed darkgreen;
+  border: 4px dashed dodgerblue;
   border-radius: 25px;
 }
 

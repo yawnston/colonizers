@@ -21,6 +21,7 @@ import { PlayerHandComponent } from './player-hand/player-hand.component';
 import { PlayerColonyComponent } from './player-colony/player-colony.component';
 import { ColonistPickComponent } from './colonist-pick/colonist-pick.component';
 import { DrawComponent } from './draw/draw.component';
+import { DiscardComponent } from './discard/discard.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DrawComponent } from './draw/draw.component';
     PlayerColonyComponent,
     ColonistPickComponent,
     DrawComponent,
+    DiscardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

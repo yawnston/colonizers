@@ -1,0 +1,16 @@
+<div class="shadow card colonist-pick-container">
+  <div class="card-body">
+    <div style="text-align:center;margin-bottom:10px">
+      <div>Click the module you want to keep in your hand:</div>
+      <div>(the other one will be discarded)</div>
+    </div>
+    <div class="fl">
+      <div style="height:100px;width:100px;position:relative;left:-20px" (click)="keep(getModules()[0])">
+        <app-module [module]="getModules()[0]"></app-module>
+      </div>
+      <div style="height:100px;width:100px;position:relative;right:-20px" (click)="keep(getModules()[1])">
+        <app-module [module]="getModules()[1]"></app-module>
+      </div>
+    </div>
+  </div>
+</div>
