@@ -16,6 +16,9 @@ import { GameEndComponent } from './game-end/game-end.component'
 import { ModuleComponent } from './module/module.component';
 import { ScriptsComponent } from './scripts/scripts.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PlayerPortraitComponent } from './player-portrait/player-portrait.component';
+import { PlayerHandComponent } from './player-hand/player-hand.component';
+import { PlayerColonyComponent } from './player-colony/player-colony.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GameEndComponent,
     ModuleComponent,
     ScriptsComponent,
+    PlayerPortraitComponent,
+    PlayerHandComponent,
+    PlayerColonyComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

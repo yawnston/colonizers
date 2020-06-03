@@ -22,13 +22,6 @@
   right: 8px;
 }
 
-.vertical-center {
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
 .board-left {
   left: 50px;
 }

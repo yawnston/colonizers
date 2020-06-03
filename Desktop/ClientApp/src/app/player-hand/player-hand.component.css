@@ -1,0 +1,12 @@
+.eqi-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.module-container {
+  width: 100px;
+  height: 170px;
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+}

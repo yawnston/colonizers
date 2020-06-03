@@ -3,24 +3,20 @@
     <span class="sr-only">Loading...</span>
   </div>
   <div class="player-content">
-    <span>{{ player.id }}</span>
-
-    <div>
-      <span class="font-weight-bold">Omnium:</span> {{ player.omnium }}
-    </div>
-
-    <div>
-      <div class="font-weight-bold">Colonist:</div> {{ player.colonist?.name }}
-    </div>
-
-    <div style="display: flex">
-      <div *ngFor="let module of player.hand">
-        <app-module [module]="module"></app-module>
+    <div class="player-info">
+      <div class="player-id">
+        Player {{ player.id }} (HeuristicIntelligence)
+      </div>
+      <div>
+        <span class="font-weight-bold">Omnium:</span> {{ player.omnium }},
+        <span class="font-weight-bold">Points:</span> {{ getPlayerPoints() }}
       </div>
     </div>
 
-    <div>
-      <div class="font-weight-bold">Colony count:</div> {{ player.colony?.length }}
-    </div>
+    <app-player-portrait class="player-portrait" [colonist]="player?.colonist?.name"></app-player-portrait>
+
+    <app-player-colony class="player-colony" [colony]="player?.colony"></app-player-colony>
+
+    <app-player-hand class="player-hand" [hand]="player?.hand"></app-player-hand>
   </div>
 </div>

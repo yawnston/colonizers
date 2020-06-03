@@ -22,3 +22,48 @@
   border-color: dodgerblue;
   border-radius: 35px;
 }
+
+.player-info {
+  left: 20px;
+  top: 20px;
+  position: absolute;
+  overflow: hidden;
+  width: 200px;
+}
+
+.player-portrait {
+  left: 20px;
+  bottom: 20px;
+  position: absolute;
+  border: solid;
+  border-color: black;
+  border-width: 2px;
+  height: 300px;
+  width: 200px;
+}
+
+.player-hand {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  border: solid;
+  border-color: olive;
+  width: 550px;
+  height: 175px;
+}
+
+.player-colony {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border: solid;
+  border-color: red;
+  width: 550px;
+  height: 175px;
+}
+
+.player-id {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -16,4 +16,12 @@ export class PlayerComponent implements OnInit {
   ngOnInit() {
 
   }
+
+  getPlayerPoints(): number {
+    let points = 0;
+    for (const m of this.player.colony) {
+      points += m.victoryValue;
+    }
+    return points;
+  }
 }

@@ -9,6 +9,7 @@ import { Module, Color } from '../services/game/models/gamestate';
 export class ModuleComponent implements OnInit {
 
   @Input() module: Module;
+  @Input() hidden: boolean;
 
   constructor() { }
 
@@ -16,6 +17,14 @@ export class ModuleComponent implements OnInit {
   }
 
   getClassByColor(color: Color): string {
+    if (!color) {
+      return "module-none";
+    }
+
+    if (this.hidden) {
+      return "module-hidden";
+    }
+
     switch (color) {
       case Color.red: return "module-red";
       case Color.green: return "module-green";

@@ -1,0 +1,10 @@
+<div class="eqi-container">
+  <div class="module-container" *ngFor="let i of [0,1,2,3]">
+    <div class="module-inner">
+      <app-module [module]="fullColony[i]"></app-module>
+    </div>
+    <div class="module-inner">
+      <app-module [module]="fullColony[i+4]"></app-module>
+    </div>
+  </div>
+</div>

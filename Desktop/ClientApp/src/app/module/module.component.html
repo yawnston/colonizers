@@ -1,5 +1,10 @@
-<div [ngClass]="getClassByColor(module.type)">
-  <div>{{ module.name }}</div>
-  <div>Build cost: {{ module.buildCost }}</div>
-  <div>Value: {{ module.victoryValue }}</div>
+<div style="position:relative;height:100%;width:100%">
+  <div class="module vertical-center" [ngClass]="getClassByColor(module?.type)">
+    <div class="module-cost">
+      <div>{{ module?.buildCost }}</div>
+    </div>
+    <div class="module-cost">
+      <div>{{ module?.victoryValue }}</div>
+    </div>
+  </div>
 </div>

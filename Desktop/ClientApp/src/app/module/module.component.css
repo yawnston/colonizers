@@ -1,17 +1,41 @@
 .module-red {
-    background-color: darkred;
+  border: 4px dotted red;
+  border-radius: 25px;
 }
 
 .module-green {
-    background-color: darkgreen;
+  border: 4px solid dodgerblue;
+  border-radius: 25px;
 }
 
 .module-blue {
-    border: 2px solid dodgerblue;
-    border-radius: 25px;
-/*    background-color: dodgerblue;*/
+  border: 4px dashed darkgreen;
+  border-radius: 25px;
 }
 
 .module-white {
-    background-color: whitesmoke;
+  border: 4px double darkgrey;
+  border-radius: 25px;
+}
+
+.module-none {
+  border: 2px dashed grey;
+}
+
+.module-hidden {
+  background-color: grey;
+}
+
+.module {
+  height: 90%;
+  width: 100%;
+  text-align: center;
+  font-size: 22px
+}
+
+.module-cost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
 }
