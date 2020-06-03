@@ -8,6 +8,8 @@ import { take, map } from 'rxjs/operators';
 })
 export class ScriptsService {
 
+  // Service responsible for communicating with the AIController in the web API
+
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string) { }
 
@@ -29,6 +31,17 @@ export class ScriptsService {
     return this.http.post<boolean>(this.baseUrl + 'api/ai/addfolder', undefined)
       .pipe(
         take(1),
+      );
+  }
+
+  public getPythonExecutable$(): Observable<string | undefined> {
+    return this.http.get<{ path: string }>(this.baseUrl + 'api/ai/pythonexecutable')
+      .pipe(
+        take(1),
+        map(x => {
+          if (x) return x.path;
+          return undefined;
+        }),
       );
   }
 

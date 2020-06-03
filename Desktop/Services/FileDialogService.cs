@@ -59,6 +59,12 @@ namespace Desktop.Services
                     string toDirectory = Path.Combine(scriptFolderPath, Path.GetFileName(fromDirectory));
                     CopyDirectory(fromDirectory, toDirectory);
 
+                    // Copy the AICore.py file into the newly copied directory
+                    // This is so that the newly copied AI can import the file
+                    string coreFilePath = Path.Combine(scriptFolderPath, "AICore.py");
+                    string destinationCoreFilePath = Path.Combine(toDirectory, "AICore.py");
+                    File.Copy(coreFilePath, destinationCoreFilePath, true);
+
                     return true;
                 }
             }
@@ -70,7 +76,7 @@ namespace Desktop.Services
         /// Opens a file dialog to let the user pick a Python executable.
         /// </summary>
         /// <returns>Path to the selected Python executable, or null if it was not selected.</returns>
-        public async Task<string> GetPythonExecutable()
+        public async Task<string> GetPythonExecutableSelection()
         {
             if (HybridSupport.IsElectronActive)
             {
@@ -80,6 +86,9 @@ namespace Desktop.Services
             return null;
         }
 
+        /// <summary>
+        /// Open a file select dialog and retusn the result path, or null if the dialog was cancelled.
+        /// </summary>
         private async Task<string> OpenFileDialog(OpenDialogProperty openDialogProperty)
         {
             BrowserWindow mainWindow = Electron.WindowManager.BrowserWindows.First();

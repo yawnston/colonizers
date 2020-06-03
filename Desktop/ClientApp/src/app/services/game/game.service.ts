@@ -9,6 +9,8 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 })
 export class GameService {
 
+  // Service responsible for communicating with the GameController in the web API
+
   // Field used for storing the initial game state, since HomeComponent is the one doing the initialization
   initialGameState: GameState;
 

@@ -38,6 +38,7 @@ namespace Desktop
             services.AddSingleton<StateService>();
             services.AddSingleton<PlayerService>();
             services.AddSingleton<FileDialogService>();
+            services.AddSingleton<PythonExecutableService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,11 +89,14 @@ namespace Desktop
             Task.Run(async () =>
             {
                 System.Console.WriteLine($"Electron active: {HybridSupport.IsElectronActive}");
-                BrowserWindow browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+                if (HybridSupport.IsElectronActive)
                 {
-                    Title = "Colonizers"
-                });
-                browserWindow.Maximize();
+                    BrowserWindow browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+                    {
+                        Title = "Colonizers"
+                    });
+                    browserWindow.Maximize();
+                }
             });
         }
     }

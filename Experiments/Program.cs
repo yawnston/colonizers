@@ -23,11 +23,29 @@ namespace Experiments
 
             var scenarios = new Scenarios(serviceProvider, scriptFolderPath);
 
-            //await scenarios.FourRandoms();
-            //await scenarios.FourHeuristics();
-            //await scenarios.OneOfEach();
-            //await scenarios.MaxnVsHeuristic();
-            await scenarios.ISMCTSVsHeuristic();
+            string pythonExecutable = args[2];
+
+            switch (Int32.Parse(args[1]))
+            {
+                case 1:
+                    await scenarios.FourRandoms();
+                    break;
+                case 2:
+                    await scenarios.FourHeuristics();
+                    break;
+                case 3:
+                    await scenarios.OneOfEach();
+                    break;
+                case 4:
+                    await scenarios.MaxnVsHeuristic();
+                    break;
+                case 5:
+                    await scenarios.ISMCTSVsHeuristic();
+                    break;
+
+            }
+
+            // TODO: configure python path
         }
     }
 }

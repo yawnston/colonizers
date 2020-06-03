@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ScriptsService } from '../services/scripts/scripts.service';
 import { GameService } from '../services/game/game.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +17,13 @@ export class HomeComponent implements OnInit {
   selectedPlayers: string[] = [undefined, undefined, undefined, undefined];
 
   constructor(private scriptsService: ScriptsService,
-    private gameService: GameService) { }
+    private gameService: GameService,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loadAIScripts();
+    this.getPythonExecutable();
   }
 
   onPlayerSelect(playerName: string, playerNumber: number) {
@@ -26,18 +31,36 @@ export class HomeComponent implements OnInit {
   }
 
   addAIScript() {
-    // TODO: show toast with result
     this.scriptsService.addScript$().subscribe((wasAdded: boolean) => {
       console.log(`Adding AI script finished with result: ${wasAdded}.`);
-      this.loadAIScripts();
+      if (wasAdded) {
+        // TODO: check if the AI is a valid AI?
+        this.toastr.success('AI script was successfully copied!', 'SUCCESS');
+        this.loadAIScripts();
+      }
+      else {
+        this.toastr.info('The AI script add operation was cancelled.', 'INFO');
+      }
     });
   }
 
   addAIFolder() {
-    // TODO: show toast with result
     this.scriptsService.addFolder$().subscribe((wasAdded: boolean) => {
       console.log(`Adding AI folder finished with result: ${wasAdded}.`);
-      this.loadAIScripts();
+      if (wasAdded) {
+        // TODO: check if the AI is a valid AI?
+        this.toastr.success('AI folder was successfully copied!', 'SUCCESS');
+        this.loadAIScripts();
+      }
+      else {
+        this.toastr.info('The AI folder add operation was cancelled.', 'INFO');
+      }
+    });
+  }
+
+  getPythonExecutable() {
+    this.scriptsService.getPythonExecutable$().subscribe((path: string | undefined) => {
+      this.pythonExecutable = path;
     });
   }
 
@@ -49,7 +72,18 @@ export class HomeComponent implements OnInit {
   }
 
   startGame() {
-    console.log("starting game!");
+    console.log("Starting game.");
+    if (this.selectedPlayers
+      && this.selectedPlayers.every(x => x != undefined
+        && this.pythonExecutable)) {
+      this.gameService.initGame$(this.selectedPlayers).subscribe((result) => {
+        this.router.navigateByUrl('/game');
+      });
+    }
+    else {
+      console.log(`Game start validation FAILED: ${JSON.stringify(this.selectedPlayers)}, ${this.pythonExecutable}.`);
+      this.toastr.error('Could not start game due to a validation error. Please re-configure the game and try again.', 'ERROR');
+    }
   }
 
   loadAIScripts() {

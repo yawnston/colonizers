@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { GameState } from '../services/game/models/gamestate';
 import { GameService } from '../services/game/game.service';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -14,7 +15,8 @@ export class GameComponent implements OnInit, OnDestroy {
   gameState: GameState;
   playerLoadingObs: Observable<boolean>[] = [...Array(4)].map(_ => of(false));
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService,
+    private router: Router) { }
 
   processTurn(): void {
     if (false) {
@@ -44,10 +46,12 @@ export class GameComponent implements OnInit, OnDestroy {
     // TODO: process human turn (somehow set turn to enable actions and end)
   }
 
+  abandonGame(): void {
+    this.router.navigateByUrl('/');
+  }
+
   ngOnInit(): void {
-    this.gameService.initGame$(this.playerNames).subscribe(x => {
-      this.gameState = x;
-    });
+    this.gameState = this.gameService.initialGameState;
   }
 
   ngOnDestroy(): void {

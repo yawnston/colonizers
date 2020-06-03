@@ -18,12 +18,15 @@ namespace Desktop.Controllers
     {
         private readonly ILogger<AIController> logger;
         private readonly FileDialogService fileDialogService;
+        private readonly PythonExecutableService pythonExecutableService;
 
         public AIController(ILogger<AIController> logger,
-            FileDialogService fileDialogService)
+            FileDialogService fileDialogService,
+            PythonExecutableService pythonExecutableService)
         {
             this.logger = logger;
             this.fileDialogService = fileDialogService;
+            this.pythonExecutableService = pythonExecutableService;
         }
 
         [HttpGet("scripts")]
@@ -58,11 +61,31 @@ namespace Desktop.Controllers
             return Ok(await fileDialogService.AddFolderScript());
         }
 
+        /// <summary>
+        /// Returns the currently configured path to the Python executable.
+        /// </summary>
+        [HttpGet("pythonexecutable")]
+        public IActionResult GetPythonExecutable()
+        {
+            return Ok(new { Path = pythonExecutableService.GetPath() });
+        }
+
+        /// <summary>
+        /// Opens a dialog where the user can specify a Python executable to use.
+        /// If they cancel the dialog, the previous path remains.
+        /// </summary>
+        /// <returns>Path to the executable</returns>
         [HttpPost("pythonexecutable")]
         public async Task<IActionResult> SetPythonExecutable()
         {
-            // TODO: remember python executable between sessions?
-            return Ok(new { Path = await fileDialogService.GetPythonExecutable() });
+            string previousExecutable = pythonExecutableService.GetPath();
+            string selectedExecutable = await fileDialogService.GetPythonExecutableSelection();
+            if (selectedExecutable != null)
+            {
+                pythonExecutableService.SetPath(selectedExecutable);
+                return Ok(new { Path = selectedExecutable });
+            }
+            return Ok(new { Path = previousExecutable });
         }
     }
 }
