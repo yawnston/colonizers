@@ -18,10 +18,6 @@ namespace Experiments
 
             Scenarios scenarios = new Scenarios(serviceProvider, scriptFolderPath);
 
-            System.Console.WriteLine(args[0]);
-            System.Console.WriteLine(args[1]);
-            //System.Console.WriteLine(args[2]);
-
             string pythonExecutable = args[1];
 
             switch (int.Parse(args[0]))

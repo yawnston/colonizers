@@ -21,19 +21,24 @@
       <app-board [boardState]="gameState.boardState"></app-board>
     </div>
 
-    <div *ngIf="isWaitingForHumanPlayer && isColonistPickPhase()">
+    <div style="width:20%;margin:0 auto;display:flex;justify-content:center;margin-top:20px">
+      <button type="button" class="btn btn-secondary" style="margin:0 auto"
+              (click)="toggleHideDialog()" [disabled]="!canHideDialog()">Hide / Show Dialog</button>
+    </div>
+
+    <div *ngIf="!isDialogHidden && isWaitingForHumanPlayer && isColonistPickPhase()">
       <app-colonist-pick [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-colonist-pick>
     </div>
 
-    <div *ngIf="isWaitingForHumanPlayer && isDrawPhase()">
+    <div *ngIf="!isDialogHidden && isWaitingForHumanPlayer && isDrawPhase()">
       <app-draw [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-draw>
     </div>
 
-    <div *ngIf="isWaitingForHumanPlayer && isDiscardPhase()">
+    <div *ngIf="!isDialogHidden && isWaitingForHumanPlayer && isDiscardPhase()">
       <app-discard [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-discard>
     </div>
 
-    <div *ngIf="isWaitingForHumanPlayer && isPowerPhase()">
+    <div *ngIf="!isDialogHidden && isWaitingForHumanPlayer && isPowerPhase()">
       <app-power [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-power>
     </div>
 

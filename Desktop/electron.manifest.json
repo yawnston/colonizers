@@ -29,8 +29,7 @@
       "**/*"
     ],
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "oneClick": true
     }
   }
 }

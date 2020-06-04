@@ -23,6 +23,8 @@ export class GameComponent implements OnInit, OnDestroy {
   // Indicates whether the game is waiting on input from a human player
   isWaitingForHumanPlayer: boolean = false;
 
+  isDialogHidden: boolean = false;
+
   constructor(private gameService: GameService,
     private router: Router) { }
 
@@ -92,6 +94,14 @@ export class GameComponent implements OnInit, OnDestroy {
 
   buildNothing() {
     this.onHumanPlayerAction(this.gameState.actions.findIndex(x => x.type === 'BuildNothing'));
+  }
+
+  toggleHideDialog() {
+    this.isDialogHidden = !this.isDialogHidden;
+  }
+
+  canHideDialog() {
+    return this.isWaitingForHumanPlayer && this.gameState.boardState.gamePhase !== 'Build';
   }
 
   ngOnInit(): void {
