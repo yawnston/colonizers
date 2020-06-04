@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class GameEndComponent implements AfterViewInit {
   @Input() gameEndInfo: GameEndInfo;
+  @Input() playerNames: string[];
   @ViewChild('content', { static: true }) content: ElementRef;
   closeResult: string;
 

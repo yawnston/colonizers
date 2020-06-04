@@ -11,6 +11,7 @@ export class PlayerHandComponent implements OnInit {
   @Input() hand: Module[];
   @Input() player: PlayerInfo;
   @Input() gameState: GameState;
+  @Input() playerName: string;
   @Input() hideInformation: boolean;
   @Output() onPick = new EventEmitter<number>();
 
@@ -35,6 +36,10 @@ export class PlayerHandComponent implements OnInit {
   isCurrentPlayerBuildPhase(): boolean {
     return this.player.id === this.gameState.boardState.playerTurn
       && this.gameState.boardState.gamePhase === 'Build';
+  }
+
+  isHumanPlayer(): boolean {
+    return this.playerName === 'Human Player';
   }
 
   constructor() { }

@@ -2,7 +2,7 @@
   <p *ngIf="!gameState"><em>Loading...</em></p>
 
   <div *ngIf="gameState?.gameOver">
-    <app-game-end [gameEndInfo]="gameState?.gameEndInfo"></app-game-end>
+    <app-game-end [gameEndInfo]="gameState?.gameEndInfo" [playerNames]="playerNames"></app-game-end>
   </div>
 
   <div *ngIf="gameState">

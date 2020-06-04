@@ -17,7 +17,7 @@
 
     <app-player-colony class="player-colony" [colony]="player?.colony"></app-player-colony>
 
-    <app-player-hand class="player-hand" [hand]="player?.hand" [player]="player"
+    <app-player-hand class="player-hand" [hand]="player?.hand" [player]="player" [playerName]="playerName"
                      [gameState]="gameState" (onPick)="build($event)" [hideInformation]="shouldHideInformation()"></app-player-hand>
   </div>
 </div>

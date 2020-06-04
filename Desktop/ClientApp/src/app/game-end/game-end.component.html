@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
     <div *ngFor="let player of sortPlayersByRanking(gameEndInfo.players)">
-      #{{ player.ranking }}: Player {{ player.player.id }} with {{ player.victoryPoints }} Points
+      #{{ player.ranking }}: Player {{ player.player.id }} ({{ playerNames[player.player.id - 1] }}) with {{ player.victoryPoints }} Points
     </div>
   </div>
   <div class="modal-footer">
