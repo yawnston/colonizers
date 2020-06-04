@@ -18,7 +18,7 @@ export class ColonistPickComponent implements OnInit {
   }
 
   getAllColonistNames() {
-    let colonistNames = [undefined, undefined, undefined, undefined, undefined, undefined];
+    let colonistNames = [undefined, undefined, undefined, undefined, undefined];
     for (let i = 0; i < this.gameState.actions.length; i++) {
       colonistNames[i] = this.gameState.actions[i].colonist;
     }
