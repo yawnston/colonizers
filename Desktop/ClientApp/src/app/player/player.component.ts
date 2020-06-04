@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PlayerInfo } from '../services/game/models/gamestate';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { PlayerInfo, GameState } from '../services/game/models/gamestate';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 export class PlayerComponent implements OnInit {
   @Input() player: PlayerInfo;
   @Input() isLoading$: Observable<boolean>;
+  @Input() gameState: GameState;
+  @Output() onBuild = new EventEmitter<number>();
 
   constructor() { }
 
@@ -23,5 +25,9 @@ export class PlayerComponent implements OnInit {
       points += m.victoryValue;
     }
     return points;
+  }
+
+  build(index: number) {
+    this.onBuild.next(index);
   }
 }

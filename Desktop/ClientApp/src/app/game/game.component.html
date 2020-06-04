@@ -7,10 +7,10 @@
 
   <div *ngIf="gameState">
     <div class="player-top-left">
-      <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]"></app-player>
+      <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
     </div>
     <div class="player-top-right">
-      <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]"></app-player>
+      <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
     </div>
 
     <div class="vertical-center board-left">
@@ -33,16 +33,22 @@
       <app-power [gameState]="gameState" (onPick)="onHumanPlayerAction($event)"></app-power>
     </div>
 
+    <div *ngIf="isWaitingForHumanPlayer && isBuildPhase()">
+      <div class="centered-global">
+        <button type="button" class="btn btn-primary" (click)="buildNothing()">Build nothing</button>
+      </div>
+    </div>
+
     <div class="vertical-center board-right">
       <button type="button" class="btn btn-primary game-btn" (click)="processTurn()" [disabled]="isGameRunning">Start Game</button>
       <button type="button" class="btn btn-danger game-btn" (click)="abandonGame()">Abandon Game</button>
     </div>
 
     <div class="player-bottom-left">
-      <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]"></app-player>
+      <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
     </div>
     <div class="player-bottom-right">
-      <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]"></app-player>
+      <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
     </div>
   </div>
 </div>

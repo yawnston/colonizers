@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Module } from '../services/game/models/gamestate';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Module, PlayerInfo, GameState } from '../services/game/models/gamestate';
 
 @Component({
   selector: 'app-player-hand',
@@ -9,6 +9,9 @@ import { Module } from '../services/game/models/gamestate';
 export class PlayerHandComponent implements OnInit {
 
   @Input() hand: Module[];
+  @Input() player: PlayerInfo;
+  @Input() gameState: GameState;
+  @Output() onPick = new EventEmitter<number>();
 
   get fullHand(): Module[] {
     let arr = [undefined, undefined, undefined, undefined, undefined];
@@ -16,6 +19,21 @@ export class PlayerHandComponent implements OnInit {
       arr[i] = this.hand[i];
     }
     return arr;
+  }
+
+  canBuild(index: number): boolean {
+    return this.isCurrentPlayerBuildPhase() && this.fullHand[index] && this.player.omnium >= this.fullHand[index].buildCost;
+  }
+
+  build(index: number) {
+    if (this.isCurrentPlayerBuildPhase()) {
+      this.onPick.next(this.gameState.actions.findIndex(x => x.module === this.fullHand[index].name));
+    }
+  }
+
+  isCurrentPlayerBuildPhase(): boolean {
+    return this.player.id === this.gameState.boardState.playerTurn
+      && this.gameState.boardState.gamePhase === 'Build';
   }
 
   constructor() { }

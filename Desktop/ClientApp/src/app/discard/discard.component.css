@@ -16,9 +16,3 @@
   height: 300px;
   width: 200px;
 }
-
-.fl {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

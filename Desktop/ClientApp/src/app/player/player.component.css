@@ -47,7 +47,7 @@
   right: 20px;
   bottom: 20px;
   border: solid;
-  border-color: olive;
+  border-color: lightgrey;
   width: 550px;
   height: 175px;
 }
@@ -57,7 +57,7 @@
   right: 20px;
   top: 20px;
   border: solid;
-  border-color: red;
+  border-color: lightgrey;
   width: 550px;
   height: 175px;
 }

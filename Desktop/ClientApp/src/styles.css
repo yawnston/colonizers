@@ -37,3 +37,16 @@ html, body {
   justify-content: space-between;
   align-items: center;
 }
+
+.fl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centered-global {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

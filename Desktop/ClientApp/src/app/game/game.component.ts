@@ -28,26 +28,26 @@ export class GameComponent implements OnInit, OnDestroy {
 
   processTurn(): void {
     this.isGameRunning = true;
-    if (this.isHumanTurn()) {
-      this.processHumanTurn();
-    }
-    else {
-      // AI player
-      this.processAITurn();
+    if (this.gameState && !this.gameState.gameOver) {
+      if (this.isHumanTurn()) {
+        this.processHumanTurn();
+      }
+      else {
+        // AI player
+        this.processAITurn();
+      }
     }
   }
 
   processAITurn(): void {
-    if (this.gameState && !this.gameState.gameOver) {
-      const playerTurn = this.gameState.boardState.playerTurn;
-      this.playerLoadingObs[playerTurn - 1] = this.gameService.isLoading$;
+    const playerTurn = this.gameState.boardState.playerTurn;
+    this.playerLoadingObs[playerTurn - 1] = this.gameService.isLoading$;
 
-      this.gameService.processAITurn$().subscribe(x => {
-        this.playerLoadingObs[playerTurn - 1] = of(false);
-        this.gameState = x;
-        this.processTurn();
-      });
-    }
+    this.gameService.processAITurn$().subscribe(x => {
+      this.playerLoadingObs[playerTurn - 1] = of(false);
+      this.gameState = x;
+      this.processTurn();
+    });
   }
 
   processHumanTurn(): void {
@@ -88,6 +88,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   isBuildPhase(): boolean {
     return this.gameState.boardState.gamePhase === 'Build';
+  }
+
+  buildNothing() {
+    this.onHumanPlayerAction(this.gameState.actions.findIndex(x => x.type === 'BuildNothing'));
   }
 
   ngOnInit(): void {

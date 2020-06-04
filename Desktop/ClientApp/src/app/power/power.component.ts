@@ -25,9 +25,14 @@ export class PowerComponent implements OnInit {
     return colonistNames.filter((val) => val !== undefined);
   }
 
+  hasChoice(): boolean {
+    return this.gameState.actions.length > 1;
+  }
+
   target(colonist) {
     if (colonist === undefined) {
       this.onPick.next(this.gameState.actions.findIndex(x => x.type === 'DoNothing'));
+      return;
     }
 
     this.onPick.next(this.gameState.actions.findIndex(x => x.target === colonist));
