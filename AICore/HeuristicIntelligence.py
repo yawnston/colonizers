@@ -1,6 +1,8 @@
+import sys
+sys.path += '.'
+
 from AICore import *
 
-import sys
 import json
 from random import seed, randint, choice
 

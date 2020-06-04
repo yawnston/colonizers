@@ -1,7 +1,9 @@
+import sys
+sys.path += '.'
+
 from AICore import *
 from HeuristicIntelligence import HeuristicAI
 
-import sys
 from random import seed, randint, choice
 from math import sqrt, log
 

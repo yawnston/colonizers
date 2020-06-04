@@ -1,6 +1,8 @@
+import sys
+sys.path += '.'
+
 from AICore import *
 
-import sys
 from random import seed, randint
 
 class RandomAI(AIBase):
