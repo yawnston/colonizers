@@ -18,9 +18,13 @@ namespace Experiments
 
             Scenarios scenarios = new Scenarios(serviceProvider, scriptFolderPath);
 
-            string pythonExecutable = args[2];
+            System.Console.WriteLine(args[0]);
+            System.Console.WriteLine(args[1]);
+            //System.Console.WriteLine(args[2]);
 
-            switch (int.Parse(args[1]))
+            string pythonExecutable = args[1];
+
+            switch (int.Parse(args[0]))
             {
                 case 1:
                     await scenarios.FourRandoms(pythonExecutable);

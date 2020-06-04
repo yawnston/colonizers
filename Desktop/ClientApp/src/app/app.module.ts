@@ -7,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { PlayerComponent } from './player/player.component';
@@ -27,7 +26,6 @@ import { PowerComponent } from './power/power.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
     GameComponent,
     PlayerComponent,
