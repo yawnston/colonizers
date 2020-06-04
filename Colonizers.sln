@@ -11,6 +11,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AICore", "AICore\AICore.pyp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desktop", "Desktop\Desktop.csproj", "{D2D5888F-793E-407A-A953-D4F89356BAC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColonizersTests", "ColonizersTests\ColonizersTests.csproj", "{059C726B-5A7E-4B92-9997-3E9C595CA130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2D5888F-793E-407A-A953-D4F89356BAC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{059C726B-5A7E-4B92-9997-3E9C595CA130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{059C726B-5A7E-4B92-9997-3E9C595CA130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{059C726B-5A7E-4B92-9997-3E9C595CA130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{059C726B-5A7E-4B92-9997-3E9C595CA130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

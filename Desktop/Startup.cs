@@ -38,7 +38,7 @@ namespace Desktop
             services.AddSingleton<StateService>();
             services.AddSingleton<PlayerService>();
             services.AddSingleton<FileDialogService>();
-            services.AddSingleton<PythonExecutableService>();
+            services.AddSingleton<IPythonExecutableService, PythonExecutableService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

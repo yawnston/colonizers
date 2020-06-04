@@ -8,7 +8,7 @@ namespace Desktop.Services
     /// between sessions. It writes the selected path into a file in the game's
     /// installation directory.
     /// </summary>
-    public sealed class PythonExecutableService
+    public sealed class PythonExecutableService : IPythonExecutableService
     {
         private const string PythonPathFileName = "PythonExecutablePath.txt";
         private readonly string PythonPathFullPath;
@@ -45,5 +45,11 @@ namespace Desktop.Services
                 File.WriteAllText(PythonPathFullPath, path);
             }
         }
+    }
+
+    public interface IPythonExecutableService
+    {
+        string GetPath();
+        void SetPath(string path);
     }
 }

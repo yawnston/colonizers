@@ -1,6 +1,5 @@
 ﻿using Desktop.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,15 +15,12 @@ namespace Desktop.Controllers
     [Route("api/[controller]")]
     public class AIController : ControllerBase
     {
-        private readonly ILogger<AIController> logger;
         private readonly FileDialogService fileDialogService;
-        private readonly PythonExecutableService pythonExecutableService;
+        private readonly IPythonExecutableService pythonExecutableService;
 
-        public AIController(ILogger<AIController> logger,
-            FileDialogService fileDialogService,
-            PythonExecutableService pythonExecutableService)
+        public AIController(FileDialogService fileDialogService,
+            IPythonExecutableService pythonExecutableService)
         {
-            this.logger = logger;
             this.fileDialogService = fileDialogService;
             this.pythonExecutableService = pythonExecutableService;
         }

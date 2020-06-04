@@ -7,15 +7,15 @@ using System.Reflection;
 
 namespace Desktop.Services
 {
-    public class PlayerService : IDisposable
+    public class PlayerService : IDisposable, IPlayerService
     {
         private readonly ILogger<PlayerService> logger;
-        private readonly PythonExecutableService pythonExecutableService;
+        private readonly IPythonExecutableService pythonExecutableService;
 
         public List<IPlayer> Players { get; set; }
 
         public PlayerService(ILogger<PlayerService> logger,
-            PythonExecutableService pythonExecutableService)
+            IPythonExecutableService pythonExecutableService)
         {
             this.logger = logger;
             this.pythonExecutableService = pythonExecutableService;
@@ -136,5 +136,13 @@ namespace Desktop.Services
             // GC.SuppressFinalize(this);
         }
         #endregion
+    }
+
+    public interface IPlayerService
+    {
+        List<IPlayer> Players { get; set; }
+        void Dispose();
+        void DisposePlayers();
+        void InitPlayers(string[] playerNames);
     }
 }

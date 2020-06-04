@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Game.Entities.Colonists
 {
-    class Spy : Colonist
+    public class Spy : Colonist
     {
         public override IList<IGameAction> GetActions(BoardState boardState)
         {
