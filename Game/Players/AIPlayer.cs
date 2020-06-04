@@ -23,7 +23,6 @@ namespace Game.Players
             Name = playerName;
             ProcessStartInfo start = new ProcessStartInfo
             {
-                // TODO: do something to handle when the executable is not a valid python executable
                 FileName = pythonExecutable,
                 Arguments = $"{scriptName} {pipeName}",
                 UseShellExecute = false

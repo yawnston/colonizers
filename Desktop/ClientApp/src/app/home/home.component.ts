@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
     this.scriptsService.addScript$().subscribe((wasAdded: boolean) => {
       console.log(`Adding AI script finished with result: ${wasAdded}.`);
       if (wasAdded) {
-        // TODO: check if the AI is a valid AI?
         this.toastr.success('AI script was successfully copied!', 'SUCCESS');
         this.loadAIScripts();
       }
@@ -49,7 +48,6 @@ export class HomeComponent implements OnInit {
     this.scriptsService.addFolder$().subscribe((wasAdded: boolean) => {
       console.log(`Adding AI folder finished with result: ${wasAdded}.`);
       if (wasAdded) {
-        // TODO: check if the AI is a valid AI?
         this.toastr.success('AI folder was successfully copied!', 'SUCCESS');
         this.loadAIScripts();
       }
