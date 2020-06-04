@@ -8,6 +8,16 @@
   z-index: 8888;
 }
 
+.colonist-pick-container-sm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 230px;
+  z-index: 8888;
+}
+
 .colonist-portrait-wrapper {
   position: relative;
   border: solid;

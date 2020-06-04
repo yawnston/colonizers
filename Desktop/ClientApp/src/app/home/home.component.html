@@ -9,6 +9,13 @@
 
   <hr />
 
+  <div>
+    <div>You can toggle whether to enable hiding information. Leaving it disabled can be useful when testing AI.</div>
+    <span class="badge badge-secondary" style="position:relative;left:-40px">Hide information: </span><input type="checkbox" class="form-check-input" (click)="toggleHidden()">
+  </div>
+
+  <hr />
+
   <p>You may also add new AI scripts or folders to the game:</p>
   <div>
     <button type="button" class="btn btn-primary add-btn" (click)="addAIScript()">Add AI script</button>
@@ -38,5 +45,7 @@
     <p class="text-danger">You have not selected a Python executable. You may not start a game until you do so.</p>
   </div>
   <button type="button" class="btn btn-danger start-btn"
-          [disabled]="!pythonExecutable" (click)="startGame()">START GAME</button>
+          [disabled]="!pythonExecutable" (click)="startGame()">
+    START GAME
+  </button>
 </div>

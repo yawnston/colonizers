@@ -16,6 +16,9 @@ export class GameService {
 
   playerNames: string[];
 
+  // Whether hidden information should really be hidden
+  hideInformation: boolean = false;
+
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string) { }
 

@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PlayerPortraitComponent implements OnInit {
 
   @Input() colonist: string;
+  @Input() hideInformation: boolean;
 
   constructor() { }
 

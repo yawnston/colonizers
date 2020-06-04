@@ -1,22 +1,23 @@
-<div class="player-container">
+<div [ngClass]="(isOnTurn())?'player-container':'player-container-inactive'">
   <div *ngIf="isLoading$ | async" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
   <div class="player-content">
     <div class="player-info">
       <div class="player-id">
-        Player {{ player.id }} (HeuristicIntelligence)
+        Player {{ player.id }} ({{ playerName }})
       </div>
       <div>
-        <span class="font-weight-bold">Omnium:</span> {{ player.omnium }},
+        <span class="font-weight-bold">Omnium:</span> {{ player.omnium }}, 
         <span class="font-weight-bold">Points:</span> {{ getPlayerPoints() }}
       </div>
     </div>
 
-    <app-player-portrait class="player-portrait" [colonist]="player?.colonist?.name"></app-player-portrait>
+    <app-player-portrait class="player-portrait" [colonist]="player?.colonist?.name" [hideInformation]="shouldHideInformation() && !alreadyHadTurn()"></app-player-portrait>
 
     <app-player-colony class="player-colony" [colony]="player?.colony"></app-player-colony>
 
-    <app-player-hand class="player-hand" [hand]="player?.hand" [player]="player" [gameState]="gameState" (onPick)="build($event)"></app-player-hand>
+    <app-player-hand class="player-hand" [hand]="player?.hand" [player]="player"
+                     [gameState]="gameState" (onPick)="build($event)" [hideInformation]="shouldHideInformation()"></app-player-hand>
   </div>
 </div>

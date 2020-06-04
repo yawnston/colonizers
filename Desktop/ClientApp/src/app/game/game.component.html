@@ -7,10 +7,14 @@
 
   <div *ngIf="gameState">
     <div class="player-top-left">
-      <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
+      <app-player [player]="gameState.boardState.players[0]" [isLoading$]="playerLoadingObs[0]"
+                  [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)" [playerName]="playerNames[0]"
+                  [hideInformation]="gameService.hideInformation"></app-player>
     </div>
     <div class="player-top-right">
-      <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
+      <app-player [player]="gameState.boardState.players[1]" [isLoading$]="playerLoadingObs[1]"
+                  [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"  [playerName]="playerNames[1]"
+                  [hideInformation]="gameService.hideInformation"></app-player>
     </div>
 
     <div class="vertical-center board-left">
@@ -45,10 +49,14 @@
     </div>
 
     <div class="player-bottom-left">
-      <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
+      <app-player [player]="gameState.boardState.players[2]" [isLoading$]="playerLoadingObs[2]"
+                  [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)" [playerName]="playerNames[2]"
+                  [hideInformation]="gameService.hideInformation"></app-player>
     </div>
     <div class="player-bottom-right">
-      <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]" [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)"></app-player>
+      <app-player [player]="gameState.boardState.players[3]" [isLoading$]="playerLoadingObs[3]"
+                  [gameState]="gameState" (onBuild)="onHumanPlayerAction($event)" [playerName]="playerNames[3]"
+                  [hideInformation]="gameService.hideInformation"></app-player>
     </div>
   </div>
 </div>

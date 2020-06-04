@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loadAIScripts();
     this.getPythonExecutable();
+    this.gameService.hideInformation = false;
   }
 
   onPlayerSelect(playerName: string, playerNumber: number) {
@@ -90,6 +91,10 @@ export class HomeComponent implements OnInit {
     this.scriptsService.getScripts$().subscribe((result) => {
       this.scripts = result;
     });
+  }
+
+  toggleHidden() {
+    this.gameService.hideInformation = !this.gameService.hideInformation;
   }
 
 }

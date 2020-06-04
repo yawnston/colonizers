@@ -11,6 +11,7 @@ export class PlayerHandComponent implements OnInit {
   @Input() hand: Module[];
   @Input() player: PlayerInfo;
   @Input() gameState: GameState;
+  @Input() hideInformation: boolean;
   @Output() onPick = new EventEmitter<number>();
 
   get fullHand(): Module[] {

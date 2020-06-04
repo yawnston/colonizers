@@ -9,8 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class PlayerComponent implements OnInit {
   @Input() player: PlayerInfo;
+  @Input() playerName: string;
   @Input() isLoading$: Observable<boolean>;
   @Input() gameState: GameState;
+  @Input() hideInformation: boolean;
   @Output() onBuild = new EventEmitter<number>();
 
   constructor() { }
@@ -29,5 +31,18 @@ export class PlayerComponent implements OnInit {
 
   build(index: number) {
     this.onBuild.next(index);
+  }
+
+  isOnTurn(): boolean {
+    return this.gameState.boardState.playerTurn === this.player.id;
+  }
+
+  shouldHideInformation(): boolean {
+    return this.hideInformation && (this.playerName !== 'Human Player' || !this.isOnTurn());
+  }
+
+  alreadyHadTurn(): boolean {
+    return this.gameState.boardState.gamePhase !== 'ColonistPick'
+      && this.gameState.boardState.playerTurn >= this.player.id;
   }
 }

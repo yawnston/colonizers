@@ -9,7 +9,7 @@ import { Module, Color } from '../services/game/models/gamestate';
 export class ModuleComponent implements OnInit {
 
   @Input() module: Module;
-  @Input() hidden: boolean;
+  @Input() hideInformation: boolean;
 
   constructor() { }
 
@@ -21,7 +21,7 @@ export class ModuleComponent implements OnInit {
       return "module-none";
     }
 
-    if (this.hidden) {
+    if (this.hideInformation) {
       return "module-hidden";
     }
 
